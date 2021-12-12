@@ -1,0 +1,2208 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark.pyspark\nimport datetime\nfrom pyspark.sql.functions import col, udf\nfrom pyspark.sql.types import DateType\nfrom pyspark.sql.functions import to_date\nfrom pyspark.sql.functions import year, month, dayofmonth\nfrom csv import reader\nfrom operator import add",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-11T23:55:04-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638913718139_247987908",
+      "id": "paragraph_1638913718139_247987908",
+      "dateCreated": "2021-12-07T16:48:38-0500",
+      "dateStarted": "2021-12-11T23:55:04-0500",
+      "dateFinished": "2021-12-11T23:55:04-0500",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:465"
+    },
+    {
+      "text": "%spark.pyspark\n# date",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:01:43-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639008091153_2093653302",
+      "id": "paragraph_1639008091153_2093653302",
+      "dateCreated": "2021-12-08T19:01:31-0500",
+      "status": "READY",
+      "$$hashKey": "object:466"
+    },
+    {
+      "text": "%spark.pyspark\n# test pyspark to_date() function\ntest = spark.createDataFrame([('02-2-2020',)], ['date'])\ntest.select(to_date(test.date, 'MM-dd-yyyy').alias('date')).collect()",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-11T23:55:49-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "[Row(date=datetime.date(2020, 2, 2))]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc11.nyu.cluster:38524/jobs/job?id=11",
+              "$$hashKey": "object:5923"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638918492011_1773578152",
+      "id": "paragraph_1638918492011_1773578152",
+      "dateCreated": "2021-12-07T18:08:12-0500",
+      "dateStarted": "2021-12-11T23:55:49-0500",
+      "dateFinished": "2021-12-11T23:55:54-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:467"
+    },
+    {
+      "text": "%spark.pyspark\n# NYPD arrest data\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.uip8-fykc.csv', header=True, inferSchema=True)\nds.printSchema()\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:01:31-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- ARREST_KEY: integer (nullable = true)\n |-- ARREST_DATE: string (nullable = true)\n |-- PD_CD: integer (nullable = true)\n |-- PD_DESC: string (nullable = true)\n |-- KY_CD: integer (nullable = true)\n |-- OFNS_DESC: string (nullable = true)\n |-- LAW_CODE: string (nullable = true)\n |-- LAW_CAT_CD: string (nullable = true)\n |-- ARREST_BORO: string (nullable = true)\n |-- ARREST_PRECINCT: integer (nullable = true)\n |-- JURISDICTION_CODE: integer (nullable = true)\n |-- AGE_GROUP: string (nullable = true)\n |-- PERP_SEX: string (nullable = true)\n |-- PERP_RACE: string (nullable = true)\n |-- X_COORD_CD: integer (nullable = true)\n |-- Y_COORD_CD: integer (nullable = true)\n |-- Latitude: double (nullable = true)\n |-- Longitude: double (nullable = true)\n |-- New Georeferenced Column: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=28",
+              "$$hashKey": "object:2233"
+            },
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=29",
+              "$$hashKey": "object:2234"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638907540714_1350562585",
+      "id": "paragraph_1638907540714_1350562585",
+      "dateCreated": "2021-12-07T15:05:40-0500",
+      "dateStarted": "2021-12-07T17:26:30-0500",
+      "dateFinished": "2021-12-07T17:26:30-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:468"
+    },
+    {
+      "text": "%spark.pyspark\nds = ds.withColumn('ARREST_DATE', to_date(ds.ARREST_DATE, 'MM-dd-yyyy'))\nds.printSchema()\nds.createOrReplaceTempView('ds')",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-07T19:09:33-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- ARREST_KEY: integer (nullable = true)\n |-- ARREST_DATE: date (nullable = true)\n |-- PD_CD: integer (nullable = true)\n |-- PD_DESC: string (nullable = true)\n |-- KY_CD: integer (nullable = true)\n |-- OFNS_DESC: string (nullable = true)\n |-- LAW_CODE: string (nullable = true)\n |-- LAW_CAT_CD: string (nullable = true)\n |-- ARREST_BORO: string (nullable = true)\n |-- ARREST_PRECINCT: integer (nullable = true)\n |-- JURISDICTION_CODE: integer (nullable = true)\n |-- AGE_GROUP: string (nullable = true)\n |-- PERP_SEX: string (nullable = true)\n |-- PERP_RACE: string (nullable = true)\n |-- X_COORD_CD: integer (nullable = true)\n |-- Y_COORD_CD: integer (nullable = true)\n |-- Latitude: double (nullable = true)\n |-- Longitude: double (nullable = true)\n |-- New Georeferenced Column: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638921974600_1155212474",
+      "id": "paragraph_1638921974600_1155212474",
+      "dateCreated": "2021-12-07T19:06:14-0500",
+      "dateStarted": "2021-12-07T19:09:33-0500",
+      "dateFinished": "2021-12-07T19:09:33-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:469"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select ARREST_KEY from ds where ARREST_DATE is null\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-07T19:09:36-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+\n|ARREST_KEY|\n+----------+\n+----------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=103",
+              "$$hashKey": "object:2324"
+            },
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=104",
+              "$$hashKey": "object:2325"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638920214107_403813693",
+      "id": "paragraph_1638920214107_403813693",
+      "dateCreated": "2021-12-07T18:36:54-0500",
+      "dateStarted": "2021-12-07T19:09:36-0500",
+      "dateFinished": "2021-12-07T19:09:37-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:470"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select current_date()\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-07T19:08:05-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+\n|current_date()|\n+--------------+\n|    2021-12-07|\n+--------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=100",
+              "$$hashKey": "object:2375"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638921398984_815934778",
+      "id": "paragraph_1638921398984_815934778",
+      "dateCreated": "2021-12-07T18:56:38-0500",
+      "dateStarted": "2021-12-07T19:08:05-0500",
+      "dateFinished": "2021-12-07T19:08:05-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:471"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select ARREST_KEY, ARREST_DATE from ds where ARREST_DATE>current_date()\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-07T19:11:18-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+-----------+\n|ARREST_KEY|ARREST_DATE|\n+----------+-----------+\n+----------+-----------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=115",
+              "$$hashKey": "object:2421"
+            },
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=116",
+              "$$hashKey": "object:2422"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638921200988_1241540550",
+      "id": "paragraph_1638921200988_1241540550",
+      "dateCreated": "2021-12-07T18:53:20-0500",
+      "dateStarted": "2021-12-07T19:11:18-0500",
+      "dateFinished": "2021-12-07T19:11:19-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:472"
+    },
+    {
+      "text": "%spark.pyspark\n# NYC Payroll data\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.k397-673e.csv', header=True, inferSchema=True)\nds = ds.withColumn('Agency Start Date', to_date(ds['Agency Start Date'], 'MM/dd/yyyy'))\nds.printSchema()\nds.createOrReplaceTempView('ds')",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T18:57:21-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Fiscal Year: integer (nullable = true)\n |-- Payroll Number: integer (nullable = true)\n |-- Agency Name: string (nullable = true)\n |-- Last Name: string (nullable = true)\n |-- First Name: string (nullable = true)\n |-- Mid Init: string (nullable = true)\n |-- Agency Start Date: date (nullable = true)\n |-- Work Location Borough: string (nullable = true)\n |-- Title Description: string (nullable = true)\n |-- Leave Status as of June 30: string (nullable = true)\n |-- Base Salary: double (nullable = true)\n |-- Pay Basis: string (nullable = true)\n |-- Regular Hours: double (nullable = true)\n |-- Regular Gross Paid: double (nullable = true)\n |-- OT Hours: double (nullable = true)\n |-- Total OT Paid: double (nullable = true)\n |-- Total Other Pay: double (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=142",
+              "$$hashKey": "object:2472"
+            },
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=143",
+              "$$hashKey": "object:2473"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638912471060_341056658",
+      "id": "paragraph_1638912471060_341056658",
+      "dateCreated": "2021-12-07T16:27:51-0500",
+      "dateStarted": "2021-12-07T20:27:53-0500",
+      "dateFinished": "2021-12-07T20:27:58-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:473"
+    },
+    {
+      "text": "%spark.pyspark\n# check future dates\nspark.sql(\"select * from ds where `Agency Start Date`>current_date()\").show(50)",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:02:10-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+--------------+--------------------+--------------+----------+--------+-----------------+---------------------+--------------------+--------------------------+-----------+---------+-------------+------------------+--------+-------------+---------------+\n|Fiscal Year|Payroll Number|         Agency Name|     Last Name|First Name|Mid Init|Agency Start Date|Work Location Borough|   Title Description|Leave Status as of June 30|Base Salary|Pay Basis|Regular Hours|Regular Gross Paid|OT Hours|Total OT Paid|Total Other Pay|\n+-----------+--------------+--------------------+--------------+----------+--------+-----------------+---------------------+--------------------+--------------------------+-----------+---------+-------------+------------------+--------+-------------+---------------+\n|       2020|           742|DEPT OF ED PEDAGO...|      GOLDBERG|      ADAM|       S|       9999-12-31|            MANHATTAN|TEACHER SPECIAL E...|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       36229.15|\n|       2020|           742|DEPT OF ED PEDAGO...|     CHIARELLO|     JAMES|       L|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       13012.34|\n|       2020|           742|DEPT OF ED PEDAGO...|       ROSWELL|  CAROLINE|       D|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|        12876.5|\n|       2020|           742|DEPT OF ED PEDAGO...|     ROTCHFORD|   DOROTHY|       R|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       12759.82|\n|       2020|           742|DEPT OF ED PEDAGO...|         DAQUI|     CAROL|    null|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       12536.04|\n|       2020|           742|DEPT OF ED PEDAGO...|    TORTORELLI|    HELENA|    null|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       12365.47|\n|       2020|           742|DEPT OF ED PEDAGO...|      LEONARDI|  KRISTINE|       E|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|       12302.67|\n|       2020|           742|DEPT OF ED PEDAGO...|       FRAZIER|   CYNTHIA|       V|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          122242.8|     0.0|          0.0|        12121.8|\n|       2020|           742|DEPT OF ED PEDAGO...|        ROCHEZ|   JERILYN|       O|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   124909.0|per Annum|          0.0|          121259.0|     0.0|          0.0|       11876.34|\n|       2020|           742|DEPT OF ED PEDAGO...|       SANTORE|     LINDA|       M|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   117551.0|per Annum|          0.0|         115041.54|     0.0|          0.0|        11661.4|\n|       2020|           742|DEPT OF ED PEDAGO...|        CROSBY|   MICHAEL|    null|       9999-12-31|            MANHATTAN|             TEACHER|                    ACTIVE|   117551.0|per Annum|          0.0|          114057.7|     0.0|          0.0|       10020.71|\n|       2020|           745|DEPT OF ED HRLY S...|        STAMPP|     LORNA|    null|       9999-12-31|            MANHATTAN|F/T SCHOOL LUNCH ...|                    ACTIVE|      17.04| per Hour|          0.0|           20294.4|     0.0|          0.0|       10954.22|\n|       2020|           745|DEPT OF ED HRLY S...|     DOMINIQUE|     MARIE|       B|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      17.04| per Hour|          0.0|          22293.98|     0.0|          0.0|        8647.19|\n|       2020|           745|DEPT OF ED HRLY S...|       SANTANA|   ROSALIA|       R|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      17.04| per Hour|          0.0|          15321.16|     0.0|          0.0|         5238.7|\n|       2020|           745|DEPT OF ED HRLY S...|         REYES|    HECTOR|       L|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      17.04| per Hour|          0.0|           14217.6|     0.0|          0.0|        4381.79|\n|       2020|           744|DEPT OF ED PARA P...|       MORALES|JULIO ANGE|       L|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|       27131.49|\n|       2020|           744|DEPT OF ED PARA P...|         ISLES|   ROBERTO|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|       11721.51|\n|       2020|           744|DEPT OF ED PARA P...|        HOLMES|    VERMEL|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    43895.0|per Annum|          0.0|          42958.86|     0.0|          0.0|       11398.74|\n|       2020|           744|DEPT OF ED PARA P...|          NEAL| MICHELINA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        8957.96|\n|       2020|           744|DEPT OF ED PARA P...|        SIMOES|       JOY|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    40825.0|per Annum|          0.0|           39954.3|     0.0|          0.0|       11033.26|\n|       2020|           744|DEPT OF ED PARA P...|      FAYNBLUT|      RITA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        5209.54|\n|       2020|           744|DEPT OF ED PARA P...|      WILLIAMS|   CAROLYN|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        5094.76|\n|       2020|           744|DEPT OF ED PARA P...|       LAPORTA| ANNAMARIE|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        5017.55|\n|       2020|           744|DEPT OF ED PARA P...|ROKHSAR SHALOM|   SHAHNAZ|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        4784.67|\n|       2020|           744|DEPT OF ED PARA P...|        PARKER|    ANGELA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    46333.0|per Annum|          0.0|          45344.28|     0.0|          0.0|        4698.11|\n|       2020|           744|DEPT OF ED PARA P...|      DELAROSA|   OLGUITA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    43895.0|per Annum|          0.0|          42958.86|     0.0|          0.0|        5757.05|\n|       2020|           744|DEPT OF ED PARA P...|         MARTE|     MARIA|       R|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    43895.0|per Annum|          0.0|          42958.86|     0.0|          0.0|        4750.08|\n|       2020|           744|DEPT OF ED PARA P...|          JACK|    FABIAN|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    43895.0|per Annum|          0.0|          42958.86|     0.0|          0.0|        4744.49|\n|       2020|           744|DEPT OF ED PARA P...|       TILLMAN|    GLORIA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    42881.0|per Annum|          0.0|          41965.86|     0.0|          0.0|        5048.18|\n|       2020|           744|DEPT OF ED PARA P...|         VELEZ|   YOLANDA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    40825.0|per Annum|          0.0|           39954.3|     0.0|          0.0|        4414.76|\n|       2020|           744|DEPT OF ED PARA P...|        LEVIEN|   BARBARA|       S|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    40825.0|per Annum|          0.0|           39954.3|     0.0|          0.0|        4402.89|\n|       2020|           744|DEPT OF ED PARA P...|       JOHNSON|     WANDA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    34039.0|per Annum|          0.0|          33312.78|     0.0|          0.0|        6610.32|\n|       2020|           744|DEPT OF ED PARA P...|       KNOWLES|     VINDA|       T|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    34469.0|per Annum|          0.0|          33734.04|     0.0|          0.0|         3713.1|\n|       2020|           744|DEPT OF ED PARA P...|        PORTER|     KEVIN|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    34039.0|per Annum|          0.0|          33312.78|     0.0|          0.0|        3652.98|\n|       2020|           744|DEPT OF ED PARA P...|         FABLE|      ZITA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    34039.0|per Annum|          0.0|          33312.78|     0.0|          0.0|         3606.6|\n|       2020|           744|DEPT OF ED PARA P...|     ZIELENSKI|  KATHLEEN|       J|       9999-12-31|            MANHATTAN|  SUBSTITUTE ED PARA|                    ACTIVE|     161.82|  per Day|          0.0|            7839.6|     0.0|          0.0|        2230.44|\n|       2016|          null|   POLICE DEPARTMENT|         KIRBY|   KATHLYN|       L|       2049-10-16|            MANHATTAN| RECREATION DIRECTOR|                    CEASED|    55147.0|per Annum|          0.0|            346.18|     0.0|          0.0|          14.58|\n|       2015|          null|DEPT OF ED HRLY S...|     DOMINIQUE|     MARIE|       B|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      15.25| per Hour|          0.0|          24530.87|     0.0|          0.0|          912.3|\n|       2015|          null|DEPT OF ED HRLY S...|       KALINIC|  BLAZENKA|    null|       9999-12-31|            MANHATTAN|F/T SCHOOL LUNCH ...|                    ACTIVE|      15.25| per Hour|          0.0|           17229.6|     0.0|          0.0|         657.13|\n|       2015|          null|DEPT OF ED HRLY S...|      MOLYNEUX| CATHERINE|       M|       9999-12-31|            MANHATTAN|F/T DC 37 FAMILY ...|                    ACTIVE|      20.47| per Hour|          0.0|          37450.09|     0.0|          0.0|         1000.0|\n|       2015|          null|DEPT OF ED HRLY S...|         REYES|    HECTOR|       L|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      15.25| per Hour|          0.0|          17300.93|     0.0|          0.0|         663.48|\n|       2015|          null|DEPT OF ED HRLY S...|         REYES|    RONALD|    null|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      15.25| per Hour|          0.0|          30233.74|     0.0|         0.84|         1000.0|\n|       2015|          null|DEPT OF ED HRLY S...|       SANTANA|   ROSALIA|       R|       9999-12-31|            MANHATTAN|     F/T SCHOOL AIDE|                    ACTIVE|      15.25| per Hour|          0.0|          19390.99|     0.0|          0.0|         649.51|\n|       2015|          null|DEPT OF ED HRLY S...|        STAMPP|     LORNA|    null|       9999-12-31|            MANHATTAN|F/T SCHOOL LUNCH ...|                    ACTIVE|      15.25| per Hour|          0.0|          27116.61|     0.0|          0.0|          834.5|\n|       2015|          null|DEPT OF ED PARA P...|    BETANCOURT|    JEANNE|       L|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    27617.0|per Annum|          0.0|          27293.08|     0.0|          0.0|            0.0|\n|       2015|          null|DEPT OF ED PARA P...|     CARAGIULO|   CECILIA|       C|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    33329.0|per Annum|          0.0|          33835.03|     0.0|          0.0|            0.0|\n|       2015|          null|DEPT OF ED PARA P...|      CARVALLO| FRANCISCO|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    37966.0|per Annum|          0.0|          37520.44|     0.0|          0.0|            0.0|\n|       2015|          null|DEPT OF ED PARA P...|      DELAROSA|   OLGUITA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    35915.0|per Annum|          0.0|          36564.49|     0.0|          0.0|            0.0|\n|       2015|          null|DEPT OF ED PARA P...|          DIAZ|    CARMEN|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    35915.0|per Annum|          0.0|          35493.92|     0.0|          0.0|            0.0|\n|       2015|          null|DEPT OF ED PARA P...|         FABLE|      ZITA|    null|       9999-12-31|            MANHATTAN|      ANNUAL ED PARA|                    ACTIVE|    27617.0|per Annum|          0.0|          27360.35|     0.0|          0.0|            0.0|\n+-----------+--------------+--------------------+--------------+----------+--------+-----------------+---------------------+--------------------+--------------------------+-----------+---------+-------------+------------------+--------+-------------+---------------+\nonly showing top 50 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=150",
+              "$$hashKey": "object:2523"
+            },
+            {
+              "jobUrl": "http://hc18.nyu.cluster:35418/jobs/job?id=151",
+              "$$hashKey": "object:2524"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638926897372_408128936",
+      "id": "paragraph_1638926897372_408128936",
+      "dateCreated": "2021-12-07T20:28:17-0500",
+      "dateStarted": "2021-12-07T20:46:14-0500",
+      "dateFinished": "2021-12-07T20:46:20-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:474"
+    },
+    {
+      "text": "%spark.pyspark\n# name inital",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:00:17-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639008006468_680424988",
+      "id": "paragraph_1639008006468_680424988",
+      "dateCreated": "2021-12-08T19:00:06-0500",
+      "status": "READY",
+      "$$hashKey": "object:475"
+    },
+    {
+      "text": "%spark.pyspark\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.w9ak-ipjd.csv', header=True, inferSchema=True)\nds.printSchema()\nds.createOrReplaceTempView(\"ds\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:03:51-0500",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Job Filing Number: string (nullable = true)\n |-- Filing Status: string (nullable = true)\n |-- House No: string (nullable = true)\n |-- Street Name: string (nullable = true)\n |-- Borough: string (nullable = true)\n |-- Block: integer (nullable = true)\n |-- LOT: integer (nullable = true)\n |-- Bin7: integer (nullable = true)\n |-- Commmunity - Board: integer (nullable = true)\n |-- Work on Floor: string (nullable = true)\n |-- Apt./Condo No(s): string (nullable = true)\n |-- Applicant Professional Title: string (nullable = true)\n |-- Applicant License #: integer (nullable = true)\n |-- Applicant First Name: string (nullable = true)\n |-- Applicants Middle Initial: string (nullable = true)\n |-- Applicant Last Name: string (nullable = true)\n |-- Owner's Business Name: string (nullable = true)\n |-- Owner's Street Name: string (nullable = true)\n |-- City: string (nullable = true)\n |-- State: string (nullable = true)\n |-- Zip: string (nullable = true)\n |-- Filing Representative First Name: string (nullable = true)\n |-- Filing Representative Middle Initial: string (nullable = true)\n |-- Filing Representative Last Name: string (nullable = true)\n |-- Filing Representative Business Name: string (nullable = true)\n |-- Filing Representative Street Name: string (nullable = true)\n |-- Filing Representative City: string (nullable = true)\n |-- Filing Representative State: string (nullable = true)\n |-- Filing Representative Zip: string (nullable = true)\n |-- Sprinkler (Work Type): boolean (nullable = true)\n |-- Plumbing (Work Type): boolean (nullable = true)\n |-- Initial Cost: double (nullable = true)\n |-- Total Construction Floor Area: double (nullable = true)\n |-- Review Building Code: string (nullable = true)\n |-- Little E: string (nullable = true)\n |-- Unmapped/CCO Street: string (nullable = true)\n |-- Request Legalization: string (nullable = true)\n |-- Includes Permanent Removal: string (nullable = true)\n |-- In Compliance with NYCECC: boolean (nullable = true)\n |-- Exempt from NYCECC: boolean (nullable = true)\n |-- Building Type: string (nullable = true)\n |-- Existing Stories: integer (nullable = true)\n |-- Existing Height: integer (nullable = true)\n |-- Existing Dwelling Units: integer (nullable = true)\n |-- Proposed No of Stories: integer (nullable = true)\n |-- Proposed Height: integer (nullable = true)\n |-- Proposed Dwelling Units: integer (nullable = true)\n |-- SpecialInspectionRequirement: string (nullable = true)\n |-- Special Inspection Agency Number: string (nullable = true)\n |-- ProgressInspectionRequirement: string (nullable = true)\n |-- Built 1 information value: string (nullable = true)\n |-- Built 2 information value: string (nullable = true)\n |-- Built 2 A information value: string (nullable = true)\n |-- Built 2 B information value: string (nullable = true)\n |-- Standpipe: boolean (nullable = true)\n |-- Antenna: boolean (nullable = true)\n |-- Curb Cut: boolean (nullable = true)\n |-- Sign: boolean (nullable = true)\n |-- Fence: boolean (nullable = true)\n |-- Scaffold: boolean (nullable = true)\n |-- Shed: boolean (nullable = true)\n |-- Latitude: double (nullable = true)\n |-- Longitude: double (nullable = true)\n |-- Council District: integer (nullable = true)\n |-- Census Tract: integer (nullable = true)\n |-- NTA: string (nullable = true)\n |-- BIN66: integer (nullable = true)\n |-- Filing Date: string (nullable = true)\n |-- Current Status Date: string (nullable = true)\n |-- Permit Issue Date: string (nullable = true)\n |-- Boiler Equipment (Work Type): boolean (nullable = true)\n |-- Earth Work (Work Type): boolean (nullable = true)\n |-- Foundation (Work Type): boolean (nullable = true)\n |-- General Construction (Work Type): boolean (nullable = true)\n |-- Mechanical Systems (Work Type): boolean (nullable = true)\n |-- Place of Assembly (Work Type): boolean (nullable = true)\n |-- Protection Mechanical Methods (Work Type): boolean (nullable = true)\n |-- Sidewalk Shed (Work Type): boolean (nullable = true)\n |-- Structural (Work Type): boolean (nullable = true)\n |-- Support of Excavation (Work Type): boolean (nullable = true)\n |-- Temporary Place of Assembly (Work Type): boolean (nullable = true)\n |-- Job Type: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=2",
+              "$$hashKey": "object:2614"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=3",
+              "$$hashKey": "object:2615"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1638926728253_2064659659",
+      "id": "paragraph_1638926728253_2064659659",
+      "dateCreated": "2021-12-07T20:25:28-0500",
+      "dateStarted": "2021-12-08T19:03:51-0500",
+      "dateFinished": "2021-12-08T19:03:54-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:476"
+    },
+    {
+      "text": "%spark.pyspark\n#`Applicants Middle Initial`\nspark.sql(\"select distinct `Applicants Middle Initial`, count(*) from ds group by `Applicants Middle Initial`\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:27:36-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------------+--------+\n|Applicants Middle Initial|count(1)|\n+-------------------------+--------+\n|                     null|  235966|\n+-------------------------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=5",
+              "$$hashKey": "object:2665"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=6",
+              "$$hashKey": "object:2666"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=7",
+              "$$hashKey": "object:2667"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=8",
+              "$$hashKey": "object:2668"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=9",
+              "$$hashKey": "object:2669"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639008022525_1540926958",
+      "id": "paragraph_1639008022525_1540926958",
+      "dateCreated": "2021-12-08T19:00:22-0500",
+      "dateStarted": "2021-12-08T19:26:16-0500",
+      "dateFinished": "2021-12-08T19:26:20-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:477"
+    },
+    {
+      "text": "%spark.pyspark\n\nspark.sql(\"select distinct `Filing Representative Middle Initial`, count(*) from ds group by `Filing Representative Middle Initial`\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:28:18-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------------------------+--------+\n|Filing Representative Middle Initial|count(1)|\n+------------------------------------+--------+\n|                                null|  235966|\n+------------------------------------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=10",
+              "$$hashKey": "object:2731"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=11",
+              "$$hashKey": "object:2732"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=12",
+              "$$hashKey": "object:2733"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=13",
+              "$$hashKey": "object:2734"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=14",
+              "$$hashKey": "object:2735"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639009643139_1275641282",
+      "id": "paragraph_1639009643139_1275641282",
+      "dateCreated": "2021-12-08T19:27:23-0500",
+      "dateStarted": "2021-12-08T19:28:18-0500",
+      "dateFinished": "2021-12-08T19:28:20-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:478"
+    },
+    {
+      "text": "%spark.pyspark\n# DOB NOW: Build – Approved Permits\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.rbx6-tga4.csv', header=True, inferSchema=True)\nds.printSchema()\nds.createOrReplaceTempView(\"ds\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:36:23-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Job Filing Number: string (nullable = true)\n |-- Filing Reason: string (nullable = true)\n |-- House No: string (nullable = true)\n |-- Street Name: string (nullable = true)\n |-- Borough: string (nullable = true)\n |-- LOT: integer (nullable = true)\n |-- Bin: integer (nullable = true)\n |-- Block: integer (nullable = true)\n |-- C B NO: integer (nullable = true)\n |-- Apt/Condo No(s): string (nullable = true)\n |-- Work on Floor: string (nullable = true)\n |-- Work Type: string (nullable = true)\n |-- Permittee's License Type: string (nullable = true)\n |-- Applicant License #: integer (nullable = true)\n |-- Applicant First Name: string (nullable = true)\n |-- Applicant Middle Name: string (nullable = true)\n |-- Applicant Last Name: string (nullable = true)\n |-- Applicant Business Name: string (nullable = true)\n |-- Applicant Business Address: string (nullable = true)\n |-- Filing Representative First Name: string (nullable = true)\n |-- Filing Representative Middle Initial: string (nullable = true)\n |-- Filing Representative Last Name: string (nullable = true)\n |-- Filing Representative Business Name: string (nullable = true)\n |-- Work Permit: string (nullable = true)\n |-- Approved Date: string (nullable = true)\n |-- Issued Date: string (nullable = true)\n |-- Expired Date: string (nullable = true)\n |-- Job Description: string (nullable = true)\n |-- Estimated Job Costs: double (nullable = true)\n |-- Owner Business Name: string (nullable = true)\n |-- Owner Name: string (nullable = true)\n |-- Owner Street Address: string (nullable = true)\n |-- Owner City: string (nullable = true)\n |-- Owner State: string (nullable = true)\n |-- Owner Zip Code: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=26",
+              "$$hashKey": "object:2797"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=27",
+              "$$hashKey": "object:2798"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639008281320_1297156091",
+      "id": "paragraph_1639008281320_1297156091",
+      "dateCreated": "2021-12-08T19:04:41-0500",
+      "dateStarted": "2021-12-08T19:36:24-0500",
+      "dateFinished": "2021-12-08T19:36:26-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:479"
+    },
+    {
+      "text": "%spark.pyspark\nds.select('Applicant Middle Name').describe().show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:37:15-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+---------------------+\n|summary|Applicant Middle Name|\n+-------+---------------------+\n|  count|                  103|\n|   mean|                 null|\n| stddev|                 null|\n|    min|                  GIL|\n|    max|                  GIL|\n+-------+---------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=28",
+              "$$hashKey": "object:2848"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010184143_845467367",
+      "id": "paragraph_1639010184143_845467367",
+      "dateCreated": "2021-12-08T19:36:24-0500",
+      "dateStarted": "2021-12-08T19:37:16-0500",
+      "dateFinished": "2021-12-08T19:37:17-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:480"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select distinct `Applicant Middle Name` from ds\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:38:09-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------+\n|Applicant Middle Name|\n+---------------------+\n|                 null|\n|                  GIL|\n+---------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=29",
+              "$$hashKey": "object:2894"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=30",
+              "$$hashKey": "object:2895"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=31",
+              "$$hashKey": "object:2896"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=32",
+              "$$hashKey": "object:2897"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=33",
+              "$$hashKey": "object:2898"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010236220_1942178115",
+      "id": "paragraph_1639010236220_1942178115",
+      "dateCreated": "2021-12-08T19:37:16-0500",
+      "dateStarted": "2021-12-08T19:38:09-0500",
+      "dateFinished": "2021-12-08T19:38:11-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:481"
+    },
+    {
+      "text": "%spark.pyspark\nds.select('Filing Representative Middle Initial').describe().show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:38:57-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------------------------+\n|summary|Filing Representative Middle Initial|\n+-------+------------------------------------+\n|  count|                                   0|\n|   mean|                                null|\n| stddev|                                null|\n|    min|                                null|\n|    max|                                null|\n+-------+------------------------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=34",
+              "$$hashKey": "object:2960"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010301323_1241078773",
+      "id": "paragraph_1639010301323_1241078773",
+      "dateCreated": "2021-12-08T19:38:21-0500",
+      "dateStarted": "2021-12-08T19:38:57-0500",
+      "dateFinished": "2021-12-08T19:38:58-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:482"
+    },
+    {
+      "text": "%spark.pyspark\n# Greenbook\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.mdcw-n682.csv', header=True, inferSchema=True)\nds.printSchema()\nds.createOrReplaceTempView(\"ds\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:42:27-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Agency Name: string (nullable = true)\n |-- Agency Acronym: string (nullable = true)\n |-- Agency Website: string (nullable = true)\n |-- First Name: string (nullable = true)\n |-- Last Name: string (nullable = true)\n |-- Middle Initial: string (nullable = true)\n |-- Name Suffix: string (nullable = true)\n |-- Office Title: string (nullable = true)\n |-- Division Name: string (nullable = true)\n |-- Parent Division: string (nullable = true)\n |-- Grand Parent Division: string (nullable = true)\n |-- Great Grand Parent Division: string (nullable = true)\n |-- Address: string (nullable = true)\n |-- City: string (nullable = true)\n |-- State: string (nullable = true)\n |-- Zip Code: integer (nullable = true)\n |-- Phone 1: string (nullable = true)\n |-- Phone 2: string (nullable = true)\n |-- Fax 1: string (nullable = true)\n |-- Fax 2: string (nullable = true)\n |-- Agency Primary Phone: string (nullable = true)\n |-- Division Primary Phone: string (nullable = true)\n |-- Section: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=35",
+              "$$hashKey": "object:3006"
+            },
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=36",
+              "$$hashKey": "object:3007"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010283834_7306506",
+      "id": "paragraph_1639010283834_7306506",
+      "dateCreated": "2021-12-08T19:38:03-0500",
+      "dateStarted": "2021-12-08T19:42:28-0500",
+      "dateFinished": "2021-12-08T19:42:28-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:483"
+    },
+    {
+      "text": "%spark.pyspark\nds.select('Middle Initial').describe().show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:43:06-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+--------------+\n|summary|Middle Initial|\n+-------+--------------+\n|  count|           575|\n|   mean|          null|\n| stddev|          null|\n|    min|             A|\n|    max|             Z|\n+-------+--------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=37",
+              "$$hashKey": "object:3057"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010548057_2082762257",
+      "id": "paragraph_1639010548057_2082762257",
+      "dateCreated": "2021-12-08T19:42:28-0500",
+      "dateStarted": "2021-12-08T19:43:06-0500",
+      "dateFinished": "2021-12-08T19:43:06-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:484"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select distinct `Middle Initial` from ds order by `Middle Initial`\").show(50)",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-08T19:44:32-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+\n|Middle Initial|\n+--------------+\n|          null|\n|             A|\n|             B|\n|             C|\n|             D|\n|             E|\n|             F|\n|             G|\n|             H|\n|             I|\n|             J|\n|             K|\n|             L|\n|             M|\n|             N|\n|             O|\n|             P|\n|             R|\n|             S|\n|             T|\n|             V|\n|             W|\n|             Y|\n|             Z|\n+--------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc16.nyu.cluster:33289/jobs/job?id=43",
+              "$$hashKey": "object:3103"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010576734_1143390888",
+      "id": "paragraph_1639010576734_1143390888",
+      "dateCreated": "2021-12-08T19:42:56-0500",
+      "dateStarted": "2021-12-08T19:44:32-0500",
+      "dateFinished": "2021-12-08T19:44:32-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:485"
+    },
+    {
+      "text": "%spark.pyspark\n# Civil Service List (Active)\nds = spark.read.csv('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.vx8i-nprf.csv', header=True, inferSchema=True)\nds = ds.withColumn('Published Date', to_date(ds['Published Date'], 'MM/dd/yyyy'))\nds = ds.withColumn('Established Date', to_date(ds['Established Date'], 'MM/dd/yyyy'))\nds = ds.withColumn('Anniversary Date', to_date(ds['Anniversary Date'], 'MM/dd/yyyy'))\nds = ds.withColumn('Extension Date', to_date(ds['Anniversary Date'], 'MM/dd/yyyy'))\n\nds.printSchema()\nds.createOrReplaceTempView('ds')",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:27:54-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Exam No: integer (nullable = true)\n |-- List No: double (nullable = true)\n |-- First Name: string (nullable = true)\n |-- MI: string (nullable = true)\n |-- Last Name: string (nullable = true)\n |-- Adj. FA: double (nullable = true)\n |-- List Title Code: integer (nullable = true)\n |-- List Title Desc: string (nullable = true)\n |-- Group No: integer (nullable = true)\n |-- List Agency Code: integer (nullable = true)\n |-- List Agency Desc: string (nullable = true)\n |-- List Div Code: string (nullable = true)\n |-- Published Date: date (nullable = true)\n |-- Established Date: date (nullable = true)\n |-- Anniversary Date: date (nullable = true)\n |-- Extension Date: date (nullable = true)\n |-- Veteran Credit: string (nullable = true)\n |-- Parent Lgy Credit: string (nullable = true)\n |-- Sibling Lgy Credit: string (nullable = true)\n |-- Residency Credit: string (nullable = true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=21",
+              "$$hashKey": "object:3149"
+            },
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=22",
+              "$$hashKey": "object:3150"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010631425_2081040510",
+      "id": "paragraph_1639010631425_2081040510",
+      "dateCreated": "2021-12-08T19:43:51-0500",
+      "dateStarted": "2021-12-09T21:27:54-0500",
+      "dateFinished": "2021-12-09T21:27:55-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:486"
+    },
+    {
+      "text": "%spark.pyspark\nds.select('Extension Date').describe().show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:26:49-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+--------------+\n|summary|Extension Date|\n+-------+--------------+\n|  count|        201984|\n|   mean|          null|\n| stddev|          null|\n|    min|    01/06/2022|\n|    max|    12/28/2021|\n+-------+--------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=20",
+              "$$hashKey": "object:3200"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639103192032_794773847",
+      "id": "paragraph_1639103192032_794773847",
+      "dateCreated": "2021-12-09T21:26:32-0500",
+      "dateStarted": "2021-12-09T21:26:49-0500",
+      "dateFinished": "2021-12-09T21:26:51-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:487"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select count(*) from ds where `Extension Date`>current_date()\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:28:43-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+\n|count(1)|\n+--------+\n|  343228|\n+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=23",
+              "$$hashKey": "object:3246"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639102921021_1011831650",
+      "id": "paragraph_1639102921021_1011831650",
+      "dateCreated": "2021-12-09T21:22:01-0500",
+      "dateStarted": "2021-12-09T21:28:43-0500",
+      "dateFinished": "2021-12-09T21:28:44-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:488"
+    },
+    {
+      "text": "%spark.pyspark\nds.select('MI').describe().show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T20:27:34-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------+\n|summary|                MI|\n+-------+------------------+\n|  count|            322945|\n|   mean|2.3333333333333335|\n| stddev| 1.632993161855452|\n|    min|                 -|\n|    max|                 `|\n+-------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc06.nyu.cluster:37751/jobs/job?id=2",
+              "$$hashKey": "object:3292"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010901566_405333853",
+      "id": "paragraph_1639010901566_405333853",
+      "dateCreated": "2021-12-08T19:48:21-0500",
+      "dateStarted": "2021-12-09T20:27:34-0500",
+      "dateFinished": "2021-12-09T20:27:47-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:489"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select distinct MI from ds order by MI\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T20:54:22-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+\n|  MI|\n+----+\n|null|\n|   -|\n|   0|\n|   1|\n|   2|\n|   3|\n|   4|\n|   A|\n|   B|\n|   C|\n|   D|\n|   E|\n|   F|\n|   G|\n|   H|\n|   I|\n|   J|\n|   K|\n|   L|\n|   M|\n+----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc12.nyu.cluster:42533/jobs/job?id=2",
+              "$$hashKey": "object:3338"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639010948822_1156489284",
+      "id": "paragraph_1639010948822_1156489284",
+      "dateCreated": "2021-12-08T19:49:08-0500",
+      "dateStarted": "2021-12-09T20:54:22-0500",
+      "dateFinished": "2021-12-09T20:54:24-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:490"
+    },
+    {
+      "text": "%spark.pyspark\nds = ds.rdd\nprint(type(ds))",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T20:54:28-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "<class 'pyspark.rdd.RDD'>\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639011619189_2125667898",
+      "id": "paragraph_1639011619189_2125667898",
+      "dateCreated": "2021-12-08T20:00:19-0500",
+      "dateStarted": "2021-12-09T20:54:28-0500",
+      "dateFinished": "2021-12-09T20:54:28-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:491"
+    },
+    {
+      "text": "%spark.pyspark\nds = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.vx8i-nprf.csv').mapPartitions(lambda x : reader(x)).filter(lambda line : len(line)>1 and 'MI' not in line)",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:04:32-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639101086499_1388228976",
+      "id": "paragraph_1639101086499_1388228976",
+      "dateCreated": "2021-12-09T20:51:26-0500",
+      "dateStarted": "2021-12-09T21:04:32-0500",
+      "dateFinished": "2021-12-09T21:04:32-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:492"
+    },
+    {
+      "text": "%spark.pyspark\ndef edit(x):\n    if x[3].isupper():\n        return x\n    else:\n        x[3]=None\n        return x",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:04:35-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639101586866_1511277985",
+      "id": "paragraph_1639101586866_1511277985",
+      "dateCreated": "2021-12-09T20:59:46-0500",
+      "dateStarted": "2021-12-09T21:04:35-0500",
+      "dateFinished": "2021-12-09T21:04:35-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:493"
+    },
+    {
+      "text": "%spark.pyspark\nds = ds.map(edit)",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:04:37-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639101720859_1824397850",
+      "id": "paragraph_1639101720859_1824397850",
+      "dateCreated": "2021-12-09T21:02:00-0500",
+      "dateStarted": "2021-12-09T21:04:37-0500",
+      "dateFinished": "2021-12-09T21:04:37-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:494"
+    },
+    {
+      "text": "%spark.pyspark\nds.map(lambda x : x[3]).distinct().collect()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:09:32-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "[None, 'S', 'J', 'R', 'K', 'C', 'L', 'O', 'N', 'W', 'P', 'M', 'G', 'D', 'A', 'E', 'T', 'V', 'Y', 'Z', 'F', 'H', 'I', 'B', 'U', 'X', 'Q']\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=6",
+              "$$hashKey": "object:3544"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639102136762_1992816862",
+      "id": "paragraph_1639102136762_1992816862",
+      "dateCreated": "2021-12-09T21:08:56-0500",
+      "dateStarted": "2021-12-09T21:09:32-0500",
+      "dateFinished": "2021-12-09T21:09:35-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:495"
+    },
+    {
+      "text": "%spark.pyspark\nds.first()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T21:10:05-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "['0162', '887.000', 'LYUDMILA', None, 'SLYUSAREVA', '76.00', '10001', 'ADMINISTRATIVE ACCOUNTANT', '000', '000', 'OPEN COMPETITIVE', '', '05/26/2021', '07/28/2021', '07/28/2025', '', '', '', '', '']\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=7",
+              "$$hashKey": "object:3590"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639102199152_1651216144",
+      "id": "paragraph_1639102199152_1651216144",
+      "dateCreated": "2021-12-09T21:09:59-0500",
+      "dateStarted": "2021-12-09T21:10:05-0500",
+      "dateFinished": "2021-12-09T21:10:05-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:496"
+    },
+    {
+      "text": "%spark.pyspark\nspark.sql(\"select distinct MI from ds order by MI\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T20:29:17-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+\n|  MI|\n+----+\n|null|\n|   -|\n|   0|\n|   1|\n|   2|\n|   3|\n|   4|\n|   A|\n|   B|\n|   C|\n|   D|\n|   E|\n|   F|\n|   G|\n|   H|\n|   I|\n|   J|\n|   K|\n|   L|\n|   M|\n+----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc06.nyu.cluster:37751/jobs/job?id=6",
+              "$$hashKey": "object:3762"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639099750109_432250724",
+      "id": "paragraph_1639099750109_432250724",
+      "dateCreated": "2021-12-09T20:29:10-0500",
+      "dateStarted": "2021-12-09T20:29:17-0500",
+      "dateFinished": "2021-12-09T20:29:19-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:500"
+    },
+    {
+      "text": "%spark.pyspark\n# title description\n\n# Read All the data\n# NYC Civil Service Titles 1\nds1 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.nzjr-3966.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[1], 1]).filter(lambda line : len(line)>1 and 'Title Description' not in line)\n# Civil Service Titles Subject to Investigation 1\nds2 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.h7fs-cqma.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[1], 1]).filter(lambda line : len(line)>1 and 'TITLE DESCRIPTION' not in line)\n# Civil Service List Certification 7\nds3 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.a9md-ynri.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'List Title Desc' not in line)\n# NYC Jobs 5\nds4 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.kpav-sd4t.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[5], 1]).filter(lambda line : len(line)>1 and 'Civil Service Title' not in line)\n# Appeals Filed In 2017 7\nds5 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.7xq6-k6zy.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'Title' not in line)\n# Appeals Filed In 2016 7\nds6 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.7h99-xsqt.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'Title' not in line)\n# Appeals Filed In 2018 7\nds7 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.9vaq-mvvx.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'Title' not in line)\n# Appeals Closed In 2018 7\nds8 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.uetw-jfrg.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'Title' not in line)\n# Appeals Closed In 2016 7\nds9 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.wbtw-zkex.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'Title' not in line)\n# Civil Service List (Terminated) 7\nds10 = sc.textFile('hdfs:/user/CS-GY-6513/project_data/data-cityofnewyork-us.qu8g-sxqf.csv').mapPartitions(lambda x : reader(x)).map(lambda x: [x[7], 1]).filter(lambda line : len(line)>1 and 'List Title Desc' not in line)\n",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-11T23:57:21-0500",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639020671853_394691860",
+      "id": "paragraph_1639020671853_394691860",
+      "dateCreated": "2021-12-08T22:31:11-0500",
+      "dateStarted": "2021-12-11T23:57:21-0500",
+      "dateFinished": "2021-12-11T23:57:21-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:501"
+    },
+    {
+      "text": "%spark.pyspark\n# ds1.reduceByKey(add).count()\n# ds2.reduceByKey(add).count()\n# ds3.reduceByKey(add).count()\n# ds4.reduceByKey(add).count()\n# ds5.reduceByKey(add).count()\n# ds6.reduceByKey(add).count()\n# ds7.reduceByKey(add).count()\n# ds8.reduceByKey(add).count()\n# ds9.reduceByKey(add).count()\n# ds10.reduceByKey(add).count()",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-11T23:46:15-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "2105\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=36",
+              "$$hashKey": "object:5651"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639106152794_1710292766",
+      "id": "paragraph_1639106152794_1710292766",
+      "dateCreated": "2021-12-09T22:15:52-0500",
+      "dateStarted": "2021-12-09T22:34:00-0500",
+      "dateFinished": "2021-12-09T22:34:00-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:503"
+    },
+    {
+      "text": "%spark.pyspark\nall = ds1.union(ds2).union(ds3).union(ds4).union(ds5).union(ds6).union(ds7).union(ds8).union(ds9).union(ds10)\nall.count()",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-11T23:57:27-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "2672736\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc11.nyu.cluster:38524/jobs/job?id=12",
+              "$$hashKey": "object:5978"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639107324620_1731754566",
+      "id": "paragraph_1639107324620_1731754566",
+      "dateCreated": "2021-12-09T22:35:24-0500",
+      "dateStarted": "2021-12-11T23:57:27-0500",
+      "dateFinished": "2021-12-11T23:57:39-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:504"
+    },
+    {
+      "text": "%spark.pyspark\ntitle = all.reduceByKey(add)\ntitle.count()\n# 4140 -> 2818",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-12T00:02:46-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "2818\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc11.nyu.cluster:38524/jobs/job?id=18",
+              "$$hashKey": "object:6397"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639107419571_1164004932",
+      "id": "paragraph_1639107419571_1164004932",
+      "dateCreated": "2021-12-09T22:36:59-0500",
+      "dateStarted": "2021-12-12T00:02:46-0500",
+      "dateFinished": "2021-12-12T00:02:59-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:505"
+    },
+    {
+      "text": "%spark.pyspark\ntitle.first()",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-12T00:02:50-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc11.nyu.cluster:38524/jobs/job?id=19",
+              "$$hashKey": "object:6437"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639285182272_1514792220",
+      "id": "paragraph_1639285182272_1514792220",
+      "dateCreated": "2021-12-11T23:59:42-0500",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:6066",
+      "dateFinished": "2021-12-12T00:02:59-0500",
+      "dateStarted": "2021-12-12T00:02:50-0500",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "('DIRECTOR OF AUDITS (OFFICE OF', 1)\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\nimport numpy as np\nimport sklearn.cluster\n\ndef LevenshteinDistance(s1, s2):\n    d = [[x for x in range(len(s1)+1)] for _ in range(len(s2)+1)]\n    \n    for y in range(1,len(s2)+1):\n        d[y][0] = d[y-1][0] + 1\n\n    for x in range(1, len(s1)+1):\n        for y in range(1, len(s2)+1):\n            if s1[x-1] == s2[y-1]:\n                d[y][x] = d[y-1][x-1]\n            else:\n                substute = d[y-1][x-1] + 1\n                add = d[y][x-1] + 1\n                delete = d[y-1][x] + 1\n                d[y][x] = min(add, substute, delete)\n    return d[-1][-1]\n",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-12T00:02:52-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639188577151_713261028",
+      "id": "paragraph_1639188577151_713261028",
+      "dateCreated": "2021-12-10T21:09:37-0500",
+      "dateStarted": "2021-12-12T00:02:59-0500",
+      "dateFinished": "2021-12-12T00:02:59-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:506"
+    },
+    {
+      "text": "%spark.pyspark\n# words = np.asarray(['BOARD OF CORRECTIONS', 'BOARD OF CORRECTIOn','is','si']) #So that indexing with a list will work\ntitle = title.collect()\nlev_similarity = -1*np.array([[LevenshteinDistance(t1,t2) for t1 in title] for t2 in title])\nprint(lev_similarity)\n\naffprop = sklearn.cluster.AffinityPropagation(affinity=\"precomputed\", damping=0.5)\naffprop.fit(lev_similarity)\n# for cluster_id in np.unique(affprop.labels_):\n#     exemplar = title[affprop.cluster_centers_indices_[cluster_id]]\n#     cluster = np.unique(title[np.nonzero(affprop.labels_==cluster_id)])\n#     cluster_str = \", \".join(cluster)\n#     print(\" - *%s:* %s\" % (exemplar, cluster_str))",
+      "user": "nbuser",
+      "dateUpdated": "2021-12-12T00:02:54-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "[[ 0 -1 -2 ... -1 -1 -2]\n [-1  0 -2 ... -1 -1 -2]\n [-2 -2  0 ... -2 -2 -2]\n ...\n [-1 -1 -2 ...  0 -1 -2]\n [-1 -1 -2 ... -1  0 -2]\n [-2 -2 -2 ... -2 -2  0]]\n/share/apps/peel/python/3.7.9/gcc/lib/python3.7/site-packages/sklearn/cluster/_affinity_propagation.py:253: ConvergenceWarning: Affinity propagation did not converge, this model will not have any cluster centers.\n  ConvergenceWarning,\nAffinityPropagation(affinity='precomputed')\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc11.nyu.cluster:38524/jobs/job?id=20",
+              "$$hashKey": "object:6476"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639190354563_915073605",
+      "id": "paragraph_1639190354563_915073605",
+      "dateCreated": "2021-12-10T21:39:14-0500",
+      "dateStarted": "2021-12-12T00:02:59-0500",
+      "dateFinished": "2021-12-12T00:04:13-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:507"
+    },
+    {
+      "text": "%spark.pyspark\nres = all.countByKey()\nfor key, value in res.items():\n    print(key, value)",
+      "user": "anonymous",
+      "dateUpdated": "2021-12-09T22:50:15-0500",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "HCPPA 1\nBEAUTICIAN 1\nSPECIAL ASSISTANT TO THE BOROU 4\nASSISTANT SYSTEMS ANALYST (HHC 1\nDIRECTOR OF INTERGOVERNMENTAL 1\nFOOD SERVICE MANAGER 1\nSTUDENT LEGAL SPECIALIST 7\nDIRECTOR (PLANT OPERATIONS SER 1\nCHIEF INFORMATION TECHNOLOGY O 3\nASSISTANT TO THE PRESIDENT (BR 1\nSECRETARY TO ASSISTANT TO PRES 1\nSECRETARY TO THE EXCUTIVE ASSI 1\nRESEARCH AND LIAISON COORDINAT 3\nRESEARCH LIAISON ADN GOVERNMEN 1\nDIRECTOR BOROUGH PRESIDENT'S O 1\nFISCAL AND POLICY ANALYST (BP 2\nCHAUFFEUR-ATTENDANT (BKLYN BOR 1\nDEPUTY OPERATION SUPPORT MANAG 1\nRESEARCH AND LIAISON SPECIALIS 2\nCHAUFFEUR-ATTENDANT (BORO PRES 3\nRESEARCH PROJECTS COORDINATOR 16\nASSISTANT TO THE DEPUTY MAYOR 2\nRESEARCH PROJECTS COOR(MA)-MGR 57\nSENIOR RACKETS INVESTIGATOR (B 1\nSUPERVISING RACKETS INVESTIGAT 3\nSPECIAL ASSISTANT TO DA (QUEEN 1\nPRINCIPAL ACCOUNTANT INVESTIGA 2\nEMPLOYEE HEALTH BENEFITS PROGR 1\nDIRECTOR OF BUILDING MANAGEMEN 1\nSTATISTICAL SECRETARY (OMB) 2\nSECRETARY (OFFICE OF THE MAYOR 1\nEXECUTIVE ADMINISTRATOR OF GRA 1\nDIRECTOR, OFFICE OF OPERATIONS 1\nASST DIR OF INTERGVNMENTAL REL 1\nPROJECT PLANNER (MA) 1\nSR PROJECT PLANNER (MA) 1\nASSISTANT COMMISSIONER(ADMINIS 1\nDIR OF ADMINISTRATION, WORKER' 1\nEXECUTIVE ASSISTANT-MIDTOWN EN 1\nSECRETARY (OFFICE OF BORO PRES 1\nASST PROJECT PLANNER (OFFICE O 1\nPROJECT PLANNER (OFFICE OF BOR 1\nCONFIDENTIAL ASSISTANT TO BORO 1\nRECREATION SPECIALIST (DEPT OF 1\nBUDGET ANALYST (OMB) 82\nBUDGET ANALYST (OMB)-MANAGERIA 13\nDIRECTOR OF CRISIS ASSISTANCE 2\nASSISTANT LEGISLATIVE REPRESEN 2\nPUBLIC RELATIONS OFFICER (BORO 1\nSUPERVISOR OF NURSES (BOARD OF 2\nDIRECTOR OF NEIGHBORHOOD PARK 1\nSENIOR OCCUPATIONAL THERAPIST 2\nCASE MANAGEMENT NURSE (DOC) 2\nDIRECTOR OF AUDITS (OFFICE OF 1\nINCINERATOR FACILITY MANAGER ( 1\nINVESTIGATOR(DISCP)(ONLY FOR P 8\nDEPUTY ASSISTANT COUNSEL (OLR) 4\nSTAFF ASSISTANT (OFFICE OF THE 1\nDIRECTOR OF ADMINISTRATION (LA 1\nDEPUTY DIRECTOR OF ADMINISTRAT 5\nMAYORAL OFFICE ASSISTANT 1\nEXECUTIVE DIRECTOR OF FOOD SER 1\nMAYORAL PROGRAM COORDINATOR (M 1\nSECRETARY TO PUBLIC ADMINISTRA 1\nDEPUTY COMMISSIONER (CDCSA) 1\nSECRETARY OF COMMISSIONER (CDC 1\nDEPUTY EXECUTIVE DIRECTOR CAMP 1\nDEPUTY DIRECTOR OF ADMIN WORKE 1\nSECRETARY TO THE EXECUTIVE DIR 4\nDIRECTOR OF PUBLIC RELATIONS ( 7\nDEPUTY COMMISSIONER FOR LAW EN 1\nDEP COMMISSIONER FOR COMMUNITY 3\nSENIOR STUDENT LEGAL SPECIALIS 1\nCONFIDENTIAL INVESTIGATOR (CON 6\nSPECIAL COMMISSIONER OF INVEST 2\nASST DIRECTOR OF INTERGOVERMEN 1\nCHAUFFEUR-ATTENDANT (BOARD OF 1\nMEDICOLEGAL ANALYST (LAW DEPT) 4\nFOOD SERVICE ADMINISTRATOR (DC 1\nASSISTANT RACKETS INVESTIGATOR 1\nANALYST CFB AL 1 ONLY 1\nSYSTEMS ADMINISTRATOR-CAM FIN 3\nADMIN ASST-CAMPAIGN FIN BOARD 2\nATTORNEY-CAMPAIGN FIN BOARD 2\nANALYST CFB AL 2&3 ONLY 2\nNURSE PRACTITIONER(DEPT HEALTH 3\nSECRETARY TO THE SPECIAL COMMI 2\nSECRETARY TO THE CHAIRPERSON ( 1\nSPECIAL EXAMINER (PHYSICAL TES 1\nPLAYGROUND ASSOCIATE 1\nSPECIAL EXAMINER (DCAS) 1\nHEARING OFFICER (PVB - NOT EMP 3\nINVESTIGATOR (EMPLOYEE DISCIPL 25\nSPECIAL ASSISTANT (OFFICE OF T 1\nSpecial Assistant (MA)-MGRL 1\nSECRETARY TO THE DEPUTY COMMIS 7\nDEPUTY COMMISSIONER (DDC) 2\nDEPUTY COMMISSIONER FOR POLICY 1\nASSISTANT BUDGET ANALYST (COMP 1\nBUDGET ANALYST (COMPTROLLER) 1\nASSISTANT BUDGET ANALYST (IBO) 1\nBUDGET ANALYST (IBO) 1\nBUDGET ANALYST (IBO) ((MANAGER 1\nSECRETARY TO THE FIRST ASSISTA 1\nDEPUTY CHIEF RACKETS INVESTIGA 2\nSECRETARY TO THE FIRST DEPUTY 4\nSCHOOL BUSINESS MANAGER 2\nNYCAPS PROCESS ANALYST 2\nMARINE ELECTRONICS TECHNICIAN 3\nFIRST DEPUTY COMMISSIONER (OEM 1\nDEPUTY COMMISSIONER (OEM) 1\nEMERGENCY PREPAREDNESS MANAGER 1\nEMERGENCY PREPAREDNESS SPECIAL 55\nSECRETARY TO THE CHIEF ACTUARY 1\nFAMILY PUB HEALTH NURSE (HMH) 3\nASSOCIATE EXECUTIVE DIRECTOR ( 2\nEXECUTIVE DIRECTOR OF MATERIAL 1\nEXECUTIVE ASST-DOMESTIC VIOLEN 1\nSECRETARY TO THE DEPUTY CHAIR 1\nCONFIDENTIAL AGENCY INVESTIGAT 3\nINVESTMENT TRUSTEE - DEFERRED 1\nIT PROJECT SPECIALIST 36\nPUBLIC HEALTH/PREVENTIVE MEDIC 3\nEXECUTIVE DIRECTOR (FDNY PENSI 2\nDEPUTY EXECUTIVE DIRECTOR (FDN 2\nEXECUTIVE PROGRAM SPECIALIST ( 30\nDEPUTY DIRECTOR OF MEDICOLEGAL 2\nCHIEF OF STAFF - MAYOR'S OFFIC 1\nDIRECTOR OF IMMIGRANT AFFAIRS 1\nDIRECTOR OF OFFICE FOR PEOPLE 1\nCOMMISSIONER OF DEPARTMENT OF 1\nCOMMISS OF THE OFF TO END DOME 1\nCHIEF SERVICE OFFICER (MA) 1\nSENIOR POLICY ADVISOR TO THE M 1\nDIRECTOR OF CRIMINAL JUSTICE ( 1\nEXECUTIVE DIRECTOR ON COMMISSI 1\nSENIOR ADVISOR TO THE MAYOR (M 1\nDECEDENT PROPERTY AGENT (PANYC 1\nASSISTANT COMMISSIONER (CULTUR 2\nASSISTANT COMMISSIONER (DOITT) 1\nExecutive Program Specialist ( 3\nDeputy Commissioner (CEC) 1\nSTRATEGIC INITIATIVE SPECIALIS 24\nAssociate Commissioner (DOITT) 1\nDEPUTY EXECUTIVE DIRECTOR (BOA 4\nDIRECTOR OF CORRECTIONAL STAND 8\nSERVICE INSPECTOR (PROJECT SCO 2\nSENIOR SERVICE INSPECTOR (PROJ 1\nCOMMUNITY SERVICE AIDE (SCSP) 1\nRESEARCH & LIAISON COORDINATOR 1\nASSISTANT TO THE PRESIDENT (BK 1\nEXECUTIVE ASSISTANT TO THE COM 12\nEXECUTIVE COOK (MAYOR) 1\nADMINISTRATIVE ACCOUNTANT 271\nADMINISTRATIVE GRAPHIC ARTIST 11\nADMINISTRATIVE ARCHITECT 853\nADMINISTRATIVE ASSESSOR 2\n*ADMINISTRATIVE ATTORNEY 1\nADMINISTRATIVE BOROUGH SUPERIN 1\nADMINISTRATIVE BUSINESS PROMOT 10\nADMIN ARCHITECT (NON MGRL) M-1 1\nADMINISTRATIVE ACCOUNTANT (NON 3\nADMINISTRATIVE MANAGEMENT AUDI 8\nADMINISTRATIVE CONSULTANT (EAR 1\nADMINISTRATIVE ENGINEER 35991\nADMINISTRATIVE DIRECTOR OF RES 3\nADMINISTRATIVE HOUSING MANAGER 4\nADMINISTRATIVE HOUSING SUPERIN 11\nADM ENGINEER (NON MGRL) 16\nADMINISTRATIVE INVESTIGATOR 407\nADMINISTRATIVE COMMUNITY RELAT 3\nADMINISTRATIVE LANDSCAPE ARCHI 1\nADMINISTRATIVE FIRE PROTECTION 2\nADMINISTRATIVE MANAGER 14854\nADMINISTRATIVE STAFF ANALYST ( 63\nADMINISTRATIVE NUTRITIONIST 4\nADMINISTRATIVE PROBATION OFFIC 1\nADM MANAGER-NON-MGRL FRM M1/M2 25\nADMIN COMMUNITY RELATIONS SPEC 7\nADM LANDSCAPE ARCHITECT (NM) 1\nADMINISTRATIVE INVESTIGATOR (N 1\nADMINISTRATIVE EDUCATION ANALY 2\nADMINISTRATIVE PUBLIC HEALTH N 2\nADMINISTRATIVE PUBLIC INFORMAT 3\nADMINISTRATIVE LANDMARKS PRESE 1\nADMINISTRATIVE SUPERVISOR OF B 1\nADMINISTRATIVE SPACE ANALYST 20\nADMINISTRATIVE STOREKEEPER 16\nADMINISTRATIVE SUPERINTENDENT 2\nADM LNDMRK PRESERVATIONIST NM 1\nADMINISTRATIVE SPACE ANALYST ( 1\nADMINISTRATIVE PUBLIC RECORDS 3\nADMINISTRATIVE TRAFFIC ENFORCE 1\nADMINISTRATIVE CLAIM EXAMINER 41\nADMINISTRATIVE SUPERVISOR OF S 1\nADMINISTRATIVE REAL PROPERTY M 2\nADMINISTRATIVE TAX AUDITOR 29\nADM TRAFFIC ENFRCMNT AGENT-DIR 1\nADMIN TRAFFIC ENFRCMNT AGENT ( 1\nADMINISTRATIVE TAX AUDITOR (NO 2\nCOMPUTER SYSTEMS MANAGER 103224\nADMINISTRATIVE CITY PLANNER 1821\nADMINISTRATIVE BLASTING INSPEC 1\nADMINISTRATIVE DIRECTOR OF LAB 1\nADMINISTRATIVE DIRECTOR OF SOC 5\nADM CITY PLANNER (NON MGRL) 2\nADMIN DIR OF LABORATORY (WATER 1\nADMINISTRATIVE TRANSPORTATION 1\nADMINISTRATIVE EDUCATION OFFIC 1\nADMINISTRATIVE TESTS & MEASURE 1\nADMINISTRATIVE SCHOOL FOOD SER 1\nHEALTH SERVICES MANAGER 5114\nADMIN TESTS & MEAS SPEC (MGRL) 1\nADMINISTRATIVE EDUCATION OFFI 1\nHEALTH SERVICES MANAGER NON MA 4\nADMINISTRATIVE HORTICULTURIST 49\nADMINISTRATIVE PARKS & RECREAT 1\nADMINISTRATIVE INSPECTOR (BUIL 1\nCOMPUTER OPERATIONS MANAGER (S 1\nSUPERVISOR OF ELEVATOR MAINTEN 1\nADMINISTRATIVE INSPECTOR (ELEC 1\nADMINISTRATIVE INSPECTOR (HOUS 3\nADMINISTRATIIVE TAXI & LIMOUSI 1\nADM INSPECTOR (BUILDINGS) NM 1\nADMIN INSPECTOR (ELECTRICAL)NM 1\nADMINISTRATIVE PARKS & RECREA 1\nCOMPUTER OPERATIONS MANAGER 4197\nADMINISTRATIVE QUALITY ASSURAN 4\nSUPERINTENDENT OF WATER AND SE 1\n*ADMINISTRATIVE SCHOOLSECURITY 1\nADMINISTRATIVE  PROGRAM OFFICE 15\nDIRECTOR OF TECHNICAL SERVICES 5\n*ADMINSTRATIVE SCHOOL SECURITY 1\nADMIN CONTRACT SPECIALIST (PYR 8\nADMINISTRATIVE PRINTING SERVIC 1\nADMINISTRATIVE CONTRACT SPECIA 6\nCONFIDENTIAL ASST OFFICE 1\nSTUDENT AIDE 1\nCOLLEGE ASSISTANT (NO LEAVE AC 1\nEXECUTIVE ASSISTANT 2\nELIGIBILITY SPECIALIST 45634\nOFFICE ASSISTANT 2\nCOOPERATIVE EDUCATIONAL TRAINE 1\nLEGISLATIVE CLERICAL ASSISTANT 1\nCHIEF OFFICE ASSISTANT 2\nCOOPERATIVE EDUCATION TRAINEE 4\nPRINCIPAL ADMINISTRATIVE ASSOC 57\nADMINISTRATIVE CHIEF 2\nDIRECTOR,CITYWIDE OCCUPATIONAL 1\nCHIEF CLERK 1\nDEPUTY PUBLIC ADMINISTATOR 1\nPRECINCT RECEPTIONIST (PER HOU 1\nDECEDENT PROPERTY AGENT 1\nPOLICE ADMINISTRATIVE AIDE 8805\nADMINISTRATIVE ASSISTANT TO TH 2\nSENIOR POLICE ADMINISTRATIVE A 5\nDirector of Admin (DSS only) 1\nDEPUTY EXECUTIVE DIRECTOR (HA) 3\nDEPUTY DIRECTOR OF COUNCIL SER 1\nDIRECTOR OF COUNCIL SERVICES B 1\nEXECUTIVE DIRECTOR OF STANDARD 1\nEXECUTIVE DIRECTOR 1\nASSISTANT EXECUTIVE DIRECTOR ( 3\nEXECUTIVE DIRECTOR (TEACHERS R 1\nEXECUTIVE DIRECTOR (PERSONNEL) 1\nEXECUTIVE DIRECTOR (BOE RETIRE 1\nEXECUTIVE DIRECTOR (LABOR RELA 1\nDEPUTY EXECUTIVE DIRECTOR (TEA 1\nEXECUTIVE DIRECTOR (NYC EMPLOY 1\nDEPUTY EXECUTIVE DIRECTOR (NYC 2\nEXECUTIVE DIRECTOR (CITY PLANN 1\nDEPUTY ASSISTANT DIRECTOR (CIV 1\nEXECUTIVE DIRECTOR (CIVILIAN C 1\nDEPUTY EXECUTIVE DIRECTOR (CIT 1\nDEPUTY ASSISTANT DIRECTOR (NON 1\nDISTRICT MANAGER OF ADMINISTRA 1\nCOOPERATIVE EDUCATION TRAINEE- 4\nPRIVATE SECRETARY 1\nSECRETARY TO DISTRICT ATTORNEY 1\nCONFIDENTIAL SECRETARY 2\nNEW YORK CITY URBAN FELLOW 1\nCOLLEGE AIDE (ALL CITY DEPTS) 62\nCOLLEGE AIDE - ASSIGNMENT LEVE 8\nREPORTER/STENOGRAPHER 6\nDEPUTY EXECUTIVE DIRECTOR (CIV 1\nSECRETARY 5684\nSTENOGRAPHIC SPECIALIST 7\nLEGISLATIVE STENOGRAPHER (CITY 1\nLEGISLATIVE FINANCIAL STENOGRA 1\nSENIOR SECRETARY 2\nCHIEF LAW STENOGRAPHER (DA) 1\nSUPERVISING LEGISLATIVE STENOG 1\nConfidential Stenographer (FD) 1\nSTENOGRAPHER TO EACH DEPUTY CO 1\nLEGAL SECRETARIAL ASST- L1 1\nLEGAL SECRETARIAL ASST- L2,3,4 5\nSTENOGRAPHER TO THE CORPORATIO 1\nSUMMER GRADUATE INTERN 1\nSUMMER COLLEGE INTERN 3\n*ASSISTANT COORDINATINGMANAGER 1\nHIGH SCHOOL STUDENT AIDE 1\nCONFIDENTIAL SECRETARY (SPECIA 1\nSTENOGRAPHER TO COUNCIL (CITY 1\nEDUCATIONAL MANAGEMENT ASSOCIA 1\nNEW YORK CITY PUBLIC SERVICE 1\nNEW YORK CITY FELLOW (DCAS) 4\nADMINISTRATIVE JOB OPPORTUNITY 15\nCLERICAL AIDE 10691\nCLERICAL ASSOCIATE 68925\nCALL CENTER REPRESENTATIVE 7731\nASSOCIATE CALL CENTER REPRESEN 2\nLEGISLATIVE TYPIST 1\nCASHIER 1072\nOFFICE MACHINE AIDE 413\nSUPERVISOR OF OFFICE MACHINE O 2\nASSISTANT PURCHASING AGENT 1\nPURCHASING AGENT 3\nPROCUREMENT ANALYST 7471\n*PROCUREMENT ANALYST LEVEL III 1\nSENIOR SALVAGE APPRAISER 1\nSTOCK WORKER 10584\nSUPERVISOR OF STOCK WORKERS 967\nHOUSING STOCK WORKER 1618\nSUPERVISOR OF HOUSING STOCK WO 3\nLEGISLATIVE ANALYST AIDE (CITY 1\nLEGISLATIVE ANALYST 1\nSTAFF ANALYST 27146\nASSOCIATE STAFF ANALYST 32214\nEDUCATION ANALYST 868\nASSOCIATE EDUCATION ANALYST 1022\nEDUCATION ANALYST (UNION) 1\nASSOCIATE EDUCATION ANALYST (U 1\nSTAFF ANALYST (DOE - OJ) 2\nASSOCIATE STAFF ANALYST DOE OJ 1\nSPECIAL ASSISTANT TO THE DISTR 1\nEDUCATION OFFICER 2019\nSR MANAGEMENT CONSULTANT (ACCO 1\nSenior Management Consultant 1\nEDUCATION OFFICER (UNION) 2\n*ASSOCIATE EDUCATION OFFICER ( 1\nSENIOR MANAGEMENT CONSULTANT ( 2\n*ASSISTANT SYSTEMS ANALYST (FI 1\n*SYSTEMS ANALYST 1\n*SENIOR SYSTEMS ANALYST 1\n*SUPERVISING SYSTEMS ANALYST 1\n*SR SYSTEMS ANALYST - EDP(HMH) 1\n*SR MANAGEMENT CONSULTANT HMH 1\nDIRECTOR EMPLOYEE MANAGEMENT D 1\nDIRECTOR OF TRAINING (POLICE D 1\nMONITOR 1\nTESTS AND MEASUREMENT SPECIAL 5\nPENSION INVESTMENT ADVISOR 1\nSTAFF ANALYST TRAINEE 19951\nEDUCATION ANALYST TRAINEE 1\nPSYCHOMETRICIAN 1\nLABOR RELATIONS ANALYST TRAINE 3\nSECRETARY TO COMMISSIONER (YOU 1\nSECRETARY TO CONFLICTS OF INTE 1\nCONFIDENTIAL SECRETARY OF ADMI 1\nEXECUTIVE SECRETARY TO VICE CH 1\nCONFIDENTIAL SECRETARY (KINGS 1\nASSISTANT EXECUTIVE SECRETARY 1\nSPECIAL ADVISOR TO THE CITY CL 1\nEXECUTIVE ASSISTANT TO THE CIT 1\nASSISTANT ADMINISTRATOR (OFFIC 1\nEXECUTIVE ASSISTANT TO THE DIR 5\nCONFIDENTIAL SECRETARY TO THE 1\nEXECUTIVE SECRETARY 1\nEXEC SEC TO ADVISORY BD FOR LO 1\nSECRETARY (NYC COMMISSION TO T 1\nLAW SECRETARY 1\nSECRETARY TO COMMUNITY SCHOOL 1\nSECY TO THE DIRECTOR OF COLLEC 1\nSECRETARY TO THE DIRECTOR OF F 1\nEXECUTIVE SECRETARY TO THE DIR 1\nSECRETARY TO COMMISSIONER OF B 1\nSecretary to the Deputy Mayor 1\nSECRETARY OF THE AUTHORITY 1\nSECRETARY OF THE BOARD 1\nSECRETARY OF THE BOARD OF EDUC 1\nSECRETARY OF THE DEPARTMENT (H 1\nSECRETARY OF THE COMMISSION 1\nSECRETARY TO THE DEPARTMENT (F 1\nSECRETARY (MANAGERIAL) 1\nSECRETARY OF THE TAX COMMISSIO 1\nSECRETARY OF COMM(7 AGENCIES) 2\nSECRETARY TO DEPARTMENT 1\nSECRETARY TO ONE DEPUTY COMMIS 1\nSECRETARY TO THE CHAIRMAN (TAX 1\nSECRETARY TO THE CHAIRMAN 1\nSECRETARY TO THE COMMISSIONER 5\nSECRETARY TO THE CORPORATION C 1\nSECRETARY TO THE DEPARTMENT 1\nSECRETARY TO THE PRESIDENT 1\nSECRETARY TO THE DEPUTY BORO P 1\nSECRETARY TO VICE CHAIRMAN 1\nSECRETARY TO THE DIRECTOR OF M 1\nASSISTANT SECRETARY TO THE COM 2\nSECRETARY TO MINORITY LEADER 1\nSECRETARY TO THE BOARD OF CORR 2\nSECRETARY TO THE FIRE COMMISSI 1\nSECRETARY TO PRESIDENT OF THE 1\nSECRETARY TO THE COMPTROLLER 1\nASSISTANT DEPUTY COMMISSIONER 2\nFIRST DEPUTY CITY ADMINISTRATO 1\nSECRETARY TO THE PUBLIC ADMINI 1\nASSISTANT COMMISSIONER (DEPT O 1\nASSISTANT COMMISSIONER (PROGRA 1\nASSISTANT COMMISSIONER (BUDGET 1\nDEPUTY CITY CLERK 1\nASSISTANT COMMISSIONER (EQUAL 2\nDEPUTY COMMISSIONER 3\nSPECIAL DEPUTY COMMISSIONER (D 1\nDEPUTY COMMISSIONER (YOUTH SER 1\nDEPUTY MAYOR 1\nDIRECTOR OF FRANCHISES 1\nFIRST DEPUTY MAYOR 1\nFIRST DEPUTY COMMISSIONER 1\nFIRST DEPUTY COMMISSIONER GENE 1\nSECRETARY TO COUNSEL (HA) 1\nEXECUTIVE SECRETARY (EEPC) 1\nSECRETARY TO DEPUTY EXECUTIVE 1\nDEPUTY BOROUGH PRESIDENT 3\nSECRETARY TO MEMBER (HA) 1\nSECRETARY TO EXECUTIVE DIRECTO 1\nCHAIRMAN, FINANCE COMMITTEE 1\nCHAIRMAN COMMISSION ON HUMAN R 1\nFIRST DEPUTY CITY CLERK 1\nCITY CLERK & CLERK OF COUNCIL 1\nVICE CHAIRMAN MAJORITY LEADER 1\nMEMBER OF THE HOUSING AUTHORIT 1\nCOMMISSIONER 1\nCHAIRMAN 1\nPRESIDENT 1\nBOROUGH PRESIDENT 2\nMAYOR 1\nCOMMISSIONER DESIGNATED AS VIC 1\nCOMMISSIONER (NOT FULL-TIME) 1\nCOMMISSIONER OF EMERGENCY MANA 1\nFIRST DEPUTY COMMISSIONER (FD) 1\nFIRST DEPUTY COMMISSIONER (BUI 1\nFIRST DEPUTY COMMISSIONER (DOC 1\nDIRECTOR OF PERSONNEL (HA) 1\nASSISTANT TRANSIT MANAGEMENT A 1\nASSISTANT TO THE COMMISSIONER 5\nASSISTANT TO CITY ADMINISTRATO 1\nASSISTANT TO THE CHAIRMAN 1\nASSISTANT TO THE COMPTROLLER 1\nASSISTANT TO THE MAYOR 1\nASSISTANT TO THE PRESIDENT 1\nASSISTANT TO DEPUTY COMPTROLLE 1\nASSISTANT TO POLICE COMMISSION 1\nEXECUTIVE ASSISTANT TO THE CHI 1\nASSISTANT TO THE PRESIDENT (PM 1\nCONFIDENTIAL ASSISTANT TO BOAR 1\nEXECUTIVE ASSISTANT TO THE PRE 1\nCONFIDENTIAL EXAMINER 1\nSPECIAL ASSISTANT (TAX COMMISS 1\nSPECIAL ASSISTANT TO THE PRESI 1\nCONFIDENTIAL ASSISTANT TO THE 2\nSPECIAL ASSISTANT (RESEARCH AN 1\nSPECIAL ASSISTANT IN THE OFFIC 1\nASST TO THE CHAIRMAN (COMM HUM 1\nLIAISON OFFICER TO THE MAYOR 1\nEXECUTIVE ASSISTANT TO COMMUNI 1\nCALENDAR ASSISTANT 1\nEXECUTIVE ASSISTANT FOR PLANNI 1\nEXECUTIVE ASSISTANT TO THE MAY 1\nSPECIAL ASSISTANT TO THE MAYOR 1\nSPECIAL ASSISTANT TO COMMISSIO 3\nExec Asst to the Chairman 1\nEXECUTIVE ASST TO THE NYC COMM 1\nExecutive Assistant to the Ope 1\nDIRECTOR OF MANAGEMENT PLANNIN 2\nEXECUTIVE ASSISTANT FOR INTERG 1\nEXECUTIVE ASSISTANT FOR PROGRA 1\nEXEC ASST TO THE DIR (MAYOR'S 1\nSPECIAL ASSISTANT (BOE) 1\nSPECIAL ASSISTANT TO MEMBER OF 1\nEXECUTIVE ASSISTANT (TAXI & LI 1\nEXECUTIVE ASSISTANT TO THE CHA 1\nEXECUTIVE ASSISTANT TO THE FIR 1\nSPECIAL ASSISTANT TO THE CHANC 1\nLABOR RELATIONS TRIAL EXAMINER 1\nDEPUTY DIRECTOR (OFFICE OF COL 1\nEXECUTIVE ASSISTANT (BUILDINGS 1\nHEARING EXAMINER (HA) 1\nDIRECTOR OF LABOR MANAGEMENT R 1\nCOMMISSIONER, UN & CONSULAR CO 1\nDIRECTOR OF COMMUNITY ASSISTAN 1\nMEDIATOR (OLR) 1\nCHIEF MEDIATOR (OLR) 1\nASSISTANT COMMISSIONER OF LABO 1\nDEPUTY COMMISSIONER OF LABOR R 1\nCOMMISSIONER OF LABOR RELATION 1\nLABOR RELATIONS ANALYST 1625\nASSOCIATE LABOR RELATIONS ANAL 5\nDIRECTOR MANAGEMENT INFORMATIO 1\nDIRECTOR OF TECHNOLOGY DEVELOP 1\nCOMPUTER ASSOC (TECH SUPP) 8\nSCHOOL COMPUTER TECHNOLOGY SPE 3\nCOMPUTER SERVICE TECHNICIAN (C 4\nSUPERVISING COMPUTER SERVICE T 3\nCOMPUTER AIDE 1844\nCOMPUTER ASSOC (OPERATIONS) 16\nCOMPUTER SPECIALIST (OPERATION 5\nCOMPUTER ASSOC (SOFTWARE) 28\nCOMPUTER SPECIALIST (SOFTWARE) 68716\nCYBER SECURITY ANALYST 16\nCERT IT DEVELOPER (APP) 25\nCERT IT ADMINISTRATOR (DB) 6\nCOMPUTER PROG ANALYST TRAINEE 1\nCOMPUTER PROGRAMMER ANALYST 10460\nCERTIFIED IT ADMINISTRATOR (LA 25\n*CERTIFIED LOCAL AREA NETWORKA 4\n*CERTIFIED WIDE AREA NETWORKAD 4\n*CERTIFIED APPLICATIONSDEVELOP 4\n*CERTIFIED DATABASE ADMINISTRA 4\nENGINEERING WORK STUDY TRAINEE 1\nCooperative EducationTrainee E 1\nENGINEERING TECHNICIAN 393\nESTIMATOR (ELECTRICAL) 2\nESTIMATOR (GENERAL CONSTRUCTIO 4\nESTIMATOR (MECHANICAL) 2\n*SENIOR ESTIMATOR (ELECTRICAL) 1\n*SENIOR ESTIMATOR (GENERAL CON 5\n*SENIOR ESTIMATOR (MECHANICAL) 1\nAUTOMOTIVE SPECIALIST 1\nSENIOR AUTOMOTIVE SPECIALIST 1\nCIVIL ENGINEERING INTERN 1096\nASSISTANT CIVIL ENGINEER 7060\nLEGISLATIVE ENGINEER 1\nCIVIL ENGINEER 4989\nASSISTANT DIRECTOR OF TECHNICA 1\nPUBLIC HEALTH ENGINEERING CONS 1\nTELECOMMUNICATIONS ASSOCIATE ( 11\nOPERATIONS COMMUNICATION SPECI 2\nASSOCIATE OPERATIONS COMMUNICA 2\nELECTRICAL ENGINEERING INTERN 38\nASSISTANT ELECTRICAL ENGINEER 266\nELECTRICAL ENGINEER 531\nMECHANICAL ENGINEERING INTERN 285\nASSISTANT MECHANICAL ENGINEER 218\nMECHANICAL ENGINEER 1689\nCHEMICAL ENGINEERING INTERN 34\nASSISTANT CHEMICAL ENGINEER (C 1\nCHEMICAL ENGINEER 16\nENVIRONMENTAL ENGINEERING INTE 1\nASSISTANT ENVIRONMENTAL ENGINE 5\nENVIRONMENTAL ENGINEER 142\nCONSULTING ENGINEER 1\nTAX MAP CARTOGRAPHER 6\nSURVEYOR 4\nDEPT ENGINR (WATER SUPPLY)-DEP 1\nDEPUTY DIRECTOR OF DESIGN 1\nDEPUTY DIRECTOR OF CONSTRUCTIO 1\nDIRECTOR OF DEVELOPMENT (HA) 1\nDIRECTOR OF DESIGN 1\nDIRECTOR OF CONSTRUCTION 1\nCHIEF ENGINEER (DEP) 1\nDEPUTY CHIEF ENGINEER (DEP) 1\nARCHITECTURAL INTERN 28\nASSISTANT ARCHITECT 2283\nARCHITECT 143\nLANDSCAPE ARCHITECT INTERN 1\nASSISTANT LANDSCAPE ARCHITECT 199\nLANDSCAPE ARCHITECT 100\nLABORATORY ASSOCIATE 300\nLABORATORY MICROBIOLOGIST 9\nASSOCIATE LABORATORY MICROBIOL 6\nSCIENTIST (RADIATION CONTROL) 3\nSCIENTIST (WATER ECOLOGY) TRAI 1\nSCIENTIST (WATER ECOLOGY) 5\nBIO-MEDICAL EQUIPMENT TECHNICI 1\nCITY RESEARCH SCIENTIST 106\nASSOCIATE CHEMIST 177\nCRIMINALIST 8\nCRIMINALIST DIRECTOR OF LABORA 1\nCRIMINALIST DEPUTY DIRECTOR OF 1\nCRIMINALIST ASSISTANT DIRECTOR 4\nGEOLOGIST 90\nPHYSICIST 4\nCHIEF CONSULTANT (RADIATION CO 1\nASSISTANT URBAN DESIGNER 12\nHOUSING CONSULTANT 1\nCOMMUNITY PLANNING BOARD COORD 1\nASSOCIATE DIRECTOR, BOROUGH IM 1\nDIRECTOR BOROUGH IMPROVEMENT B 1\nCITY PLANNING TECHNICIAN 1465\nCITY PLANNER 11199\nASSOCIATE URBAN DESIGNER 29\nPRINCIPAL PLANNING CONSULTANT 5\nDIRECTOR, OFFICE OF DEVELOPMEN 1\nDEPUTY DIRECTOR-MIDTOWN ACTION 1\nASST TO THE DIRECTOR OF NEIGHB 1\nAREA DIRECTOR OF NEIGHBORHOOD 1\nASSISTANT TRANSPORTATION SPECI 1\nTRANSPORTATION SPECIALIST 13\nMULTIPLE DWELLING SPECIALIST ( 3\nPRINCIPAL MULTIPLE DWELLING SP 1\nASSISTANT PLAN EXAMINER (BLDGS 1\nPLAN EXAMINER (BLDGS) 1\nPROJECT MANAGER INTERN# 7\nPROJECT MANAGER 1757\nASSOCIATE PROJECT MANAGER 6570\nPROJECT MANAGER (DBS) 1\nHOUSING DEVELOPMENT SPECIALIST 1924\nASSOCIATE HOUSING DEVELOPMENT 35\nDEPUTY COUNSEL TO THE MAYOR 1\nCOUNSEL TO THE MAYOR 1\nPARALEGAL AIDE 6811\nLEGAL COORDINATOR 5\nASSISTANT ADVOCATE-PD 3\nASSISTANT COUNSEL-PD 1\n*ATTORNEY AT LAW 4\nAGENCY ATTORNEY INTERNE 19\nAGENCY ATTORNEY 129\nDEPUTY COUNSEL (HA) 1\n*ASSISTANT ADVOCATE-PD 3\n*AGENCY ATTORNEY 4\nCOUNSEL (BOARD OF CORRECTION) 1\nASSOCIATE COUNSEL (OLR) 1\nASSISTANT COUNSEL (OLR) 1\nCOUNSEL (OLR) 1\nSTUDENT LEGAL ASSISTANT 1\nDEPUTY GENERAL COUNSEL (OMB) 1\nGENERAL COUNSEL (OMB) 1\nHEARING DIRECTOR (COMM OF HUMA 1\nASSISTANT CORPORATION COUNSEL 10\nASSISTANT DISTRICT ATTORNEY (S 13\nEXAMINING ATTORNEY 3\nEXAMINING ATTORNEY (MANAGERIAL 1\nCOUNSEL TO THE SHERIFF 1\nCOUNSEL TO THE BOROUGH PRESIDE 1\nEXAMINING ATTORNEY (OFFICE FOR 1\nCOUNSEL (DEPARTMENT OF CONSUME 1\nCOUNSEL TO THE BOARD OF EDUCAT 1\nCOUNSEL (CITY PLANNING) 1\nCOUNSEL TO VICE CHAIRMAN 1\nCOUNSEL (DEPARTMENT OF CORRECT 1\nCOUNSEL 1\nCOUNSEL TO THE CHANCELLOR 1\nFIRST ASSISTANT CORPORATION CO 1\nDIRECTOR OF LEGAL AFFAIRS 1\nCOUNSEL (DEPT OF PROBATION) 1\nCOUNSEL (COMMISSION ON HUMAN R 1\nCOUNSEL (CONFLICTS OF INTEREST 1\nSPECIAL ASSISTANT CORPORATION 1\nLEGAL ANALYST 1\nCOUNSEL (FIRE DEPARTMENT) 1\nCOUNSEL TO THE BOARD OF ESTIMA 1\nCONSUMER ADVOCATE 1\nLEGISLATIVE ATTORNEY 1\nASSISTANT DIRECTOR OF LEGAL SE 1\nASSISTANT COUNSEL TO THE VICE 1\nCOUNSEL TO MINORITY LEADER 1\nASSISTANT SERGEANT AT ARMS 1\nDIRECTOR OF DEPARTMENT ADVOCAT 1\nLEGISLATIVE REPRESENTATIVE 1\nSERGEANT AT ARMS 1\nCOUNCIL MEMBER 1\nMINORITY LEADER 1\nCOUNSEL (BOARD OF STANDARDS AN 1\nDOCUMENT CLERK (CITY COUNCIL) 1\nADMINISTRATIVE LAW JUDGE 2\nLEGISLATIVE ASSISTANT 1\nLEGISLATIVE CLERK 1\nCORPORATION COUNSEL 1\nCHIEF ADMINISTRATIVE LAW JUDGE 1\nCOUNSEL TO THE POLICE COMMISSI 1\nJUNIOR ASSISTANT DA 1\nDIRECTOR OF ALT SENTENCE 1\nDIRECTOR OF CRIMINAL JUSTICE 2\nDIRECTOR OF INVEST ACCOUNTING 1\nDIRECTOR OF ELDER ABUSE PROG 1\nDIRECTOR OF FEDERAL AND STATE 1\nDIRECTOR OF CYBER CRIMES FOREN 1\nDIRECTOR OF CRIME STRATEGIES 1\nDEPUTY CITY SHERIFF 12863\nSUPERVISING DEPUTY SHERIFF 2\nMORTGAGE TAX EXAMINER 2\nCLAIM SPECIALIST 2760\nTITLE EXAMINER 1\nSENIOR TITLE EXAMINER 1\nPRINCIPAL TITLE EXAMINER 8\nCHIEF INVESTIGATOR (RICHMOND C 1\nCOUNTY DETECTIVE 2\nDETECTIVE INVESTIGATOR 3\nSENIOR DETECTIVE INVESTIGATOR 4\nASSISTANT CHIEF DETECTIVE INVE 2\nRACKETS INVESTIGATOR 1\nSENIOR RACKETS INVESTIGATOR 1\nASSISTANT CHIEF RACKET INVESTI 1\nCHIEF RACKETS INVESTIGATOR 2\nCHIEF RACKETS  INVESTIGATOR (Q 1\nASSISTANT CHIEF INVESTIGATING 1\nCHIEF INVESTIGATING ACCOUNTANT 1\nSENIOR ACCOUNTANT INVESTIGATOR 1\nSUPERVISING ACCOUNTANT INVESTI 1\nINTERPRETER (SPANISH) 38\nINTERPRETER (CHINESE) 1\nINTERPRETER (HOURLY) (DOE) 1\nSIGN LANGUAGE INTERPRETER (DOE 10\nINTERPRETER/TRANSLATOR (DOE) 1\nINTERPRETER/TRANSLATOR 1\nINVESTIGATOR TRAINEE (PYRL NOT 2\nINVESTIGATOR 8934\nFRAUD INVESTIGATOR 10854\nASSOCIATE FRAUD INVESTIGATOR ( 4\nASSOCIATE INVESTIGATOR (NOT PR 7\nSPECIAL INVESTIGATOR (COMPUTER 1\nSPECIAL INVESTIGATOR 4\nCONFIDENTIAL INVESTIGATOR (OFF 1\nDIRECTOR OF CORRUPTION ANALYSI 1\nCONFIDENTIAL INVESTIGATOR 27\nDEPUTY INSPECTOR GENERAL 5\nINSPECTOR GENERAL 2\nSPECIAL ASST FOR INVESTIGATION 1\nSUPERVISING INSPECTOR GENERAL 1\nCONFIDENTIAL INVESTIGATOR (BOE 1\nCONFIDENTIAL OPERATIONS SPECIA 1\nINVESTIGATOR (DISCIPLINE) (DOC 11\nINVESTIGATOR (CCRB) 9\nSUPERVISOR OF INVESTIGATORS (C 2\nINTELLIGENCE RESEARCH SPECIALI 6\nINVESTIGATOR (EMPLOYEE COMPLIA 3\nINVESTIGATOR (DISCIPLINE) ACS 3\nCRIME ANALYST 366\nPUBLIC HEALTH SANITARIAN 760\nASSOCIATE PUBLIC HEALTH SANITA 6\nINDUSTRIAL HYGIENIST 41\nSAFETY SPECIALIST 1\nLEAD ABATEMENT WORKER 56\nASBESTOS HAZARD INVESTIGATOR 19\nASBESTOS HANDLER 1\nASBESTOS HANDLER SUPERVISOR 1\nAIR POLLUTION INSPECTOR 278\nAssociate Air Pollution Inspr 3\nDIRECTOR OF SCHOOL SAFETY 1\nINSPECTOR (BOILERS) 4\nINSPECTOR (CONSTRUCTION) 25\nINSPECTOR (ELECTRICAL FOR PAYR 2\nINSPECTOR (ELEVATORS) 3\nHIGHWAYS AND SEWERS INSPECTOR 27\nINSPECTOR (HOISTS AND RIGGING) 4\nINSPECTOR (PLUMBING) 84\nASSOCIATE INSPECTOR (BOILERS) 8\nASSOCIATE INSPECTOR (ELECTRICA 6\nASSOCIATE INSPECTOR (ELEVATORS 2\nASSOCIATE INSPECTOR (HIGHWAYS 2\nASSOCIATE INSPECTOR (HOISTS / 2\nASSOCIATE INSPECTOR (PLUMBING) 8\nINSPECTOR (MULTI-DISCIPLINE) 3\nFIRE PROTECTION INSPECTOR 2808\nASSOCIATE FIRE PROTECTION INSP 6\nINSPECTOR (HOUSING) 434\nASSOCIATE INSPECTOR (HOUSING) 183\nASSOCIATE INSPECTOR (LOW PRESS 1\nREHABILITATION SPECIALIST (HPD 1\nASSOCIATE REHABILITATION SPECI 1\nINSPECTOR (HOUSING CONSTRUCTIO 1\nASSOC INSPECTOR (HOUSING CONST 2\nTRAFFIC CONTROL INSPECTOR 44\nSUPERVISING BLASTING INSPECTOR 7\nDEMOLITION INSPECTOR 2\nSUPERVISING DEMOLITION INSPECT 1\nSERVICE INSPECTOR (BOARD OF ED 1\nSERVICE INSPECTOR (DOT) 2\nSENIOR SERVICE INSPECTOR (DOT) 2\nDIRECTOR BUREAU OF WEIGHTS AND 1\nMARKET AGENT 6\nINSPECTOR (CONSUMER AND WORKER 14\nASSOCIATE INSPECTOR (CONSUMER 2\nQUALITY ASSURANCE SPECIALIST T 1\nQUALITY ASSURANCE SPECIALIST 295\nQUALITY ASSURANCE SPECIALIST ( 13\nASSOCIATE QUALITY ASSURANCE SP 2\nASSOCIATE QUALITY ASSURANCE 1\nCONSTRUCTION PROJECT MANAGER I 1\nCONSTRUCTION PROJECT MANAGER 1742\nSUPERVISOR OF ELECTRICAL INSTA 4\nSUPERVISOR OF MECHANICAL INSTA 6\nWATER USE INSPECTOR 297\nASSOCIATE WATER USE INSPECTOR 37\nASSOC WATER USE INSPECTOR-MGRL 1\nAPPRENTICE INSPECTOR (BOILERS) 1\nAPPRENTICE INSPECTOR (CONSTRUC 1\nAPPRENTICE INSPECTOR (ELECTRIC 2\nAPPRENTICE INSPECTOR (ELEVATOR 1\nAPPRENTICE INSPECTOR (HIGHWAYS 1\nAPPRENTICE INSPECTOR (HOUSING) 1\nAPPRENTICE (PAINTER) 1\nAPPRENTICE INSPECTOR (HSG CONT 1\nTAXI AND LIMOUSINE INSPECTOR 1433\nASSOCIATE TAXI & LIMOUSINE INS 2\nCONFIDENTIAL INSPECTOR 1\nGENERAL INSPECTOR 1\nDEPUTY DIRECTOR OF MANAGEMENT 2\nASSOCIATE DIRECTOR (OMB) 1\nDIRECTOR OF FINANCING POLICY C 1\nDIRECTOR OF MANAGEMENT & BUDGE 1\nASSISTANT CITY ASSESSOR 953\nCITY ASSESSOR (I,II,IIIA,IIIB) 5\nINSURANCE ADVISOR 3\nINSURANCE ADVISOR (HEALTH) 1\nINSURANCE ADVISOR (HA) 3\nAPPRAISER (REAL ESTATE) 7\nPRINCIPAL APPRAISER (REAL ESTA 1\nWORKER'S COMPENSATION BENEFITS 4\nASSISTANT RETIREMENT BENEFITS 6\nASSOCIATE RETIREMENT BENEFITS 3\nMANAGEMENT AUDITOR TRAINEE 554\nMANAGEMENT AUDITOR 2811\nASSISTANT ACCOUNTANT 1\nLEGISLATIVE FINANCIAL ANALYST 2\nPRINCIPAL LEGISLATIVE FINANCIA 1\nACCOUNTANT 8225\nCITY TAX AUDITOR 1928\nBOOKKEEPER 7052\nDEPUTY CONTROLLER (HA) 1\nCONTROLLER (HA) 1\nDIRECTOR OF AUDIT AND INVESTIG 1\nCHIEF SCHOOL BUSINESS EXECUTIV 1\nPRINCIPAL INVESTMENT OFFICER ( 1\nDEPUTY CHANCELLOR FINANCIAL AF 1\nDEPUTY EXECUTIVE DIRECTOR OF F 1\nDIRECTOR OF MORTGAGE RESEARCH 1\nCONTRACT SPECIALIST 165\nASSOCIATE CONTRACT SPECIALIST 138\nCONTRACT REVIEWER (OFFICE OF L 7\nSTATISTICIAN 531\nACTUARIAL SPECIALIST LEVEL I 1\nCHIEF ACTUARY 1\nACTUARIAL SPECIALIST LEVEL II, 1\nDEPUTY AUDITOR GENERAL-COUNSEL 1\nFIRST DEPUTY AUDITOR GENERAL ( 1\nAUDITOR GENERAL (OFFICE OF THE 1\nEXAMINER OF ACCOUNTS 2\nDEPUTY AUDITOR GENERAL (DOE) 1\nAUDITOR GENERAL (DOE) 1\nECONOMIST 25\nINVESTMENT ANALYST 195\nFIRST DEPUTY COMPTROLLER 1\nSECOND DEPUTY COMPTROLLER 1\nSPECIAL DEPUTY COMPTROLLER 1\nTHIRD DEPUTY COMPTROLLER 1\nCOMPTROLLER 1\nASSISTANT COMPTROLLER OF IT 1\nPARKING CONTROL SPECIALIST TRA 2\nPARKING CONTROL SPECIALIST 1\nASSOCIATE PARKING CONTROL SPEC 2\nDENTAL HYGIENIST 2\nSENIOR POLICY ADVISOR (BUILDIN 1\nRISK MANAGEMENT OFFICER (BUILD 1\nSENIOR POLICY ADVISOR (DDC) 1\nCITY DENTIST 2\nCITY DENTIST (PART-TIME) 2\nCITY DEPUTY MANAGEMENT DENTIST 1\nCITY MANAGEMENT DENTIST 1\nDIETITIAN 3\nNUTRITIONIST 15\nNUTRITIONIST (PART-TIME) 1\nNUTRITION CONSULTANT 9\nPRINCIPAL NUTRITION CONSULTANT 1\nCITY VETERINARIAN 2\nCITY VETERINARIAN (PART-TIME) 3\nMEDICAL RECORD LIBRARIAN 11\nNURSES AIDE 2\nLICENSED PRACTICAL NURSE 2\nNURSE'S AIDE (HANDICAPPED CHIL 2\nSTAFF NURSE 10\nHEAD NURSE 5\nASSISTANT HEAD NURSE 2\nSTRATEGI INITIATIVE SPECIALIST 1\nCASE MANAGEMENT NURSE (POLICE 2\nCASE - MANAGEMENT NURSE (FIRE 6\nSUPERVISOR OF NURSES 8\nSPECIAL CONSULTANT (MENTAL HEA 2\nREGISTERED NURSE (PER SESSION) 1\nPUBLIC HEALTH NURSE (PER SESSI 1\nJUNIOR PUBLIC HEALTH NURSE 1\nCONSULTANT PUBLIC HEALTH NURSE 7\nJUNIOR PUBLIC HEALTH NURSE (PA 1\nJR PHNURSE (SCH HLTH)>20 HR PT 1\nSPEC CONSULTANT (MHSS) (AL 2) 13\nPUBLIC HEALTH NURSE 1182\nPUBLIC HEALTH NURSE (PART-TIME 1\nPUBLIC HEALTH NURSE (SCHOOL HE 9\nPOISON INFORMATION SPECIALIST 6\nHEALTH AIDE 1\nPUBLIC HEALTH EDUCATION TRAINE 1\nPUBLIC HEALTH EDUCATOR 866\nPUBLIC HEALTH EPIDEMIOLOGIST 149\nASST PB HLTH ADV (COMM DIS CON 2\nPUBLIC HEALTH ADVISER 1498\nSUPERVISING PUBLIC HEALTH ADVI 6\nPUBLIC HEALTH ADVISER (SCHOOL 16\nPUBLIC HEALTH EMERGENCY PREPAR 2\nCOUNSELOR (ADDICTION TREATMENT 3\nPEER COUNSELOR (HMH) 3\nOCCUPATIONAL THERAPIST (DOE) 3580\nPHYSICAL THERAPIST (DOE) 519\nFITNESS INSTRUCTOR 18\nSTAFF AUDIOLOGIST 1\nSUPERVISING THERAPIST 36\nSUPERVISING THERAPIST (COMP DO 2\nMENTAL HEALTH WORKER 2\nSENIOR MENTAL HEALTH WORKER 23\nCORRECTIONAL COUNSELOR 1\nASSOCIATE CORRECTIONAL COUNSEL 2\nX-RAY TECHNICIAN 12\nENVIRONMENTAL HEALTH TECHNICIA 1\nYOUTH COORDINATOR (YOUTH SERVI 1\nPROGRAM OFFICER (DEPT FOR THE 8\nDIRECTOR OF COMMUNITY PLANNING 2\nDIRECTOR OF COMMUNITY RELATION 2\nDIRECTOR, UNITED NATIONS & CON 1\nLIAISON OFFICER TO THE UNITED 1\nCHILDREN'S COUNSELOR (PER DIEM 1\nSUPERINTENDENT (CHILDRENS INST 1\nDEPUTY COMMISSIONER (JUVENILE 1\nSUPERINTENDENT (JUVENILE INSTI 1\nASSISTANT COMMISSIONER FOR AFT 1\nASST COMMISSIONER FOR NON-SECU 1\nASST COMMISSIONER FOR PLANNING 2\nGENERAL COUNSEL (JUVENILE JUST 1\nDEPUTY SUPERINTENDENT (JUVENIL 1\nDIRECTOR OF PUBLIC INFORMATION 7\nEXECUTIVE ASSISTANT (JUVENILE 1\nFAMILY PRESERVATIONIST (JUVENI 1\nPROGRAM COORDINATOR (JUVENILE 1\nCONSULTANT (EARLY CHILDHOOD ED 3\nCONSULTANT (PUBLIC HEALTH-SOCI 1\nSENIOR CONSULTANT (PUBLIC HEAL 1\nDIRECTOR (CRIMINAL JUSTICE COO 1\nCHIEF OF PLANNING & EVALUATION 1\nPROJECT COORDINATOR(CRIMINAL J 1\nGENERAL COUNSEL(CRIMINAL JUSTI 1\nPROJECT PLANNER (CRIMINAL JUST 1\nSENIOR PROJECT PLANNER (CRIMIN 1\nSpecial Assistant to the Direc 1\nEXECUTIVE ASSISTANT (CRIMINAL 1\nSenior Project Planner (CJCC)- 1\nPROBATION ASSISTANT 11\nPROBATION OFFICER TRAINEE 32\nPROBATION OFFICER 3033\nSUPERVISING PROBATION OFFICER 134\nEXECUTIVE DIRECTOR OF SPECIAL 2\nEXECUTIVE DIR OF ADMINISTRATIO 1\nASSISTANT DIR OF ADMINISTRATIO 1\nDEPUTY DIRECTOR OF PROBATION 1\nDEPUTY DIRECTOR OF PROBATION ( 1\nASSISTANT DIRECTOR (DEPARTMENT 1\nSECRETARY TO THE DIRECTOR OF P 1\nPROJECT DIRECTOR (DEPARTMENT O 1\nCity Mortuary Technician 1\nFORENSIC MORTUARY TECHNICIAN 198\nFORENSIC MORTUARY TECHNICIAN-C 1\nCOORDINATOR OF MORTUARY SERVIC 1\nPSYCHOLOGIST 142\nASST SUPERINTENDT WELF SHELT ( 1\nSUPERINTENDENT OF ADULT INSTIT 1\nYOUTH DEVELOPMENT SPECIALIST 413\nASSOCIATE YOUTH DEVELOPMENT SP 2\nJUVENILE COUNSELOR 5540\nASSOCIATE JUVENILE COUNSELOR 169\nCASEWORKER TRAINEE 1\nCASEWORKER 21916\nSUPERVISOR I (SOCIAL SERVICES) 1193\nSUPERVISOR II (SOCIAL SERVICES 1\nSUPERVISOR III (SOCIAL SERVICE 1\nJOB OPPORTUNITY SPECIALIST 16587\nSUPERVISOR OF CHILD CARE 2\nASSOCIATE JOB OPPORTUNITY SPEC 5\nCHILD PROTECTIVE SPECIALIST (C 2\nCHILD PROTECTIVE SPECIALIST SU 2\nPROTECTION AGENT (ACS) 6\nCHILD WELFARE SPECIALIST 2\nCHILD WELFARE SPECIALIST SUPER 3\nPUBLIC SERVICE INTERNE 2\nSENIOR CITIZEN AIDE (PART TIME 1\nHOME AIDE 1\nHOMEMAKER 2\nCOMMUNITY SERVICE AIDE 1\nCHILD AND FAMILY SPECIALIST 542\nPROGRAM EVALUATOR (ACS) 212\nHOUSEPARENT AIDE 1\nHOUSEPARENT 1\nSENIOR HOUSEPARENT 1\nFOSTER GRANDPARENT 1\nCONGREG CARE SPEC-DJJ (40 HR) 2\nCONGREG CARE SPEC-ACS(35 HR WK 2\nDIRECTOR OF ADMINISTRATION (CH 1\nDIRECTOR OF ADMINISTRATION (SP 1\nDIRECTOR OF ADMINISTRATION (ME 1\nDIRECTOR OF MEDICAL ASSISTANCE 1\nDIRECTOR OF PARENT INVOLVEMENT 1\nCHIEF ADMINISTRATOR OF IMPARTI 1\nSOCIAL WORKER 3529\nCORRECTIONAL STANDARDS REVIEW 2\nSUPERVISOR I SOCIAL WORK 2\nSUPERVISOR II SOCIAL WORK 1\nSUPERVISOR III SOCIAL WORK 3\nOMBUDSMAN (JUVENILE JUSTICE) 1\nPHYSICIANS ASSISTANT 6\nHEALTH OFFICER IN TRAINING 1\nCLINICIAN 1\nMEDICAL SPECIALIST 1\nSENIOR MEDICAL SPECIALIST 1\nPHYSICIAN 1\nPODIATRIST (PART TIME) 1\nOPTOMETRIST (PART TIME) 1\nCITY CLINICIAN 3\nCITY MEDICAL SPECIALIST 4\nCITY MEDICAL SPECIALIST (PART- 20\nCITY DEPUTY MEDICAL DIRECTOR 1\nCITY MEDICAL DIRECTOR 1\nADMINISTRATOR OF MEDICAL AFFAI 1\nAGENCY MEDICAL DIRECTOR 3\nAGENCY DEPUTY MEDICAL DIRECTOR 1\nFIRE MEDICAL OFFICER 1\nPOLICE SURGEON 1\nEMERGENCY MEDICAL SPECIALIST T 1\nEMERGENCY MEDICAL SPECIALIST-E 1\nEMERGENCY MEDICAL SPECIALIST-P 1\nSUPERVISING EMERGENCY MEDICAL 4\nEMERGENCY MEDICAL SERVICE CADE 1\nAMBULANCE TECHNICIAN 1\nEMPLOYEE ASSISTANCE PROGRAM SP 1\nDEPUTY CHIEF SURGEON (NON-MANA 1\nCHIEF SURGEON (NON-MANAGERIAL 1\nSUPERVISING CHIEF SURGEON (MAN 1\nASSISTANT SUPERVISING CHIEF SU 1\nFIRE MEDICAL OFFICER (MGR DET) 1\nDIRECTOR OF PSYCHOLOGICAL SERV 1\nPSYCHIATRIST (PER HOUR) 1\nMEDICOLEGAL INVESTIGATOR (OCME 4\nDIRECTOR OF HEALTH & SAFETY (S 1\nCITY MEDICAL EXAMINER (OCME) 2\nMEDICAL INVESTIGATOR 1\nJUNIOR MEDICAL EXAMINER (OFF O 1\nMEDICAL CONSULTANT TO THE COMP 1\nDIRECTOR OF MEDICAL CARE 1\nDIRECTOR OF SCHOOL LUNCHES 1\nSCHOOL FOOD SERVICE MANAGER 342\nASSOCIATE SCHOOL FOOD SERVICE 1\nSCHOOL LUNCH HELPER 1\nSENIOR SCHOOL LUNCH HELPER 3\nSCHOOL LUNCH AIDE 3\nSENIOR SCHOOL LUNCH AIDE 2\nSCHOOL LUNCH ASSISTANT 3\n*SCHOOL LUNCH HELPER 1\nSENIOR SCHOOL LNCH AIDE 1\nSCHOOL LUNCH LOADER AND HANDLE 1\nSENIOR SCHOOL LUNCH AIDE (COOK 3\nSCHOOL LUNCH ASSISTANT COOK 3\nCHAPLAIN 6\nRESIDENT CHAPLAIN (CORRECTIONA 1\nCHAPLAIN (JUVENILE DETENTION C 1\nCONFIDENTIAL STRATEGY PLANNER 19\nDIRECTOR (EMPLOYEE ASSISTANCE 1\nCOMMISSARY MANAGER 5\nSENIOR INTERGROUP RELATIONS OF 4\nHUMAN RIGHTS SPECIALIST (PR#99 1\nHUMAN RIGHTS SPECIALIST (COMM 7\nSUPERVISING HUMAN RIGHTS SPECI 1\nASSOCIATE HUMAN RIGHTS SPECIAL 6\nEQUAL RIGHTS COMPLIANCE SPECIA 2\nASSISTANT DIRECTOR OF INTERGRO 1\nPRINICIPAL HUMAN RIGHTS SPECIA 1\nCONSULTANT ON RACE RELATIONS 1\nDIRECTOR OF EQUAL OPPORTUNITY 2\nASSISTANT COMMISSIONER (ETHNIC 1\nDEPUTY EXECUTIVE DIRECTOR (COM 3\nDIRECTOR OF TENANT & COMMUNITY 1\nHUMAN RESOURCES TECHNICIAN 1\nCOMMUNITY ASSISTANT 12\nCOMMUNITY ASSOCIATE 113\nCOMMUNITY COORDINATOR 190\nPRECINCT COMMUNITY RELATIONS A 2\nCOMMUNITY ASSISTANT (DOE) 1\nCOMMUNITY ASSOCIATE DOE 1\nCOMMUNITY COORDINATOR DOE 1\nJUNIOR SCHOOL-NEIGHBORHOOD WOR 2\nSCHOOL-NEIGHBORHOOD WORKER 2\nSENIOR SCHOOL-NEIGHBORHOOD WOR 2\nPRINCIPAL SCHOOL-NEIGHBORHOOD 1\nPRECINCT COMMUNITY RELATIONS C 1\nADDICTION SPECIALIST (METHADON 1\nSR ADDICTION SPEC METHADONE 1\nSUBSTANCE ABUSE PREVENTION & I 3\nDISTRICT MANAGER 1\nASSISTANT DISTRICT MANAGER (CO 3\nSUMMER CREW CHIEF 1\nFIELD SUPERVISOR (SUMMER YOUTH 1\nSENIOR FIELD SUPERVISOR (SUMME 1\nDEPARTMENT LIBRARIAN 4\nPUBLIC RECORDS AIDE 1604\nPUBLIC RECORDS OFFICER 25\nASSOCIATE PUBLIC RECORDS OFFIC 2\nEQUAL EMPLOYMENT OPPORTUNITY O 1\nSENIOR INSTITUTIONAL TRADES IN 1\nASSISTANT INSTITUTIONAL TEACHE 1\nINSTITUTI0NAL TEACHER (JUVENIL 2\nASSISTANT DIRECTOR OF EDUCATIO 1\nDIRECTOR OF EDUCATION (JJ) 1\nLECTURER (EMS) 1\nPLAYGROUND ASSISTANT 1\nPUPPETEER 5\nDIRECTOR OF PUPPETRY 1\nURBAN PARK RANGER 1211\nASSOCIATE URBAN PARK RANGER 353\nRECREATION DIRECTOR 9\nRECREATION DIRECTOR (PART-TIME 1\nRECREATION SUPERVISOR 383\nARTS PROGRAM SPECIALIST 1\nASSOCIATE ARTS PROGRAMS SPECIA 3\nASSOCIATE ARTS PROGRAM SPECIAL 1\nDIRECTOR OF ARTWORKS (DOE) 1\nCHIEF OF HOUSING COMMUNITY ACT 1\nDIRECTOR OF SOCIAL & COMMUNITY 1\nPROGRAM PRODUCER 21\nDIRECTOR OF TELEVISION 2\nDIRECTOR OF PUBLIC AFFAIRS (OM 1\nELECTION AIDE (OFFICE OF COLLE 1\nPUBLIC INFORMATION OFFICER 1\nLEGISLATIVE INFORMATION OFFICE 1\nDIRECTOR, MAYOR'S RECEPTION CO 1\nASSOCIATE PUBLIC INFORMATION 5\nSCHOOL SAFETY AGENT 106993\nSUPERVISOR OF SCHOOL SECURITY 1066\nASSOCIATE SUPERVISOR OF SCHOOL 2\nASSOC SUPVR OF SCHL SEC (MGRL) 2\nASSISTANT COMMISSIONER (COMMUN 2\nPUBLIC RELATIONS ADVISER 2\nASSISTANT TO THE COMPTROLLER ( 1\nSPECIAL ASSISTANT TO THE FIRE 1\nDIRECTOR, NYC MAYOR'S OFFICE F 1\nDIRECTOR OF NEWS BUREAU 1\nDIRECTOR OF PUBLIC & COMMUNITY 1\nBUSINESS PROMOTION COORDINATOR 2372\nDIRECTOR OF CONSUMER INFORMATI 1\nPRESS OFFICER (OFFICE OF THE M 2\nDIRECTOR OF PUBLIC AFFAIRS 1\nDIRECTOR OF BUREAU OF CONSUMER 1\nPUBLIC RELATIONS CONSULTANT (O 1\nCUSTOMER INFORMATION REP 11\nDIRECTOR OF INFORMATION AND RE 1\nRESEARCH ASSISTANT 9097\nDEP DIR RESEARCH & POL DEVELP 1\nDIRECTOR OF RESEARCH & POLICY 1\nPROGRAM RESEARCH INTERN 1\nPROGRAM SPECIALIST  CORRECTION 6\nCHIEF, PUBLICATIONS & REPORTS 1\nEXECUTIVE DIRECTOR (BOARD OF C 1\nCOORDINATOR, TENANT PATROL (HA 1\nSANITATION WORKER 47163\nSUPERVISOR (SANITATION) 7711\nGENERAL SUPERINTENDENT (SANITA 3\nSCHOOL CROSSING GUARD 3\nPOLICE CADET 3\nPOLICE CADET (HOUSING BUREAU) 1\nSCHOOL CROSSING GUARD (AL II â€“ 1\nPOLICE OFFICER (RECURRING NIGH 1\nPOLICE OFFICER D/A DETECTIVE 3 1\nPOLICE OFFICER D/A DETECTIVE 2 1\nPOLICE OFFICER D/A DETECTIVE 1 1\nPOLICE OFFICER, DET. SPECIALIS 1\nPOLICE OFFICER, SPECIAL ASSIGN 1\nSERGEANT (RECURRING NIGHT SHIF 1\nSERGEANT D/A SPECIAL ASSIGNMEN 1\nSERGEANT D/A SUPERVISOR DETECT 1\nLIEUTENANT (POLICE) (RECUR NS) 1\nCAPTAIN (POLICE SERVICE)(REC N 1\nDIRECTOR OF COMMUNICATIONS 1\nLIEUTENANT D/A SPECIAL ASSIGNM 1\nLIEUTENANT D/A COMMANDER OF DE 1\nLIEUTENANT D/A DIR LEGAL BUREA 1\nCAPTAIN D/A DEPUTY INSPECTOR ( 1\nCAPTAIN D/A INSPECTOR (REC N/S 1\nCAPTAIN D/A DEPUTY CHIEF INSPE 1\nCAPTAIN DETAILED AS ASSISTANT 1\nCAPTAIN DETAILED AS CHIEF OF D 1\nCAPTAIN DETAILED CHIEF OF RISK 1\nCAPTAIN DETAILED AS CHIEF OF T 1\nCAPTAIN DETAILED AS CHIEF OF P 2\nCAPTAIN DETAILED AS CHIEF OF L 1\nCAPTAIN DETAILED AS CHIEF OF C 1\nCAPTAIN DETAILED AS CHIEF OF O 1\nCHIEF OF DEPARTMENT 1\nCAPT DET CHIEF OF INTERNAL AFF 1\nCHIEF OF THE HOUSING BUREAU 1\nCAPT DET CHIEF OF THE TRANSIT 1\nCAPTAIN DETAILED AS CHIEF OF I 1\nCAPTAIN: CHIEF OF TRANSPORTATI 1\nCAPTAIN CHIEF OF COUNTERTERROR 1\nCAPTAIN-CHIEF OF COMMUNITY AFF 1\nCAPTAIN DETAILED AS CHIEF OF S 1\nCAPTAIN-CHIEF OF INTELLIGENCE 1\nCAPTAIN-CHIEF OF STAFF 1\n*SURGEON 1\n*SURGEON DETAILED AS DEPUTY CH 1\nSUPERVISING CHIEF SURGEON 1\nFIRE CADET 1\nFIREFIGHTER 56839\nPILOT 49\nWIPER (UNIFORMED) 2\nMARINE ENGINEER (WITH LICENSE) 2\nLIEUTENANT (FIRE) 9643\nCAPTAIN (FIRE) 3585\nBATTALION CHIEF 890\nDEPUTY CHIEF(FIRE) 1\nCHIEF OF DEPARTMENT (FDNY) 1\nDEPUTY ASSISTANT CHIEF OF DEPA 1\nASSISTANT CHIEF OF DEPARTMENT 1\nASSISTANT CHIEF OF DEPT DESIGN 1\nFIRE MARSHAL (UNIFORMED) 2364\nSUPERVISING FIRE MARSHAL (UNIF 2\nASSISTANT CHIEF FIRE MARSHAL ( 1\nCHIEF FIRE MARSHAL (UNIFORMED) 1\nSUPERVISING FM-MGL DET: CHIEF 1\nCORRECTION ADMINISTRATIVE AIDE 2052\nCORRECTION OFFICER 71906\nCAPTAIN (CORRECTION) TED < 11/ 1\nWARDEN (CORRECTION)(MGRL ASSIG 1\nWARDEN-ASSISTANT DEPUTY WARDEN 1\nWARDEN-DEPUTY WARDEN 1\nWARDEN-DEPUTY WARDEN IN COMM T 1\nSPECIAL OFFICER 18261\nENVIRONMENTAL POLICE OFFICER 9002\nSUPERVISING SPECIAL OFFICER 1013\nENVIRONMENTAL POLICE OFFICER-M 1\nDEPUTY DIRECTOR OF SECURITY 1\nDIRECTOR OF SECURITY (HRA/DSS 1\nFIRE ALARM DISPATCHER 2991\nPOLICE COMMUNICATIONS TECHNICI 1\nSUPERVISING POLICE COMMUNICATI 1\nPRINCIPAL POLICE COMMUNICATION 3\nEVIDENCE AND PROPERTY CONTROL 2\nSUPERVISING FIRE ALARM DISPATC 2\nSPVSG FAD-ASST COMMISS DETAIL 1\nSPVSG FAD-DIR DSPTCH OP DETAIL 1\nSPVSG FAD-DEP DIR DSPTCH DTAIL 1\nFINGERPRINT TECHNICIAN TRAINEE 1\nASSOCIATE FINGERPRINT TECHNICI 4\nPRINCIPAL FINGERPRINT TECHNICI 1\nLIFE GUARD 4\nCHIEF LIFEGUARD 4\nTRAFFIC ENFORCEMENT AGENT L1&2 2\nASSOCIATE TRAFFIC ENFORCEMENT 3\nTRAFFIC ENFORCEMENT AGENT L3&4 2\nSANITATION ENFORCEMENT AGENT 2034\nASSOCIATE SANITATION ENFORCEME 3\nSANITATION COMPLIANCE AGENT 4\nREAL PROPERTY ASSISTANT 2\nREAL PROPERTY MANAGER 4\nASSOCIATE REAL PROPERTY MANAGE 8\nSPACE ANALYST 1088\nHOUSING ASSISTANT TRAINEE 1\nHOUSING ASSISTANT (HA) 1\nHOUSING ASSISTANT (BILINGUAL) 23\nASSISTANT HOUSING MANAGER (HA) 2\nHOUSING MANAGER (HA) 1\nDIRECTOR OR MANAGEMENT 1\nDIRECTOR OF METHODS & ANALYSIS 1\nDIRECTOR OF INFORMATION SYSTEM 1\nDIRECTOR OF CONTRACT ADMINISTR 1\nDIRECTOR OF PROGRAM PLANNING ( 2\nDIR OF QUALITY & COST CONTROL 1\nDIRECTOR OF HUD ACQUIRED PROPE 1\nDIRECTOR OF HOUSING APPLICANTI 1\nDIRECTOR OF LEASED HOUSING (HA 1\nDIRECTOR OF GENERAL SERVICES ( 1\nDIRECTOR OF REVIEW & COUNSELIN 1\nDIRECTOR OF AUDIT AND PROGRAM 1\nASSISTANT RESIDENT BUILDING SU 1\nRESIDENT BUILDING SUPERINTENDE 6\nDIRECTOR OF PLANT OPERATIONS & 1\nCUSTODIAL SUPERVISOR 1\nSENIOR CUSTODIAL SUPERVISOR 1\nASSISTANT PRINCIPAL CUSTODIAL 1\nPRINCIPAL CUSTODIAL SUPERVISOR 1\nCUSTODIAN 1827\nCUSTODIAN (MANAGERIAL ASSIGNME 1\nPROPERTY CLERK 1\nJOB TRAINING PARTICIPANT 1\n*ASSISTANT MAINTENANCE SUPERVI 1\nHOUSEKEEPER 1\nSUPERVISING HOUSEKEEPER 1\nSUPERINTENDENT OF LAUNDRIES 2\nELEVATOR STARTER 1\nASSOCIATE PARK SERVICE WORKER 1498\nPARK SUPERVISOR 740\n*PRINCIPAL PARK SUPERVISOR 2\nCLIMBER & PRUNER 4\nGARDENER 214\nSUPERVISING HOUSING GROUNDSKEE 1\nFORESTER 250\nFERRY TERMINAL SUPERVISOR 13\nDOCKMASTER 1\nSUPERVISING DOCKMASTER 1\nCHIEF DOCKMASTER 1\nAssistant Caretaker (HA) 1\nCHIEF CARETAKER (HA) 1\nDIETARY AIDE 2\nINSTITUTIONAL AIDE 3\nPUBLIC HEALTH ASSISTANT 1\nPUBLIC HEALTH ASSISTANT (SCHOO 1\nHOSTLER 39\nELEV MECHANIC'S HELPER TRAINEE 1\n*HOUSING CARETAKER (HA) 1\nSUPERVISOR OF HOUSING CARETAKE 1\n*CUSTODIAL ASSISTANT 1\nEMERGENCY SERVICE AIDE (HA) 1\nLABORATORY HELPER 2\nASSISTANT REAL ESTATE REPAIRER 1\nREAL ESTATE REPAIRER (DCAS) 1\nCOMMUNITY CENTER ATTENDANT 1\nSCHOOL AIDE 1\nFAMILY AUXILIARY 1\nEDUCATIONAL AUXILIARY 1\nCASEWORKER (SSC PROTECTIVE UNI 1\nINTELLEGENCE RESEARCH MANAGER- 1\nCIVILIANIZATION MANAGER-PD 2\nDIRECTOR OF PHOTOGRAPHIC SERVI 1\nDIRECTOR OF SUPPORT SERVICES-P 1\nSCHOOL PLANT MANAGER (BOE) 1\nAGENCY CHIEF CONTRACTING OFFIC 1\nINVESTIGATIVE MANAGER (CCRB) 2\nADMINISTRATIVE PROCUREMENT ANA 3\nFIRST DEPUTY COMMISSIONER (DCA 1\nADMINISTRATIVE LA GUARDIA MANA 1\nADM PROC ANAL-NM FRM M1-3 2\nADMINISTRATIVE PSYCHOLOGIST 7\nADMINISTRATIVE JUVENILE COUNSE 1\nADMINISTRATIVE SANITATION ENFO 1\nTELECOMMUNICATION MANAGER 7\nADMINISTRATIVE ACTUARY 6\nADMINISTRATIVE RETIREMENT BENE 8\nMANAGER OF RADIO REPAIR OPERAT 2\nADMINISTRATIVE DEPUTY REGISTER 4\nADMINISTRATIVE PUBLIC HEALTH S 8\nTELECOMMUNICATIONS MANAGER (NO 3\nADMINISTRATIVE RETIREMENTS BEN 3\nADMINISTRATIVE CONSTRUCTION PR 17\nADMINISTRATIVE LABOR RELATIONS 1\nADM CONSTRUCTION PRJ MGR-NM 23\nADMINISTRATIVE HOUSING DEVELOP 1\nADMINISTRATIVE DIRECTOR OF MAR 1\nADMINISTRATIVE PROJECT MANAGER 10813\nADM HOUSING DEV SPEC(NON MGRL) 1\nPLANNER: PRODUCTION CNTRL & SC 1\nHEALTH CARE PROGRAM PLANNER/AN 1\nSR HEALTHCARE PROG PLAN ANLYST 5\nELECTION TRAINER (PART-TIME)-B 1\nINSTITUTIONAL GARMENT WORKER 1\nLICENSED BARBER (CORRECTION) 1\nPOLICE ATTENDANT 28\nCOOK 1\nBAKER 1\nSENIOR BAKER (CORRECTIONS) 1\nSENIOR COOK 1\nTELEVISION LIGHTING TECHNICIAN 1\nFILM MANAGER 3\nRADIO AND TELEVISION OPERATOR 30\nSUPERVISOR OF RADIO AND TELEVI 2\nSUPERVISOR (PEST CONTROL) 3\nEXTERMINATOR 561\nHOUSING EXTERMINATOR (HA) 3\nHOUSING EXTERMINATOR-AL II & I 2\nHOUSING EXTERMINATOR-AL IV 1\nREPAIR CREW WORKER (HDA) 1\nREPAIR CREW CHIEF (HDA) 7\nSENIOR REPAIR CREW CHIEF (HDA) 1\nREPAIR SHOP MANAGER (HDA) 1\nFILM INSPECTION ASSISTANT 1\nPHOTOGRAPHER 2\nPHOTOGRAPHER AND PHOTOSTAT OPE 2\nASSISTANT MEDIA SERVICES TECHN 1\nMEDIA SERVICES TECHNICIAN 120\nSENIOR PHOTOGRAPHER 18\nCITY PARK WORKER 8\nCITY PARKING EQUIPMENT SERVICE 3\nCITY PEST CONTROL AIDE 1\nCITY CUSTODIAL ASSISTANT 5\nCARETAKER (HA) 5\nCITY ATTENDANT 1\nCITY ELEVATOR OPERATOR 1\nCITY SECURITY AIDE 1\nASSISTANT CITY HIGHWAY REPAIRE 1\nMAINTENANCE WORKER 6370\nCITY DEBRIS REMOVER 1\nCITY LABORER 5\nCARRIAGE UPHOLSTERER 1\nCLOCK REPAIRER 1\nELEVATOR MECHANIC 1079\nELEVATOR MECHANIC HELPER 3\nGLAZIER 22\nLOCKSMITH 49\nRADIO REPAIR MECHANIC 793\nRIGGER 1\nROOFER 199\nRUBBER TIRE REPAIRER 59\nSCHOOL EQUIPMENT MAINTAINER 2\nSEWAGE TREATMENT WORKER 1718\nSHOEMAKER 1\nAPPRENTICE (CONSTRUCTION LABOR 1\nBOILER MAKER 1\nCONSTRUCTION LABORER 516\nSUPERVISOR OF RADIO REPAIR OPE 1\nSUPERVISOR LOCKSMITH 1\nSENIOR SEWAGE TREATMENT WORKER 1798\nSUPERVISOR ELEVATOR MECHANIC 75\nSUPERVISOR OF MECHANICS 3\nSUPERVISOR ROOFER 1\nSUPERVISOR BOILER MAKER 1\nSUPERVISOR GLAZIER 1\nSENIOR OFFICE APPLIANCE MAINTA 1\nSUP TRAFFIC DEVICE MAINT L1 1\nSUP TRAFFIC DEVICE MAINT L2&L3 2\nTRAFFIC DEVICE MAINTAINER 163\nINSTRUMENTATION SPECIALIST TRA 1\nINSTRUMENTATION SPECIALIST 19\nWATERSHED MAINTAINER 412\nWATER TREATMENT PLANT OPERATOR 3\nBRIDGE OPERATOR 359\nMOTOR GRADER OPERATOR 12\nMOTOR VEHICLE OPERATOR 17182\nTRACTOR OPERATOR (5 DAY OPERAT 1\nCHAUFFEUR-ATTENDANT 2\nMETAL WORK MECHANIC 1\nMOTOR VEHICLE SUPERVISOR 15\nOIL BURNER SPECIALIST 6\nCHAUFFEUR-ATTENDANT (LPC) 1\nCHAUFFEUR (BUILDINGS) 1\nCHAUFFEUR-ATTENDANT (HA) 1\nHELICOPTER PILOT (DEP) 1\nSUPERVISOR OF MOTOR TRANSPORT 10\nSUPERVISOR (WATER & SEWER SYST 1\nDISTRICT SUPERVISOR (WATER & S 1\nSUPERVISOR 10\nSUPERVISOR (WATERSHED MAINTENA 3\nDISTRICT SUPERVISOR 1\nAREA SUPERVISOR (HIGHWAY MAINT 2\nDIRECTOR (DIVISION OF MAINTENA 1\nDIRECTOR (DIVISION OF DESIGN A 1\nEXECUTIVE DIRECTOR (SCHOOL BUI 1\nCITY SERVICE AIDE 4\nCITY SEASONAL AIDE 8\nCITY SEASONAL AIDE (DOS ONLY) 1\nGRAPHIC ARTIST 9\nMONUMENTS OFFICER 1\nMARINER 53\nASSISTANT CAPTAIN 1\nCAPTAIN (FERRY) 19\nCAPTAIN (SLUDGE BOAT) 8\nCHIEF MARINE ENGINEER 87\nCHIEF MARINE ENGINEER (DIESEL) 6\nCHIEF MARINE ENGINEER (DC) 1\nDECKHAND 302\nMARINE ENGINEER (DIESEL) 2\nMARINE ENGINEER 38\nMARINE ENGINEER (DC) 3\nMARINE OILER 2\nMARINE OILER(FERRY OPERATIONS) 7\nMARINE OILER (DEPT OF CORRECTI 1\nMATE 1\nLAUNCH OPERATOR/WATER POLLUTIO 1\nPORT MARINE ENGINEER (DOT) 1\nPORT MARINE ENGINEER (DEP) 1\nASPHALT PLANT MANAGER (DOT) 1\nMATE (DEP) 3\nCRANE OPERATOR (ANY MOTIVE POW 1\nGASOLINE ROLLER ENGINEER 473\nHEATING PLANT TECHNICIAN (HA) 1\nOILER 3284\nCUSTODIAN ENGINEER (BOE) 988\nSENIOR STATIONARY ENGINEER 270\nSENIOR STATIONARY ENGINEER (EL 12\nSTATIONARY ENGINEER 6911\nSTATIONARY ENGINEER (ELECTRIC) 315\nHIGH PRESSURE PLANT TENDER 1463\nAREA MANAGER OF SCHOOL MAINTEN 1\nELECTRICIAN 1600\nELECTRICIAN (AUTOMOBILE) 53\nELECTRICIANS HELPER 2\nCOMMUNICATION ELECTRICIAN 72\nSUPERVISING COMMUNICATION ELEC 1\nSENIOR SUPERVISOR COMMUNICATIO 1\nSUPERVISOR ELECTRICIAN 271\nBRIDGE PAINTER 17\nLETTERER AND SIGN PAINTER 28\nPAINTER 1209\nSUPERVISOR BRIDGE PAINTER 1\nSUPERVISOR PAINTER 266\nPLUMBER 4983\nPLUMBER'S HELPER 354\nSTEAM FITTER 3364\nSTEAM FITTER'S HELPER 11\nTHERMOSTAT REPAIRER 2096\nSUPERVISOR THERMOSTAT REPAIR 1\nSUPERVISOR STEAMFITTER 1\nSUPERVISOR PLUMBER 432\nCARPENTER 3075\nDOCKBUILDER 1\nSHIP CARPENTER 1\nSUPERVISOR CARPENTER 81\nSUPERVISOR DOCKBUILDER 1\nSUPERVISOR SHIP CARPENTER 1\nBOOKBINDER 4\nBOOKBINDERâ€™S SEAMSTRESS 1\nCOMPOSITOR (JOB) 4\nASSISTANT PRINTING PRESS OPERA 1\nPRINTING PRESS OPERATOR 72\nSUPERVISING BOOKBINDER 2\nBRICKLAYER 1\nCEMENT MASON 2312\nMASONS HELPER 1\nPLASTERER 410\nLANDMARKS PRESERVATIONIST 76\nASSOCIATE LANDMARKS PRESERVATI 1\nURBAN ARCHEOLOGIST 4\nSUPERVISOR BRICKLAYER 1\nSUPERVISOR PLASTERER 69\nBLACKSMITH 16\nBLACKSMITH'S HELPER 1\nBRIDGE REPAIRER AND RIVETER 53\nHORSESHOER 4\nSHEET METAL WORKER 365\nSUPERVISOR SHEET METAL WORKER 1\nWELDER 15\nSUPERVISOR BRIDGE REPAIRER AND 1\nSUPERVISOR OF IRONWORK 2\nHIGHWAY REPAIRER 321\nSUPERVISOR HIGHWAY REPAIRER 723\nAUTO BODY WORKER 56\nAUTO  MACHINIST 1\nAUTOMOTIVE SERVICE WORKER 2754\nAUTO MECHANIC 5463\nAUTO MECHANIC (DIESEL) 950\nHELICOPTER MECHANIC (DEP) 1\nSUPERVISOR OF MECHANICS(MECHAN 3\nSUPERVISOR OF MECHANICS-ME MGL 1\nDIRECTOR OF MOTOR TRANSPORT (P 1\nMARINE MAINTENANCE MECHANIC 10\nTELEPHONE SERVICE TECHNICIAN 8\nMACHINIST 425\nMACHINIST'S HELPER 190\nFURNITURE MAINTAINER 1\nFURNITURE MAINTAINER'S HELPER 1\nASSISTANT DIRECTOR OF ADMINIST 1\nDEPUTY ADMINISTRATION ASSISTAN 1\nLEGISLATIVE COORDINATOR 1\nEXECUTIVE LEGISLATIVE COORDINA 1\nASSISTANT LEGISLATIVE INFORMAT 1\nLEGISLATIVE INFORMATION ASSIST 1\nSENIOR LEGISLATIVE FINANCIAL A 1\nCOUNCIL MEMBER AIDE 1\nCOUNSEL TO THE BOARD (BOE) 1\nSENIOR ADMINISRATOR (BOARD OF 1\nSENIOR ADMINISTRATIVE ASSISTAN 1\nCHIEF CLERK (BOARD OF ELECTION 1\nDEPUTY CHIEF CLERK (BOARD OF E 1\nADMINISTRATIVE ASSOCIATE (BOAR 1\nADMINISTRATIVE ASSISTANT (BOE) 1\nDIRECTOR OF EQUIPMENT (BOARD O 1\nINSPECTOR (BOARD OF ELECTIONS) 2\nVOTING MACHINE TECHNICIAN (BOA 1\nSENIOR VOTING MACHINE TECHNICI 1\nATTENDANT (BOARD OF ELECTIONS) 1\nTYPIST (BOARD OF ELECTIONS) 1\nFINANCE OFFICER  (BOARD OF ELE 1\nASSISTANCE FINANCE OFFICER(BOA 1\nCLERK TO THE BOARD (BOARD OF E 1\nTABULATOR OPERATOR (BOARD OF E 1\nSENIOR TABULATOR OPERATOR (BOA 1\nEXECUTIVE DIRECTOR (BOARD OF E 1\nCOMPUTER SYSTEM MANAGER (BOARD 1\nCHIEF VOTING MACHINE TECHNICIA 1\nACCOUNTANT (BOARD OF ELECTIONS 1\nSENIOR COMPUTER PROGRAMMER (BO 1\nKEYPUNCH OPERATOR/TABULATOR OP 1\nFINANCIAL CLERK (BOARD OF ELEC 1\nSENIOR OFFICE APPLIANCE OPERAT 1\nDIRECTOR OF THE OFFICE OF COLL 1\nCOMMISSIONER OF PARKS & RECREA 1\nCOMMISSIONER OF CULTURAL AFFAI 1\nLEGISLATIVE ADMINISTRATIVE SEC 1\nEXECUTIVE LEGISLATIVE SECRETAR 1\nEXECUTIVE LEGISLATIVE STENOGRA 1\nCOMMISSIONER OF FINANCE 1\nCHAIRMAN GENERAL WELFARE COMMI 1\nDIRECTOR OF PROBATION 1\nDIRECTOR OF THE OMBUDSMAN PROG 1\nMEMBER OF THE ENVIRONMENTAL CO 1\nASSISTANT TO FINANCE COMMITTEE 1\nDISTRICT ATTORNEY 1\nPUBLIC ADMINISTRATOR 1\nCOMMISSIONER OF BUILDINGS 1\nCOMMISSIONER (BOARD OF ELECTIO 1\nCOMMISSIONER OF HEALTH 1\nCOMMISSIONER OF ENVIRONMENTAL 1\nCOMMISSIONER OF MENTAL HEALTH 1\nCOMMISSIONER OF TRANSPORTATION 1\nCOMMISSIONER OF HOUSING PRESER 1\nCOMMISSIONER OF SANITATION 1\nASSISTANT DIRECTOR OF FINANCE 1\nTEMPORARY CLERK (BOARD OF ELEC 1\nTEMPORARY CLERK (CITY COUNCIL) 1\nHUMAN RESOURCES ADMINISTRATOR 1\nADMINISTRATIVE MANAGER (BOARD 1\nDEPUTY PERSONNEL ASST COUNCIL 1\nSTENOGRAPHIC/SECRETARIAL ASSOC 1\nSENIOR BUYER (BOARD OF ELECTIO 1\nPRINCIPAL STOREKEEPER (BOARD O 1\nDIRECTOR OF LEGISLATIVE OVERSI 1\nLEGISLATIVE INVESTIGATOR (CITY 1\nLEGISLATIVE ADMINISTRATIVE ASS 1\nDIRECTOR OF LEGISLATIVE FINANC 1\nLEGISLATIVE POLICY ANALYST (CI 1\nMANAGER OF LEGISLATIVE POLICY 1\nLEGISLATIVE SYSTEMS MANAGER (C 1\nDIRECTOR OF LEGAL SERVICES (CI 1\nLEGISLATIVE LIAISON-ALBANY (CI 1\nDIRECTOR OF ADMINISTRATION (CI 1\nLEGISLATIVE ADMINISTRATIVE MAN 1\nSENIOR SYSTEMS ANALYSTS (BOARD 1\nCOMPUTER OPERATOR (BOARD OF EL 1\nPROGRAMMER (BD OF ELECTIONS) 1\nEXECUTIVE ASST TO MAJORITY LEA 1\nDirector of Training (BOE) 1\nSENIOR LEGISLATIVE ATTORNEY (C 1\nCOMMISSIONER OF EMPLOYMENT 1\nDIRECTOR, PERSONNEL AND BUDGET 1\nCOUNSEL (BOARD OF ELECTIONS) 1\nCOORDINATOR, VOTER REGISTRATIO 1\nDIRECTOR, PUBLIC AFFAIRS AND C 1\nCOORDINATOR, ELECTION DAY OPER 1\nPROJECT COORDINATOR (BOARD OF 1\nASSOCIATE STAFF ANALYST(BOARD 1\nMEMBER (CONFLICTS OF INTEREST 1\nLEGISLATIVE FISCAL OFFICER (CI 1\nLEGISLATIVE SUPPORT SERVICE CO 1\nLEGISLATIVE PLANNING COORDINAT 1\nSECRETARY TO DIRECTOR COUNCIL 1\nPERSONNEL COORDINATOR (CITY CO 1\nLEGISLATIVE ADMINISTRATIVE CLE 1\nLEGISLATIVE SUPERVISOR SECRETA 1\nLEGISLATIVE ADMINISTRATIVE TYP 1\nLEGISLATIVE MESSENGER (CITY CO 1\nLEGISLATIVE INTERN (CITY COUNC 1\nCHIEF INVESTIGATOR 1\nSENIOR LEGISLATIVE INVESTIGATO 1\nLEGISTATIVE CONFIDENTIAL SECRE 1\nDEPUTY DIRECTOR- FINANCE (CITY 1\nSUPERVISING LEGISLATIVE FINANC 1\nLEGISLATIVE FINANCE SECRETARY 1\nDIRECTOR LEGAL DIVISION/GEN CO 1\nDEPUTY DIRECTOR-LEGAL DIVISION 1\nDIRECTOR-OFFICE OF POLICY (CIT 1\nSENIOR LEGISLATIVE POLICY ANAL 1\nLEGISLATIVE POLICY SECRETARY ( 1\nDIRECTOR-OFFICE OF COMMUNICATI 1\nDEPUTY DIRECTOR-OFFICE OF COMM 1\nLEGISTATIVE MANAGER-OFFICE OF 1\nCOMMUNICATION ASSISTANT (CITY 1\nLEGISLATIVE COMMUNICATION SECR 1\nDIRECTOR-TECHNICAL SERVICES (C 1\nASSISTANT TO DIRECTOR-TECHNICA 1\nSENIOR LEGISLATIVE CLERK (CITY 1\nLEGISLATIVE TECHNICAL SECRETAR 1\nDIRECTOR OF FINANCE (CITY COUN 1\nLEGISLATIVE FISCAL STUDIES COO 1\nLEGISLATIVE INTERDIVISIONAL LI 1\nSPEAKER/MAJORITY LEADER (CITY 1\nCHIEF OF STAFF (CITY COUNCIL) 1\nLEGISLATIVE COUNSEL (CITY COUN 1\nUNIT CHIEF (CITY COUNCIL) 1\nLEGISLATIVE PROGRAMMER/ANALYST 1\nLEGISLATIVE COMPUTER SUPPORT S 1\nDIRECTOR OF LAND USE DIVISION 1\nSPECIAL ADVISOR TO THE DIRECTO 1\nCOMMISSIONER OF YOUTH SERVICES 1\nDIRECTOR (CITY COUNCIL) 1\nDEPUTY DIRECTOR (CITY COUNCIL) 1\nDEPUTY UNIT CHIEF (CITY COUNCI 1\nLEGISLATIVE PROJECT MANAGER (C 1\nLEGISLATIVE OFFICE MANAGER (CI 1\nEXECUTIVE DIRECTOR (CAMPAIGN F 1\nTECHNICAL SUPPORT SPECIALIST(B 1\nEXECUTIVE DIRECTOR (FISA) 1\nEXECUTIVE DIRECTOR (NYC DISTRI 1\nCOUNSEL (NYCDC) 1\nTECHNICAL SYSTEMS MANAGER (NYC 1\nSOCIAL SCIENCE DATA MANAGER (N 1\nSPECIAL ASSISTANT FOR RESEARCH 1\nRESEARCH ANALYST (NYCDC) 1\nOPERATION MANAGEMENT OFFICER ( 1\nDISTRICTING COMMISSION ADMINIS 1\nDISTRICTING COMMISSION SECRETA 1\nDISTRICTING COMMISSION OFFICE 1\nPRESS OFFICER (NYCDC) 1\nCOMMUNICATION FIELD MANAGER (N 1\nCOMMUNITY LIAISON REPRESENTIVE 1\nCHAIR-LANDMARKS PRESERVATION C 1\nEXECUTIVE DIRECTOR (LANDMARKS 1\nCHAIR (HA) 1\nEXECUTIVE DIRECTOR OF PUBLIC I 1\nCHAIR, PROCUREMENT POLICY BOAR 1\nDEPUTY COUNSEL (NYCDC) 1\nCOMMISSIONER (TAX APPEALS TRIB 1\nCOMMISSIONER OF HOMELESS SERVI 1\nMEMBER, CIVILIAN COMPLAINT REV 1\nPUBLIC ADVOCATE 1\nASSISTANT TO THE PUBLIC ADVOCA 2\nCOUNSEL TO THE PUBLIC ADVOCATE 1\nEXECUTIVE ASSISTANT AND COUNSE 1\nEXECUTIVE SECRETARY TO THE PUB 1\nFIRST ASSISTANT TO THE PUBLIC 1\nRESEARCH ANALYST TO THE PUBLIC 1\nCOMMISSIONER OF BUSINESS SERVI 1\nASSOCIATE ACCOUNTANT (PUBLIC A 1\nASSOCIATE STAFF ANALYST (PUBLI 1\nDIRECTOR OF COMMUNICATIONS (PU 1\nOFFICE ASSISTANT (PUBLIC ADVOC 1\nOFFICE MANAGER (PUBLIC ADVOCAT 1\nPRINCIPAL INVESTIGATOR (PUBLIC 1\nPROGRAM RESEARCH ANALYST TO TH 1\nSENIOR INVESTIGATOR (PUBLIC AD 1\nSPECIAL ASSISTANT (PUBLIC ADVO 1\nCOMMISSIONER OF DEPT OF INFO T 1\nDEPUTY CHIEF OF STAFF (CITY CO 1\nCOMMISSIONER OF CHILDREN'S SER 1\nDIRECTOR OF INDEPENDENT BUDGET 1\nCOMMISSIONER OF DESIGN & CONST 1\nCOMMISSIONER OF CITYWIDE ADMIN 1\nTRAINER ASSISTANT (BOARD OF EL 1\nCHAIR (BIC) 1\nCOMPUTER SPECIALIST (SOFTWARE 4\nCHIEF OF STAFF (BUILDINGS) 1\nCHIEF ASSET MANAGEMENT OFFICER 1\nCHIEF STRATEGY OFFICER (BUILDI 1\nCHIEF STRUCTURAL ENGINEER (BUI 1\nBOROUGH COMMISSIONER (BUILDING 1\nCHIEF OF STAFF TO THE MAYOR 1\nDIRECTOR OF THE OFFICE OF SCHE 1\nEXECUTIVE DIRECTOR OF GRACIE M 1\nEXECUTIVE DIRECTOR OF THE COMM 1\nEXECUTIVE DIRECTOR, CITYWIDE E 1\nEXECUTIVE DIRECTOR, SPECIAL PR 1\nCHIEF SERVICE OFFICER OF NYC S 1\nDIRECTOR OF THE MAYORâ€™S OFFICE 3\nDIRECTOR OF THE OFFICE OF CORR 1\nDIRECTOR OF THE OFFICE OF IMMI 1\nASSISTANT TO COMMISSIONER (DEP 1\n*SENIOR STAFF OFFICER (LEGAL) 1\nEXECUTIVE AGENCY COUNSEL 43\nCOUNSEL (DEPARTMENT FOR THE AG 1\nEXECUTIVE DIRECTOR (POLICE PEN 1\nDEPUTY DIRECTOR (POLICE PENSIO 1\nSENIOR GENERAL DEPUTY MANAGER 1\nEXECUTIVE INSPECTOR (FD) 1\nFIRST DEPUTY COMMISSIONER (DOT 1\nDEPUTY COMMISSIONER (DOT) 3\nBOROUGH COMMISSIONER (DOT) 2\nDIRECTOR OF ADMINISTRATION (DE 1\nDIRECTOR OF COMMUNITY PROGRAMS 1\nDIRECTOR OF DIRECT SERVICE PRO 1\nDIRECTOR OF RESEARCH PLANNING 1\nDIRECTOR OF SENIOR CITIZEN REN 1\nCHIEF OF STAFF (DOT) 1\nCHIEF OF STAFF (FDNY PENSION F 1\nFIRST DEPUTY COMMISSIONER (ACS 1\nEXECUTIVE DEPUTY COMMISSIONER 3\nEXECUTIVE DIRECTOR (OPA) 1\nDEPUTY EXECUTIVE DIRECTOR (OPA 1\nCHIEF OF STAFF (PD) 1\nDEPUTY COMMISSIONER (COUNTERTE 1\nDEPUTY COMMISSIONER (INTELLIGE 1\nDIRECTOR OF INTERNAL AFFAIRS - 1\nDIRECTOR OF ORGANIZED CRIME CO 1\nCONFIDENTIAL ASST TO THE EXECU 2\nASSISTANT COMMISSIONER (FD) 1\nDIR ORG CRIME DETAILED AS DIRE 1\nEXECUTIVE DIRECTOR OF FLEET 1\nASSOCIATE COMMISSIONER (FD) 1\nASSISTANT COMMISSIONER (DOC) 11\nASSOCIATE COMMISSIONER (DOC) 1\nDEPUTY COMMISSIONER (DOC) 11\nCHIEF OF STAFF (DOC) 1\nFIRST DEPUTY COMMISSIONER (DDC 1\nCHIEF OF STAFF (DDC) 1\nDIRECTOR FOR EQUAL EMPLOYMENT 2\nCHIEF OF STAFF TO FIRST DEPUTY 1\nADMINISTRATIVE ASSISTANT TO CO 1\nSECRETARY TO THE CHANCELLOR (D 1\nSECRETARY TO THE DEPUTY CHANCE 1\nSECRETARY TO THE COUNSEL TO TH 1\nEXECUTIVE DIRECTOR (EEPC) 1\nASSOCIATE COMMISSIONER FOR DET 1\nASSISTANT COMMISSIONER FOR SEC 1\nASSOCIATE COMMISSIONER FOR CLO 1\nASSOCIATE COMMISSIONER OF POLI 1\nASSOCIATE COMMISSIONER FOR CBA 1\nASSOCIATE COMMISSIONER FOR JUV 1\nASSOCIATE COMMISSIONER FOR FAC 1\nASSISTANT COMMISSIONER FOR OPE 1\nCHIEF EFFECTIVENESS OFFICER (A 1\nCHIEF OF STAFF TO THE COMMISSI 1\nDIRECTOR OF EQUAL EMPLOYMENT O 1\nCHIEF ACCOUNTABILITY OFFICER ( 1\nINTERNAL MONITOR (ACS) 1\nEXECUTIVE DIRECTOR OF EQUITY S 1\nDIRECTOR OF RACE EQUITY STRATE 1\nDIRECTOR OF LGBTQ AND GENDER E 1\nEXECUTIVE DIRECTOR OF PUBLIC A 1\nCHIEF OF STAFF (OFFICE OF THE 1\nSR ADVISOR FOR INVESTIGATIONS 1\nDEPUTY COMMISSIONER (DBS) 1\nSECRETARY OF DEPARTMENT (DBS) 1\nASSISTANT COMMISSIONER (DBS) 3\nGENERAL COUNSEL (DBS) 1\nFIRST DEPUTY COMMISSIONER (BIC 1\nDEPUTY COMMISSIONER OF INVESTI 1\nDIRECTOR OF INVESTIGATIONS (BI 1\nDIRECTOR OF INVESTIGATIVE AUDI 1\nDEPUTY ADMINISTRATOR 1\nDEPUTY COMMISSIONER FOR DEP PO 1\nDEPUTY COMMISSIONER COMMUNICAT 1\nEXECUTIVE CHIEF OF STAFF (DEP) 1\nASSISTANT COMMISSIONER FOR DEP 1\nSENIOR ADVISER TO THE COMMISSI 1\nEXECUTIVE ASST TO THE COMMISSI 1\nDIRECTOR OF MOTOR EQUIPMENT (E 1\nCOUNSEL (DEPT OF ENVIRONMENTAL 1\nMANAGER, WATER AND SEWER SYSTE 1\nMANAGER, WATER SUPPLY (JAMAICA 1\nDEPUTY ADMINSTRATOR/COMSNR-DOS 1\nMEDICAL DIRECTOR (SANITATION) 1\nDEPUTY DIRECTOR OF MOTOR EQUIP 1\nDIRECTOR OF MOTOR EQUIPMENT MA 2\nSUPERVISOR OF MARINE OPERATION 1\nDEP DIR MTR EQ MNTC(DOS)-MGRL 1\nDIRECTOR OF NOISE ABATEMENT 1\nDEPUTY COMMISSIONER (DEP) 1\nASSOCIATE COMMISSIONER (DEP) 1\nASSISTANT COMMISSIONER (DEP) 1\nADMINISTRATOR OF SLUDGE VESSEL 1\nSECRETARY TO THE EXEC DEPUTY C 1\nEXECUTIVE DIRECTOR TO THE ENVI 1\nDEPUTY COMMISSIONER (FINANCE) 1\nCHIEF INVESTIGATOR (CRIMINAL I 1\nASSISTANT COMMISSIONER (CRIMIN 1\nCITY REGISTER 1\nCHIEF OF LAW BUREAU (OPINIONS/ 1\nDIRECTOR OF HEARING BUREAU (FI 1\nDIRECTOR OF LITIGATION BUREAU 1\nASSISTANT COMMISSIONER (ADM SE 1\nASSISTANT COMMISSIONER (AUDIT) 1\nASSISTANT COMMISSIONER (CASH M 1\nASSIST COMMISSIONER (MANAGEMEN 1\nASSISTANT COMMISSIONER (MANAGE 1\nASST COMMISSIONER (REAL PROPER 1\nASSISTANT COMMISSIONER (TAX PR 1\nCITY COLLECTOR 1\nCOUNSEL (DEPARTMENT OF FINANCE 1\nASSISTANT COUNSEL (TAX COMMISS 1\nCOUNSEL (TAX COMMISSION) 1\nEXEC ASST TO THE COMMISSIONER 1\nCHIEF ASSESSOR (FINANCE) 1\nCHIEF OF CITY SHERIFF OPERATIO 1\nEXECUTIVE DEPUTY SHERIFF (FINA 1\nSECRETARY TO DEPUTY COMMISSION 1\nDEPUTY COUNSEL (DCA) 1\nSPECIAL ADVISOR TO THE MAYOR 1\nDEPUTY COMMISSIONER (HEALTH) 1\nDIRECTOR OF NURSING SERVICES 1\nASSOCIATE DIRECTOR OF NURSING 1\nALCOHOLISM COUNSELOR 1\nASST COMMISSIONER (COMM DISEAS 1\nASST COMMISSIONER (ENV HS)-HMH 1\nPEDIATRIC NURSE ASSOCIATE 1\nASSISTANT COMMISSIONER (LABORA 1\nASST COMMISSIONER (PROFESSIONA 1\nASSISTANT COMMISSIONER (SUBSTA 1\nCOUNSEL (DEPARTMENT OF HEALTH) 1\nDIRECTOR OF ADMINISTRATIVE TRI 1\nASSISTANT COMMISIONER (M&C HEA 1\nCHIEF CITY MEDICAL EXAMINER 1\nDEPUTY CHIEF CITY MEDICAL EXAM 1\nASSOCIATE CHIEF CITY MEDICAL E 1\nDEPUTY COMMISSIONER FOR ADMINI 1\nDIRECTOR (OCME TOXICOLOGICAL L 1\nDEPUTY COMMISSIONER (MENTAL HE 1\nAsst Comm-Prgm Dev Revw-HMH 1\nSPECIAL ASSISTANT IN MENTAL RE 1\nDIRECTOR OF PSYCHIATRY 1\nCOUNSEL (DEPT OF MENTAL HEALTH 1\nREGIONAL DIRECTOR MENTAL HEALT 1\nEXECUTIVE ASSISTANT (DEPT M H 1\nDIRECTOR (BUREAU OF ALCOHOLISM 1\nDIRECTOR (OFFICE OF PLANNING A 1\nDIRECTOR (OFFICE OF REHABILITA 1\nDIRECTOR OF FORENSIC BIOLOGY ( 1\nASSISTANT DIRECTOR OF FORENSIC 1\nDIRECTOR OF MEDICOLEGAL INVEST 1\nASSISTANT DIRECTOR OF TOXICOLO 2\nDEPUTY COMMISSIONER (BUILDINGS 1\nCOUNSEL (DEPARTMENT OF BLDGS) 1\nASSISTANT COMMISSIONER (BUILDI 1\nASSISTANT COMMISSIONER FOR LAB 1\nEXECUTIVE INSPECTOR (BUILDINGS 1\nDEPUTY COMMISSIONER (HOUSING P 1\nDIRECTOR OF PROPERTY MANAGEMEN 3\nEXECUTIVE ASSISTANT TO THE DEP 1\nDEPUTY COUNSEL (EVALUATION AND 1\nGENERAL COUNSEL 1\nDIRECTOR OF DEMOLITION & SEALI 1\nDIRECTOR OF MANAGEMENT & PLANN 1\nASSISTANT COMMISSIONER (ALTERN 1\nASSISTANT COMMISSIONER (ENERGY 1\nASSISTANT COMMISSIONER (CODE E 1\nASSISTANT COMMISSIONER (EVALUA 3\nASSISTANT COMMISSIONER (FISCAL 1\nASSISTANT COMMISSIONER (GOVERN 1\nASSISTANT COMMISSIONER (HOUSIN 1\nASSISTANT COMMISSIONER (NEIGHB 1\nASSISTANT COMMISSIONER (RELOCA 1\nASSISTANT COMMISSIONER (IN REM 1\nASSISTANT COMMISSIONER (SPECIA 1\nASST COMMISSIONER (MAINTENANCE 1\nASSISTANT COMMISSIONER (PUBLIC 1\nADMINISTRATIVE PROJECT DIRECTO 4\nSPECIAL ASSISTANT TO THE COMMI 4\nDEPUTY GENERAL COUNSEL (HPD) 1\nDIRECTOR OF NEIGHBORHOOD CONSE 1\nLEGISLATIVE ASSISTANT (HPD) 1\nEXECUTIVE DIRECTOR (PROGRAM & 1\nASSISTANT COMMISSIONER (TECH S 1\nDEPUTY ASSISTANT COMMISIONER ( 1\nEXECUTIVE DEPUTY ADMINISTRATOR 1\nCOMMISSIONER OF COMMUNITY DEVE 1\nDEPUTY COMMISSIONER (CDA) 1\nDEPUTY COMMISSIONER (DOE) 1\nPUBLIC HEALTH PREVENTATIVE MED 3\nINVESTIGATOR (DISCIPLINE) HMH 3\nDIRECTOR OF FIELD OPERATIONS ( 4\nASSISTANT COMMISSIONER (CHILD 1\nASSISTANT COMMISSIONER FOR FAC 2\nASSOCIATE COMMISSIONER FOR ADU 1\nASSOCIATE COMMISSIONER FOR EMP 1\nASSOCIATE COMMISSIONER FOR PER 1\nEXEC ASST TO THE DEPUTY COMMIS 1\nDEPUTY DIRECTOR OF LABOR RELAT 2\nDIRECTOR OF LABOR RELATIONS (D 1\nASSOCIATE COMMISSIONER (BUILDI 1\nINVESTMENT MANAGER (COMPTROLLE 7\nDIRECTOR OF  INVESTMENTS (COMP 3\nASSISTANT COMMISSIONER (DCAS) 4\nDEPUTY COMMISSIONER OF IT 1\nDEPUTY ASSISTANT COMMISSIONER 3\nDEPUTY GENERAL COUNSEL (DCAS) 1\nASSISTANT COMMISSIONER FOR CIT 1\nDIRECTOR OF ENERGY CONSERVATIO 1\nDIRECTOR OF MUNICIPAL TELECOMM 1\nIT SECURITY SPECIALIST 26\nDIRECTOR OF SECURITY (DCAS) 1\nEXEC ASST TO THE DEPUTY COM FO 1\nGENERAL COUNSEL (DCAS) 1\nCHIEF OF STAFF (DCAS) 1\nSPECIAL ASSISTANT TO THE FIRST 1\nCHIEF OF STAFF FOR CITYWIDE PE 1\nDEPUTY COMMISSIONER (DCAS) 1\nDEPUTY COMMISSIONER FOR CITY P 1\nDIRECTOR OF THE CITY RECORD (D 1\nDIRECTOR OF PURCHASE (DCAS) 1\nDIRECTOR OF STORES (DCAS) 1\nSECRETARY OF THE DEPARTMENT (D 1\nASST COMMISSIONER FOR POLICY A 1\nASST COMMISSIONER FOR AGENCY P 1\nEXECUTIVE DIRECTOR OF HEALTHCA 1\nEXEC DIRECTOR OF GRANTS MANAGE 1\nDIRECTOR OF INTERAGENCY PLANNI 1\nDIRECTOR OF BIODETECTION RESPO 1\nDIRECTOR OF COMMUNITY ENGAGEME 1\nDIRECTOR OF NYC MEDICAL RESERV 1\nASSISTANT COMISSIONER FOR FAMI 1\nDEPUTY COMMISIONER(HOMELESS SE 1\nASST COMMISSIONER FOR PUBLIC & 1\nASST COMMISSIONER FOR SINGLES 1\nDEPUTY GENERAL COUNSEL (HOMELE 1\nDIRECTOR OF EEO (HOMELESS SVCS 1\nGENERAL COUNSEL (HOMELESS SVCS 1\nDIRECTOR OF COUNTERMEASURES AN 1\nDIR OF HEALTHCARE FACILITIES A 1\nDIRECTOR OF PUBLIC HEALTH EMER 2\nDIRCTOR OF MENTAL HEALTH DISAS 1\nDEPUTY DIRECTOR OF EMERGENCY M 1\nDEPUTY DIRECTOR OF HEADSTART P 1\nDIRECTOR OF HEADSTART PROGRAM 1\nASSOC ADM FOR PURCHASING MATER 1\nDEPUTY ASST ADMIN FOR PERSONNE 1\nEXECUTIVE ASSISTANT TO THE EXE 1\nASSIST COMMISSIONER FOR POLICY 1\nDEPUTY DIRECTOR OF HEALTH AND 1\nDIRECTOR OF  EXERCISES AND TRA 1\nEXECUTIVE DIRECTOR, NEW YORK C 1\nEXECUTIVE DIRECTOR OF PROFESSI 1\nASSISTANT ADMINISTRATOR OF PUB 1\nASSISTANT DEPUTY ADMINISTRATOR 1\nDEPUTY GENERAL COUNSEL (HRA) 1\nDIRECTOR OF FISCAL OPERATIONS 1\nDIRECTOR OF INTERNAL AUDITING 1\nDIRECTOR OF LEGISLATIVE COORDI 1\nDIR POLICY ECONOM RESRCH (HRA) 1\nDIRECTOR TITLE XX SVC PLANNING 1\nEXECUTIVE ASSISTANT TO THE HUM 1\nGENERAL COUNSEL (HRA) 1\nSPECIAL ASSISTANT TO THE HUMAN 1\nSECRETARY TO THE HUMAN RESOURC 1\nASST. COMM. OF FISCAL ADMINIST 1\nCHIEF OF STAFF (CDA) 1\nDIRECTOR OF PLANNING (CDA) 1\nASSIST COMMISSIONER FOR INTERG 1\nASSOC COMMISSIONER FOR PLANNIN 1\nDEPUTY COMMISSIONER (DEPT OF R 1\nSENIOR IT ARCHITECT 21\nIT AUTOMATION AND MONITORING E 23\nIT SERVICE MANAGEMENT SPECIALI 18\nIT INFRASTRUCTURE ENGINEER 19\nSPECIAL ASSISTANT TO THE EXECU 3\nSPECIAL ASSISTANT TO THE DEPUT 1\nGENERAL COUNSEL (DGS) 1\nGENERAL COUNSEL (YOUTH SERVICE 1\nGENERAL COUNSEL (DDC) 1\nDEPUTY GENERAL COUNSEL (DDC) 1\nASSISTANT COMMISSIONER FOR DES 1\nSPECIAL ASSISTANT (DESIGN AND 2\nASS COMMISSIONER DESIGN AND CO 1\nASSISTANT COMMISSIONER FOR MAN 1\nASSISTANT COMMISSIONER FOR PRO 1\nASSISTANT COMMISSIONER (SOCIAL 1\nCHIEF OF STAFF (HRA) 1\nDEPUTY ASST COMMISSIONER FOR P 1\nDEPUTY COMMISSIONER (ACD-DOSS) 1\nDEPUTY COMMISSIONER (FAS-DOSS) 1\nDEPUTY COMMISSIONER (GENERAL S 1\nDEPUTY COMMISSIONER (SPECIAL S 1\nDIRECTOR OF ADVOCACY (SSC-DOSS 1\nDIRECTOR OF COMMUNITY PARTICIP 1\nDIRECTOR OF COMPLIANCE & LEGIS 1\nDIR OF CONTRACT MGMT & INTERGO 1\nDIRECTOR OF EEO/CONTRACT COMPL 1\nDIRECTOR OF FOOD STAMP PROGRAM 1\nDIR OF HOME CARE SERVICES/FAMI 1\nDIRECTOR OF INFORMATION SERVIC 1\nDIRECTOR OF MANAGEMENT DESIGN 1\nDIR MGMT SYSTEMS, PLANNING, R 1\nDIRECTOR OF POLICY ANALYSIS (G 1\nMEDICAL DIRECTOR (MEDICAL ASSI 1\nASSISTANT COMMISSIONER (PARKS& 1\nASSISTANT COMMISSIONER (PARKS 2\nASSISTANT COMMISSIONER (RECREA 1\nMANAGER OF PARK LICENSE AGREEM 1\nCOUNSEL (DEPARTMENT OF PARKS & 1\nDIRECTOR OF COMMUNITY INVOLVEM 1\nDIRECTOR OF HISTORIC PARKS 1\nDIRECTOR OF URBAN PARK RANGER 1\nBOROUGH COMMISSIONER (PARKS AN 1\nDEPUTY BOROUGH COMMISSIONER (P 1\nDEPUTY CHIEF OF OPERATIONS (PA 1\nDIRECTOR OF URBAN ARCHAEOLOGY 1\nDEPUTY COMMISSIONER (PARKS & R 1\nDEPUTY COMMISSIONER (CULTURAL 1\nDIRECTOR OF PLAN & FIELD SERVI 1\nCOUNSEL (LANDMARKS PRESERVATIO 1\nSECRETARY TO THE CHAIR, LANDMA 1\nDEPUTY COMMISSIONER (TRANSPORT 1\nASSISTANT COMMISSIONER (TRAFFI 1\nASSISTANT COMMISSIONER (TRANSP 1\nEXECUTIVE ASSISTANT TO COMMISS 1\nASSISTANT TO THE DEPUTY COMMIS 1\nCOUNSEL (TRANSPORTATION) 1\nASSISTANT COMMISSIONER (PVB-DE 1\nHEARING OFFICER (PER SESSION) 1\n*ASSOCIATE DIRECTOR HEALTH PRO 3\n*ASSOCIATE EXECUTIVE DIRECTOR 1\n*COORDINATING MANAGER (HMH) 2\n*DIR OF FISCAL AFFAIRS (HMH) 1\n*DIRECTOR OF HEALTH CARE PROGR 1\nEXECUTIVE SECRETARY (HMH) 1\n*PERSONNEL DIRECTOR -HEALTH CA 4\n*PERSONNEL PROGRAM DEVELOPMENT 3\n*SR CONSULTANT MANAGEMENT INFO 2\nDEPUTY DIRECTOR (AVIATION)-DOT 1\nASSISTANT DIRECTOR (FERRIES) 1\nDEPUTY DIRECTOR (FERRIES) 1\nSPECIAL ASST DISTRICT ATTORNEY 2\nEMERGENCY MEDICAL SERVICE SPEC 2\n* ATTENDING DENTIST (HMH) FULL 3\nATTENDING PHYSICIAN 3\nPATIENT CARE TECHNICIAN 1\nSERVICE AIDE 1\nPATIENT CARE ASSOCIATE 1\nELECTION WORKER (PART-TIME)-BD 1\nADMINISTRATIVE BLASTING INSPECTOR 1\nADMINISTRATIVE CONSTRUCTION PROJECT MANAGER 29\nADMINISTRATIVE DEMOLITION INSPECTOR 1\nADMINISTRATIVE FIRE PROTECTION INSPECTOR 5\nADMINISTRATIVE INSPECTOR (BUILDINGS) 125\nADMINISTRATIVE INSPECTOR (ELECTRICAL) 1\nADMINISTRATIVE INSPECTOR (HOUSING) 50\nADMINISTRATIVE JUVENILE COUNSELOR 1\nADMINISTRATIVE LANDSCAPE ARCHITECT 8\nADMINISTRATIVE PARK AND RECREATION MANAGER 324\nADMINISTRATIVE PROBATION OFFICER 14\nADMINISTRATIVE QUALITY ASSURANCE SPECIALIST 1804\nADMINISTRATIVE REAL PROPERTY MANAGER 9\nADMINISTRATIVE TAXI AND LIMOUSINE INSPECTOR 14\nADMINISTRATIVE TRAFFIC ENFORCEMENT AGENT 45\nAPPRAISER (PERSONAL PROPERTY) 1\nASSISTANT CHIEF DETECTIVE INVESTIGATOR 1\nASSISTANT CHIEF OF DEMOLITION (HOUSING AUTHORITY) 1\nASSISTANT CITY ASSESSOR TRAINEE 1\nASSISTANT PLAN EXAMINER (BUILDINGS) 559\nASSOCIATE CASHIER (TA) 985\nASSOCIATE FIRE PROTECTION INSPECTOR 282\nASSOCIATE FRAUD INVESTIGATOR 1128\nASSOCIATE INSPECTOR (CONSTRUCTION) 53\nASSOCIATE INSPECTOR (CONSUMER AFFAIRS) 1\nASSOCIATE INSPECTOR (ELECTRICAL) 1\nASSOCIATE INSPECTOR (ELEVATOR) 4\nASSOCIATE INSPECTOR (HIGHWAYS AND SEWERS) 33\nASSOCIATE INSPECTOR (HOISTS AND RIGGING) 1\nASSOCIATE INSPECTOR (HOUSING CONSTRUCTION) 2\nASSOCIATE INSPECTOR (LOW PRESSURE BOILERS) 1\nASSOCIATE INSPECTOR (PLASTERING) 1\nASSOCIATE INSPECTOR (STEEL CONSTRUCTION) 1\nASSOCIATE INVESTIGATOR 573\nASSOCIATE PUBLIC HEALTH SANITARIAN 527\nASSOCIATE QUALITY ASSURANCE SPECIALIST 29\nASSOCIATE QUALITY ASSURANCE SPECIALIST (FOODS) 1\nASSOCIATE QUALITY ASSURANCE SPECIALIST (FUEL) 1\nASSOCIATE QUALITY ASSURANCE SPECIALIST (METALS) 1\nASSOCIATE QUALITY ASSURANCE SPECIALIST(PUPIL TRANSPORTATION 35\nASSOCIATE REAL PROPERTY MANAGER 31\nASSOCIATE REHABILITATION SPECIALIST (HPD) 1\nASSOCIATE SANITATION ENFORCEMENT AGENT 189\nASSOCIATE SUPERVISOR OF SCHOOL SECURITY 117\nASSOCIATE TAXI AND LIMOUSINE INSPECTOR 220\nASSOCIATE TRAFFIC ENFORCEMENT AGENT 3383\nASSOCIATE YOUTH DEVELOPMENT SPECIALIST 1\n1 of 4 1\nINVESTIGATION BEFORE APPOINTMENT TITLES (as of 10/14/2020) 3\nBLASTING INSPECTOR 1\nBRIDGE AND TUNNEL LIEUTENANT 103\nBRIDGE AND TUNNEL OFFICER 1\nBRIDGE AND TUNNEL SERGEANT 260\nCAPTAIN (CORRECTION) 1115\nCAPTAIN (POLICE) 2134\nCHIEF MARINE ENGINEER (UNIFORMED) 1\nCHIEF OF DEMOLITION (HOUSING AUTHORITY) 1\nCITY ASSESSOR 239\nCLAIM EXAMINER TRAINEE (TRANSIT AUTHORITY) 1\nCONGREGATE CARE SPECIALIST 1\nCONSTRUCTION PROJECT MANAGER INTERN 1095\nCONSULTANT (EARLY CHILDHOOD EDUCATION) 405\nCOORDINATOR FOR HOMELESS SERVICES (MA) 1\nDEPUTY CHIEF (FIRE) 578\nDIRECTOR, MAYOR'S ACTION CENTER (MA) 1\nEMERGENCY MEDICAL SPECIALIST TRAINEE 14282\nEMERGENCY MEDICAL SPECIALIST - EMT 1\nEMERGENCY MEDICAL SPECIALIST - PARAMEDIC 1\nEVIDENCE AND PROPERTY CONTROL SPECIALIST 2010\nHOUSING EXTERMINATOR 384\nHULL AND MACHINERY INSPECTOR 1\nINSPECTOR (CONSUMER AFFAIRS) 1\nINSPECTOR (ELECTRICAL) 26\nINSPECTOR (ELEVATOR) 38\nINSPECTOR (HEATING AND VENTILATION) 1\nINSPECTOR (HOUSING CONSTRUCTION) 1\nINSPECTOR (LOW PRESSURE BOILERS) 12\nINSPECTOR (PLASTERING) 1\nINSPECTOR (STEEL CONSTRUCTION) 1\nINSPECTOR OF FIRE ALARM BOXES 1\nINSPECTOR OF TIRES 1\nINVESTIGATOR (DISCIPLINE)_(ALL MAYORAL AGENCIES) 1\nINVESTIGATOR (EMPLOYEE DISCIPLINE) MAYORAL AGENCIES ONLY 1\nINVESTIGATOR (LIBRARY) 1\nINVESTIGATOR TRAINEE 1\n2 of 4 1\nLIEUTENANT (POLICE) 8581\nMARINE ENGINEER (UNIFORMED-FIRE DEPARTMENT) 10\nPAINTING INSPECTOR 1\nPIPE LAYING INSPECTOR 1\nPLAN EXAMINER (BUILDINGS) 86\nPOLICE COMMUNICATIONS TECHNICIAN 59755\nPOLICE OFFICER 198553\nPRINCIPAL APPRAISER (REAL ESTATE) 2\nQUALITY ASSURANCE SPECIALIST (AUTOMOTIVE EQUIPMENT) 3\nQUALITY ASSURANCE SPECIALIST (BUILDING REPAIRS) 2\nQUALITY ASSURANCE SPECIALIST (FOODS) 1\nQUALITY ASSURANCE SPECIALIST (FUEL) 1\nQUALITY ASSURANCE SPECIALIST (METALS) 1\nQUALITY ASSURANCE SPECIALIST (PUPIL TRANSPORTATION) 1\nQUALITY ASSURANCE SPECIALIST TRAINEE 1\nQUALITY CONTROL SPECIALIST 2\nRECREATION ASSISTANT 1\nREHABILITATION SPECIALIST (HPD) 1\nREPORTER/STENOGRAPHER (DA) 138\nROAD CAR INSPECTOR 2943\nSENIOR BLASTING INSPECTOR 1\nSENIOR DEMOLITION INSPECTOR 1\nSENIOR HULL AND MACHINERY INSPECTOR 1\nSENIOR INSPECTOR OF FIRE ALARM BOXES 1\nSENIOR PAINTING INSPECTOR 1\nSENIOR PIPE LAYING INSPECTOR 1\nSENIOR SERVICE INSPECTOR (BOARD OF EDUCATION) 1\nSENIOR SERVICE INSPECTOR (PROJECT SCORECARD) 1\nSENIOR WATERFRONT CONSTRUCTION INSPECTOR 1\nSERGEANT (POLICE) 19242\nSERVICE INSPECTOR (BOARD OF EDUCATION) 5\nSERVICE INSPECTOR (PROJECT SCORECARD) 1\nSPECIAL INVESTIGATOR (LIBRARY) 1\nSUPERVISING DEMOLITION INSPECTOR 1\nSUPERVISING DEPUTY SHERIFF-AL I ((ONLY)) 43\nSUPERVISING FIRE MARSHAL (UNIFORMED) 135\nSUPERVISING HULL AND MACHINERY INSPECTOR 1\n3 of 4 1\nSUPERVISING INSPECTOR (MECHANICAL) 1\nSUPERVISOR OF INVESTIGATORS (CCRB) 1\nSUPERVISOR OF TRACTOR OPERATORS 1\nTERMINAL MARKET MANAGER 1\nTRACTOR OPERATOR 46\nTRAFFIC ENFORCEMENT AGENT 59768\nTRAFFIC ENFORCEMENT AGENT (ASSIGNMENT LEVEL III & IV ONLY) 1\nTRANSPORTATION INSPECTOR 1\nWARDEN (CORRECTION)((MANAGERIAL ASSIGNMENTS) 342\nWATERFRONT CONSTRUCTION INSPECTOR 1\n4 of 4 1\nPRINCIPAL ADMINISTRATIVE ASSOCIATE 59940\nDISPATCHER (SURFACE TRANSPORTATION) 7132\nMAINTENANCE SUPERVISOR (CAR EQUIPMENT) 1209\nASSISTANT SUPERINTENDENT OF WELFARE SHELTERS 605\nADMINISTRATIVE STAFF ANALYST 29239\nSENIOR POLICE ADMINISTRATIVE AIDE 4223\nASSOCIATE JOB OPPORTUNITY SPECIALIST 2426\nPROGRAM SPECIALIST (CORRECTION) 2788\nCOLLECTING AGENT 856\nCONGREGATE CARE SPECIALIST (40 HOUR WEEK) FOR DJJ EMPS ONLY 293\nASSISTANT PUBLIC HEALTH ADVISER (COMMUNICABLE DISEASE CONTR) 602\nSUPERVISOR OF MECHANICS (MECHANICAL EQUIPMENT) 1030\nMAINTENANCE SUPERVISOR (REVENUE) 366\nMAINTENANCE SUPERVISOR (TRACK) 711\nWORKERS' COMPENSATION BENEFITS EXAMINER 351\nCHILD PROTECTIVE SPECIALIST 20882\nTRANSIT PROPERTY PROTECTION SUPERVISOR 82\nSUPERVISOR II (SOCIAL SERVICES) 3031\nASSISTANT RETIREMENT BENEFITS EXAMINER 1043\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP H-AIR CONDITIONING 46\nCUSTOMER INFORMATION REPRESENTATIVE 5826\nHEATING PLANT TECHNICIAN (HOUSING AUTHORITY) 1415\nTELECOMMUNICATIONS ASSOCIATE (DATA) 1229\nBUS MAINTAINER - GROUP B 1818\nCONDUCTOR 167063\nSTRUCTURE MAINTAINER - GROUP D 333\nASSISTANT CHEMICAL ENGINEER 116\nCLIMBER AND PRUNER 69\nTRACK WORKER 48832\nELEVATOR MECHANIC'S HELPER 178\nSUPERVISOR OF HOUSING CARETAKERS 278\nEMERGENCY MEDICAL SPECIALIST-PARAMEDIC 11357\nMAINTAINER'S HELPER-GROUP B 1007\nTRAIN OPERATOR 79609\nTRANSIT ELECTRICAL HELPER 6587\nMAINTAINER (BRIDGES AND TUNNELS) 456\nELECTRICIAN'S HELPER 3567\nSUPERVISOR OF OFFICE MACHINE OPERATIONS 101\nPROJECT MANAGER INTERN 2934\nENVIRONMENTAL ENGINEERING INTERN 219\nTRACK EQUIPMENT MAINTAINER 217\nSUPERVISOR (STATIONS) 1794\nPUBLIC HEALTH NURSE (SCHOOL HEALTH) 1813\nSUPERVISING ASSOCIATE CASHIER (TRANSIT AUTHORITY) 174\nTELECOMMUNICATIONS ASSOCIATE (VOICE) 274\nRAILROAD STOCK WORKER 789\nSENIOR STATIONARY ENGINEER (ELECTRIC) 112\nSUPERVISOR III (SOCIAL SERVICES) 542\nSUPERVISOR II (SOCIAL WORK) 139\nBUS OPERATOR 67304\nDISPATCHER (RAPID TRANSIT OPERATIONS) 3924\nEMERGENCY MEDICAL SPECIALIST-EMT 24181\nSUPERVISING COMPUTER SERVICE TECHNICIAN 388\nASSOCIATE PUBLIC INFORMATION SPECIALIST 711\nASSISTANT HOUSING MANAGER 2360\nHOUSING ASSISTANT 5272\nSUPERVISING POLICE COMMUNICATIONS TECHNICIAN 1246\nASSISTANT TRAIN DISPATCHER 4094\nTELEPHONE MAINTAINER 1300\nESTIMATOR (GENERAL CONSTRUCTION) 746\nASSOCIATE HOUSING DEVELOPMENT SPECIALIST 46\nMAINTENANCE SUPERVISOR (SURFACE) 558\nSIGNAL MAINTAINER 1156\nMAINTENANCE SUPERVISOR (POWER ELECTRONICS) 4\nSTATION AGENT 17338\nTRANSIT ELECTRO-MECHANICAL MAINTAINER 558\nMAINTENANCE SUPERVISOR (POWER DISTRIBUTION) 117\nTOWER OPERATOR 3544\nMASON'S HELPER 1046\nHIGHWAY TRANSPORTATION SPECIALIST 612\nSTRUCTURE MAINTAINER - GROUP C 349\nCOMPUTER PROGRAMMER ANALYST TRAINEE 433\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP C-IRON WORK) 114\nADMINISTRATIVE DIRECTOR OF MARINE MAINTENANCE 3\nASSOCIATE RETIREMENT BENEFITS EXAMINER 975\nTRANSIT PROPERTY PROTECTION AGENT 3205\nASSISTANT TRANSIT MANAGEMENT ANALYST (OPERATIONS) 1\nGENERAL SUPERINTENDENT (SANITATION) 605\nTRAIN SERVICE SUPERVISOR 3571\nELECTRONIC EQUIPMENT MAINTAINER 342\nMAINTENANCE SUPERVISOR (STORES) 760\nCERTIFIED IT ADMINISTRATOR (LAN/WAN) 24505\nPRINCIPAL POLICE COMMUNICATIONS TECHNICIAN 292\nSENIOR OFFICE APPLIANCE MAINTAINER 1\nPHYSICIAN'S ASSISTANT 1\nSTRUCTURE MAINTAINER - GROUP B 608\nSUPERVISING EMERGENCY MEDICAL SERVICE SPECIALIST 1592\nBUS MAINTAINER - GROUP A 304\nCAR INSPECTOR 3088\nSTRUCTURE MAINTAINER - GROUP G 902\nLIGHT MAINTAINER 802\nASSOCIATE OPERATIONS COMMUNICATIONS SPECIALIST 3\nCHIEF OF HOUSING COMMUNITY ACTIVITIES 3\nINTERPRETER, CHINESE (CANTONESE, MANDARIN, TAIWANESE-FACILIT 2\nDIRECTOR (TELEVISION) 3\nHEARING EXAMINER (HOUSING AUTHORITY) 9\nMAINTENANCE SUPERVISOR (ELECTRICAL POWER) 277\nPOWER ELECTRONIC TECHNICIAN 169\nPOWER DISTRIBUTION MAINTAINER 677\nSUPERVISOR III (SOCIAL WORK) 13\nSUPERVISING HOUSING GROUNDSKEEPER 272\nCOMPUTER SERVICE TECHNICIAN 3236\nASSOCIATE PARKING CONTROL SPECIALIST 7\nSUPERVISOR OF RADIO AND TELEVISION OPERATORS 6\nSENIOR ESTIMATOR (MECHANICAL) 1\nASSISTANT RESIDENT BUILDINGS SUPERINTENDENT 333\nSUPERVISING PUBLIC HEALTH ADVISER 2\nADMINISTRATIVE DIRECTOR OF SOCIAL SERVICES 78400\n*SUPERVISOR (EXTERMINATORS) 9\nADMINISTRATIVE SAFETY OFFICER (TA) 10\nEXECUTIVE SECRETARY (TBTA) 6\nACTUARIAL SPECIALIST 8\nSUPERINTENDENT OF WATER AND SEWER SYSTEMS 14\nADMINISTRATIVE REVENUE MANAGER (TA) 3\nREVENUE EQUIPMENT MAINTAINER 690\nSUPERVISOR (WATERSHED MAINTENANCE) 555\nCHILD PROTECTIVE SPECIALIST SUPERVISOR 5297\nMAINTENANCE SUPERVISOR (POWER CABLES) 22\nPOWER CABLE MAINTAINER 112\nASSISTANT PRINTING PRESS OPERATOR 11\nADMINISTRATIVE SUPERINTENDENT OF HIGHWAY OPERATIONS 20\nASSOCIATE PUBLIC RECORDS OFFICER 11\nSTRUCTURE MAINTAINER - GROUP A 1038\nMAINTENANCE SUPERVISOR (TRACK EQUIPMENT) 93\nSENIOR INSTITUTIONAL TRADES INSTRUCTOR (TAILORING) 2\nADMINISTRATIVE SCHOOL FOOD SERVICE MANAGER 13\nADMINISTRATIVE PUBLIC HEALTH SANITARIAN 18\nMAINTENANCE SUPERVISOR (ELECTRONIC EQUIPMENT) 89\nMAINTENANCE SUPERVISOR (LIGHTING) 90\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP B-MASONRY) 93\nMAINTENANCE SUPERVISOR (VENTILATION AND DRAINAGE) 40\nADMINISTRATIVE COMMUNITY RELATIONS SPECIALIST 104939\nCOMPUTER ASSOCIATE (SOFTWARE) 81155\nMECHANICAL MAINTAINER - GROUP C 104\nASSOCIATE TRANSIT MANAGEMENT ANALYST (OPERATIONS) 5\nSUPERVISOR STEAM FITTER 14\nSUPERVISOR OF ELECTRICAL INSTALLATIONS AND MAINTENANCE 434\nADMINISTRATIVE RETIREMENT BENEFITS SPECIALIST 147\nADMINISTRATIVE PRINTING SERVICES MANAGER 7\n*ASSOCIATE EDUCATION OFFICER 61\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP E-PLUMBING) 138\nCOMPUTER ASSOCIATE (TECHNICAL SUPPORT) 100989\nSUPERVISING FIRE ALARM DISPATCHER 103\nSYSTEM SAFETY SPECIALIST TRAINEE (TRANSIT AUTHORITY) 1\nCOLLECTION SUPERVISOR (REVENUE) 79\nPOWER MAINTAINER, GROUP B 253\nAREA MANAGER OF SCHOOL MAINTENANCE 18\nSYSTEM SAFETY SPECIALIST (TRANSIT AUTHORITY) 53\nCOUNSELOR (ADDICTION TREATMENT) 371\nTRANSIT CUSTOMER SERVICE SPECIALIST 7\nASSOCIATE SCHOOL FOOD SERVICE MANAGER 8\nADMINISTRATIVE DIRECTOR OF RESIDENTIAL CHILD CARE 32\nSCHOOL COMPUTER TECHNOLOGY SPECIALIST (DOE) 3538\nMAINTENANCE SUPERVISOR (SIGNALS) 645\nCONTRACT REVIEWER (OFFICE OF LABOR SERVICES) 20\nTELECOMMUNICATIONS MANAGER 12\nADMINISTRATIVE LANDMARKS PRESERVATIONIST 12\nADMINISTRATIVE DIRECTOR OF LABORATORY (WATER QUALITY) 5\nASSOCIATE RAILROAD SIGNAL SPECIALIST (OPERATIONS) 23\nADMINISTRATIVE SUPERVISOR OF BUILDING MAINTENANCE 23\nADMINISTRATIVE PUBLIC HEALTH NURSE 54\nADMINISTRATIVE BOROUGH SUPERINTENDENT 10\nPROGRAM OFFICER (DEPARTMENT FOR THE AGING) 25\nPRINCIPAL TRANSIT MANAGEMENT ANALYST (OPERATIONS) 8\nASSOCIATE TRANSIT MANAGEMENT ANALYST 152\nPRINCIPAL TRANSIT MANAGEMENT ANALYST 175\nADMINISTRATIVE EDUCATION OFFICER 1812\nCOMPUTER SPECIALIST (OPERATIONS) 27727\nOPERATIONS COMMUNICATIONS SPECIALIST 15\nADMINISTRATIVE EDUCATION ANALYST 3310\nADMINISTRATIVE PROGRAM OFFICER (DEPT. FOR THE AGING) 23\nBIO MEDICAL EQUIPMENT TECHNICIAN 1\nHOUSING DEVELOPMENT SPECIALIST TRAINEE 1\nSUPERVISOR (WATER AND SEWER SYSTEMS) 284\nADMINISTRATIVE HOUSING DEVELOPMENT SPECIALIST 933\nCERTIFIED IT ADMINISTRATOR (DATABASE) 2814\nCONSULTANT (PUBLIC HEALTH SOCIAL WORK) 18\nCERTIFIED IT DEVELOPER (APPLICATIONS) 4093\nTESTS AND MEASUREMENT SPECIALIST 24\nCAR MAINTAINER - GROUP B 360\nSTRUCTURE MAINTAINER - GROUP E 551\nASSISTANT TRANSIT MANAGEMENT ANALYST 47\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP A-CARPENTRY) 87\nSENIOR ESTIMATOR (GENERAL CONSTRUCTION) 20\nAREA SUPERVISOR (HIGHWAY MAINTENANCE) 178\nMAINTENANCE SUPERVISOR (ELEVATORS AND ESCALATORS) 91\nMAINTENANCE SUPERVISOR (TELEPHONES) 97\nADMINISTRATIVE JOB OPPORTUNITY SPECIALIST (NON-MANAGERIAL) 79\n*FIRST ASSISTANT MARINE ENGINEER (DIESEL) 2\nADMINISTRATIVE PUBLIC INFORMATION SPECIALIST 4249\nADMINISTRATIVE CONTRACT SPECIALIST 6186\nCOMPUTER ASSOCIATE (OPERATIONS) 30199\nADMINISTRATIVE MANAGEMENT AUDITOR 535\nSPECIAL CONSULTANT (MENTAL HEALTH STANDARDS AND SERVICES) 4252\nASSOCIATE CALL CENTER REPRESENTATIVE 166\nRESIDENT BUILDINGS SUPERINTENDENT 539\nHEATING AND AIR CONDITIONING MAINTAINER 112\nADMINISTRATIVE PROCUREMENT ANALYST 7867\nELEVATOR AND ESCALATOR MAINTAINER 80\nTRANSIT MANAGEMENT ANALYST TRAINEE 1379\nHOUSING MANAGER 1103\nVENTILATION AND DRAINAGE MAINTAINER 101\nPOWER ELECTRONIC MAINTAINER 16\nMARINE OILER (FERRY OPERATIONS) 47\nADMINISTRATIVE TRANSPORTATION COORDINATOR 343\nSIGNAL MAINTAINER TRAINEE 137\nAUTO MACHINIST 11\nMATE (FERRY) 79\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP D-SHEET METAL) 38\nELEVATOR AND ESCALATOR SPECIALIST 1\nCAR MAINTAINER - GROUP C 16\nSUPERVISOR COMMUNICATION ELECTRICIAN 36\nADMINISTRATIVE LABOR RELATIONS ANALYST 624\nCRANE OPERATOR (ANY MOTIVE POWER EXCEPT STEAM) 7\nTRANSIT RAILCAR TECHNOLOGY SPECIALIST (OPERATIONS) 4\nMULTIPLE DWELLING SPECIALIST (BUILDINGS) 1\nPUBLIC HEALTH ADVISER (SCHOOL HEALTH) 1403\nASSISTANT ENVIRONMENTAL ENGINEER 360\nASSOCIATE AIR POLLUTION INSPECTOR 5\nTRANSIT RAILCAR TECHNOLOGY SPECIALIST INTERN 2\nADMINISTRATIVE BUSINESS PROMOTION COORDINATOR 225\nSUPERVISOR OF MECHANICAL INSTALLATIONS AND MAINTENANCE 381\nMAINTENANCE SUPERVISOR (STRUCTURES-GROUP F-PAINTING) 25\nBRIDGE AND TUNNEL SUPERVISOR 22\nASSOCIATE LABOR RELATIONS ANALYST 13\nSENIOR QUALITY CONTROL SPECIALIST 9\nASSOCIATE TRANSIT CUSTOMER SERVICE SPECIALIST 34\nSENIOR CONSULTANT (PUBLIC HEALTH SOCIAL WORK) 15\nASSOCIATE CORRECTIONAL COUNSELOR 100\nPRINCIPAL MULTIPLE DWELLING SPECIALIST (BUILDINGS) 3\nMANAGER OF RADIO REPAIR OPERATIONS 4\nADMINISTRATIVE TRANSIT CUSTOMER SERVICE SPECIALIST 27\nADMINISTRATIVE HOUSING SUPERINTENDENT 41\nADMINISTRATIVE CONSULTANT (EARLY CHILDHOOD EDUCATION) 3\nASSOCIATE LABORATORY MICROBIOLOGIST 18\nCERTIFIED IT ADMINISTRATOR LAN 2\nPEST CONTROL AIDE 2\nCERT. IT ADMINISTRATOR WAN 4\n 724\nPolice Officer 1508\nChild Protective Specialist Supervisor 4\nAuto Mechanic 51\nSchool Safety Agent 228\nTraffic Enforcement Agent 108\nComputer Associate (Software) 151\nClerical Associate 51\nCity Planner 32\nComputer Associate (Technical Support) 37\nStructure Maintainer Group E 7\nAuto Mechanic (Diesel) 17\nCar Inspector 45\nProcurement Analyst 81\nPolice Offficer 8\nConductor 23\nCorrection Officer 706\nPromotion to Child Protective Specialist Supervisor 22\nJuvenile Counselor 11\nRevenue Equipment Maintainer 3\nConstruction Project Manager 16\nSenior Stationary Engineer 18\nStock Worker 3\nAdministrative Staff Analyst 46\nEmergency Medical Specialist Trainee 6\nAssociate Transit Management Analyst (Operations) 2\nSecretary 2\nComputer Programmer Analyst 51\nSpecial Officer 41\nStatistician 16\nSanitation Worker 126\nMotor Vehicle Operator 2\nFraud Investigator 11\nComputer Associate (Technical Support) (PROM) 2\nEmergency Medical Specialist - EMT 55\nEligibility Specialist 4\nChild Protective Specialist 15\nChild Protective Specialist Supervisor (PROM) 5\nEmergency Medical Spcialist - EMT (FIRE) 1\nAdministrative Graphic Artist 4\nComputer Associate 4\nPolice officer 7\nAdministrative Community Relations Specialist 33\nDeputy City Sheriff 19\nMaintenance Worker 68\nAdministrative Retirement Benefits Specialist 2\nPolice Communications Technician 80\nPromotion to Computer Associate (Technical Support) 2\nAssistant Resident Buildings Superintendent 6\nEmerg.Med.Spec.-EMT 4\nSignal Maintainer 3\nPromotional Police Officer 17\nPromotion to Captain (Police) 6\nProbation Officer 86\nAssociate Job Opportunity Specialist 4\nPrincipal Administrative Associate 25\nPromotion to Lieutenant (Police) 8\nTrain Operator 100\nPromotion to Principal Administrative Associate 9\nAdministrative Director of Social Services 38\nHigh Pressure Plant Tender 1\nPromotion to Captain (Correction) 4\nPublic Health Nurse (School Health) 5\nAssociate Public Records Officer 1\nHealth Services Manager 17\nPolice offficer 1\nEducation Officer 9\nPolice Administrative Aide 12\nPromotion to Train Operator 6\nComputer Service Technician 20\nStructure Maintainer Group G 9\nEmergency Medical Specialist - EMT (Fire) 11\nSignal Maintainer Helper 2\nConstruction Project Manager Intern 8\nAssociate Fraud Investigator (PROM) 1\nMarine Oiler 2\nCongregate Care Specialist 9\nEmegency Medical Specialist - EMT 2\nPrincipal Administrative Associate (Promotion) 2\nStation Agent 6\nProm. to Associate Fraud Investigator 2\nAuto Service Worker 1\nResearch Assistant 18\nReal Property Manager 2\nFirefighter 193\nLight Maintainer 9\nComputer Associate(Technical Support) 1\nProject Manager Intern 13\nHousing Assistant 2\nAdministrative Engineer 4\nElevator Mechanic's Helper 2\nPrincipal Administrative Associate PROM 1\nEMS-EMT 4\nNew York Police Officer 1\nFIREFIGHTER(Group 1) 1\nAddministrative Director of Social Sevices 1\nElectricians Helper 1\nAdministrative Community Relations 2\nAdministrative Investigator 17\nSchool Computer Technology Specialist DOE 1\nAssociate Project Manager 12\nMason's Helper 9\nPromotion to Administrative Staff Analyst 9\nAdministrative Community  Relations Specialist 1\nAssociate Job Opportunity Specialist (PROM) 1\nGardener 3\nAdministrative Manager 51\nInvestigator 21\nCall Center Representative 2\nCustomer Information Representative 30\nPrincipal Administrative Associate (PROM) 1\nPromotion to Administrative Manager 6\nTransit Electrical Helper 6\nPromotion to Adminstrative Staff Analyst 2\nElectrician's Helper 7\nEnvironmental Police Officer 4\nPower Electronic Technician 1\nHeating Plant Technician (Housing Authority) 2\nEstimator(General Construction) 1\nCustodian 4\nCertified IT Administrator LAN WAN 1\nPlasterer 11\nPromotion to Assistant Train Dispatcher 2\nStructure Maintainer Group C 1\nPromotion to Stationary Engineer (Electric) 1\nEmergency Medical Specialist - EMT (FIRE) 2\nNYS Court Officer-Trainee 1\nCertified IT Administrator (LAN/WAN) 1\nPromotion to Heating Plant Technician (Housing Authority) 1\nTelephone Maintainer 14\nPlan Examiner 1\nEstimator (General Construction) 2\nStaff Analyst 14\nAssociate Staff Analyst 25\nPlan Examiner (Buildings) 1\nSchool Safety Agent (SSA) 17\nPolice Officer (Promotional) 2\nHeating Plant Technician 4\nConstruction Project  Manager 1\nComputer Programmer Analyst Trainee 2\nCivil Engineering Intern 16\nPublic Health Sanitarian 6\nMasons Helper 1\nBookkeeper 4\nPromotion to Firefighter 1\nAssociate Project Manager (Promotion) 3\nCorrections Officer 11\nAssociate Fire Protection Inspector (PROM) 1\nAdministrative Manager (Promotion) 1\nAssistant Superintendent of Welfare Shelters 10\nTraffic Enforcement Agent (TEA) 13\nPromotion to Marine Engineer (Uniformed-Fire Department) 1\nAdministrative Staff Analyst (PROM) 2\nPromotion to Maintenance Supervisor (Surface) 1\nHigh Pressure Plant Teneder 2\nExterminator 1\nManagement Auditor 5\nFire Protection Inspector 32\nFire Fighter 1\nRadio Repair Mechanic 2\nEmergency Medical Specialist - Paramedic 5\nCivil Enginneering Intern 1\nClimber and Pruner 5\nTaxi and Limousine Inspector 4\nAssociate Education Analyst 4\nCar Inspector - Promotion 2\nFire Alarm Dispatcher 2\nPainter 7\nPromotion to Associate Staff Analyst 1\nElevator Mechanic Helper 8\nAssociate Contract Specialist 56\nEmergency Medical Specialist (EMT) 1\nElectrician 11\nMarine Engineer (Uniformed-Fire Department 1\nEmergency Medical Specialist - (EMT) 2\nGardner 2\nEMS-Paramedic 1\nParalegal Aide 3\nStationary Engineer (Electric) 20\nPlumber's Helper 13\nLieutenant (Police) (Prom) 2\nSupervising Special Officer 2\nEmergency Medical Specialist-Paramedic (PRO) 2\nTrack Equipment Maintainer 6\nElecronic Equipment Maintainer 2\nLieutenant (Fire) Prom. 2\nLieutenant (Fire) (Prom) 2\nInspector (Instructor) 2\nCaptain (Fire)(Prom) 2\nStationary Engineer 6\nAssociate School Food Service Manager 1\nHousing Development Specialist 8\nEmergency Medical Specialist - Paramedic (Fire) 1\nEmergency Medical Specialist-EMT (Fire) 21\nEducation Analyst 2\nMachinist 3\nUrban Park Ranger 5\nPolice Communication Technician 4\nPolice Communications Technician (PCT) 4\nMariner 3\nMaintenance Supervisor (Surface) 7\nBridge Repairer and Riveter 2\nJob Opportunity Specialist 2\nMaintenance Supervisor (Revenue) 3\nCorreaction Officer 2\nPlumber 3\nPolice Office 2\nSupervising Computer Service Technician 24\nSenior Police Administrative Aide (PROM) 2\nSteam Fitter 21\nComputer Specialist (Software) 218\nWatershed Maintainer 2\nAutomotive Service Worker 4\nCaseworker 4\nForensic Mortuary Technician 2\nStructure Maintainer Group B 15\nAdministrative Procurement Analyst 1\nAssociate Park Service Worker 9\nPromotion to Supervisor Highway Repairer 1\nCar Maintainer - Group B 3\nChief Marine Engineer (PROM) 2\nInspector (Housing) 5\nAdministrative Community Relation Specialist 1\nCity Tax Auditor 25\nPrincipal Admin. Associate 1\nPromotion to Chief Marine Engineer 2\nSanitation worker 1\nTrack Worker 4\nPromotion to Construction Laborer 2\nMaintenance Supervisor (Car Equipment) 5\nRailroad Stock Worker 26\nBus Maintainer - Group B 6\nEMT - Trainee 4\nCement Mason 2\nLieutenant (Police) 3\nTransit Mgmt Analyst Trainee 12\nArea Supervisor (Highway Maintenance) 1\nComputer Associate (Operations) 2\nOiler 7\nPromotion to Dispatcher (Rapid Transit Operations) 1\nLieutenant (Police) (Promotion) 4\nSocial Worker 2\nMate (Ferry) 4\nBridge Operator 3\nTransit Railcar Technology Specialist 3\nMaintenance Supervisor 6\nPark Service Worker 2\nTransit Electro-Mechanical Mtr 8\nComputer Specialist 4\nSupervisor (Stations) 2\nPublic Records Officer 2\nStaff Analyst Trainee 17\nComputer Specialist  (Software) 2\nAsbestos Hazard Investigator 2\nComputer Specialist software 2\nElevator Mechanic 1\nComputer Specialist(Software) 4\nPromotion to Associate Inspector (Construction) 1\nInterpreter (Spanish) 1\nComputer Specialist Software 5\nEmergency Medical Specialist - Trainee 2\nEmergency Medical Specialist  - Trainee 2\nStructure Maintainer Group D 4\nPromotion to Sergeant (Police) 15\nPrincipal Transit Management Analyst (Operations) 2\nTelecommunications Manager 2\nPromotion to Administrative Engineer 6\nPromotion to Housing Manager 4\nAssociate Transit Management Analyst 2\nComputer Associte (Software) 2\nTransit Mgmt. Analyst Trainee 6\nRecreation Supervisor 2\nComputer Associate(Software) 2\nInspector (Elevator) 2\nSergeant (Police) 2\nSpecial Officer (DOHMH) 2\nCaptain (Correction) 4\nPromotion to Associate Fraud Investigator 2\nPromotion to Supervisor (Watershed Maintenance) 2\nStructure Maintainer Group A 4\nManagement Auditor Trainee 16\nProgram Evaluator (ACS) 1\nMaintenance Supervisor (Telephones) 1\nCorrection Offier 1\nCashier 4\nTransit Electro-Mechanical Maintainer H & AC 2\nTransit Electro-Mechanical Maintainer - EL & Esc. 1\nCustodian Engineer 3\nTransit Electro-Mechanical Maintainer - El & Esc 1\nTransit Electro-Mechanical Maintainer V & D 1\nAssistant Retirement Benefits Examiner 1\nCarpenter 6\nInspector (Construction) 5\nCaptain (Police) (PROM) 1\nInspector (Contruction) 1\nEmergency Medical Specialist-EMT 8\nPromotion to General Superintendent (Sanitation) 2\nComputer Aide 27\nLead Abatement Worker 1\nContract Specialist 12\nProgram Specialist (Correction) 4\nPromotion to Administrative Investigator 4\nEmerg.Med. Spec.-Paramedic (Fire) 1\nEmerg.Med.Spec.-Paramedic (Fire) 1\nSupv. of Electrical Installations and Maintenance 1\nCustodian Engineer (BOE) 5\nMaintainer (B & T) 1\nSanitation Enforcement Agent 2\nForester 6\nTransit Property Protection Agent 2\nPark Supervisor (Promotion) 1\nPublic health Nurse (School Health) 1\nPromotion to Supervisor (Sanitation) 1\nMachinist's Helper 5\nProgram Specialist 1\nPromotion to Battalion Chief (Fire) 1\nPublic Health Nurse 2\nPublic Health Nurse(School Health) 1\nInspector (Plumbing) 1\nClimber & Pruner 3\nMaintenenace Worker 1\nPsychologist 1\nMachinist Helper 1\nAssociate Cashier TA 1\nSchool Food Service Manager 1\nChild and Family Specialist 1\nProm. to Battalion Chief (Fire) 1\nCustomer Informationn Representative 1\nCustomer Info. Representative 10\nOccupational Therapist (DOE) 5\nCivil Engineer 3\nPhysical Therapist (DOE) 1\nAssoc. Public Info. Specialist 1\nAssociate Public Information Specialist 2\nProm. Sergeant (Police) 1\nPromotion to Maintenance Supervisor (Track) 1\nEmer.Med.Spec.-Param.(Fire) 1\nPromotion to Supervising Housing Groundskeeper 1\n?TRAIN DISPATCHER 867\n?TRANSIT ELECTRO-MECHANICAL MAINTAINER 153\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://hc13.nyu.cluster:38288/jobs/job?id=51",
+              "$$hashKey": "object:4186"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1639107496280_1214420970",
+      "id": "paragraph_1639107496280_1214420970",
+      "dateCreated": "2021-12-09T22:38:16-0500",
+      "dateStarted": "2021-12-09T22:50:15-0500",
+      "dateFinished": "2021-12-09T22:50:27-0500",
+      "status": "FINISHED",
+      "$$hashKey": "object:510"
+    }
+  ],
+  "name": "date-inital",
+  "id": "2GRTMY4N5",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/date-inital"
+}
